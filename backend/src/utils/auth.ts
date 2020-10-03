@@ -7,7 +7,7 @@ export const createAccessToken = (user: User) => {
 }
 
 export const refreshAccessToken = (user: User) => {
-    return sign({userId: user.idUser}, REFRESH_TOKEN_SECRET, {expiresIn: '60d'})
+    return sign({userId: user.idUser}, REFRESH_TOKEN_SECRET)
 }
 
 export const changePassword = (user: User) => {

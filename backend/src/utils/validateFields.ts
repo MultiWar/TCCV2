@@ -53,16 +53,28 @@ export const validateSenha = (senha: string): [{field: string, message: string}]
 }
 
 export const validateCpf = (cpf: string): [{field: string, message: string}] | undefined => {
+    if(!cpf) {
+        return [{
+            field: 'cpf',
+            message: 'Este campo é obrigatório'
+        }]
+    }
     if(cpf.length !== 11) {
         return [{
             field: 'cpf',
-            message: 'Verifique se o cpf foi digitado corretamente'
+            message: 'Verifique se o CPF foi digitado corretamente'
         }]
     }
     if(cpf === '11111111111' || cpf === '22222222222' || cpf === '33333333333' || cpf === '44444444444' || cpf === '55555555555' || cpf === '66666666666' || cpf === '77777777777' || cpf === '88888888888' || cpf === '99999999999' || cpf === '00000000000') {
         return [{
             field: 'cpf',
             message: 'CPF inválido'
+        }]
+    }
+    if(!cpf.match(/^[0-9]+$/)) {
+        return [{
+            field: 'cpf',
+            message: 'Digite apenas os números, sem pontos ou traços'
         }]
     }
     let soma: number = 0
@@ -76,7 +88,7 @@ export const validateCpf = (cpf: string): [{field: string, message: string}] | u
         if(mod !== 10 || (mod === 10 && parseInt(cpf.charAt(9)) !== 0) ) {
             return [{
                 field: 'cpf',
-                message: 'cpf inválido'
+                message: 'CPF inválido'
             }]
         }
     }

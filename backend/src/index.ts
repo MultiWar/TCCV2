@@ -21,6 +21,7 @@ import { tblProgEntrega as ProgEntrega } from './entitites/ProgEntrega'
 import { tblUnidade as Unidade } from './entitites/Unidade'
 import { tblUser as User } from "./entitites/User"
 import { produtoResolver } from './resolvers/produtoResolver'
+import cors from 'cors'
 
 const main = async () => {
     await createConnection({
@@ -38,6 +39,10 @@ const main = async () => {
     // sendEmail('asdas@sdasd.aca', 'teste')
 
     const app = express()
+    app.use(cors({
+        origin: 'http://localhost:3000',
+        credentials: true
+    }))
     app.use(cookieParser())
     app.post('/refresh-token', async (req, res) => {
         const token = req.cookies.jid
@@ -67,7 +72,7 @@ const main = async () => {
         context: ({req, res}) => ({req, res})
     })
 
-    apolloServer.applyMiddleware({app})
+    apolloServer.applyMiddleware({app, cors: false})
 
     app.listen(3333, () => {
         console.log('server started on http://localhost:3333')

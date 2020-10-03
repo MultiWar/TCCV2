@@ -1,0 +1,9 @@
+mutation Register($cpf:String!, $nome:String!, $senha: String!, $email:String!, $cep:String!, $rua:String!, $numero: String!, $complemento: String) {
+  register(input: {cpf:$cpf, nomeUser:$nome, senhaUser:$senha, email:$email, cep:$cep, rua:$rua, numero: $numero, complemento: $complemento}) {
+    errors{
+      field
+      message
+    }
+    accessToken
+  }
+}

@@ -1,0 +1,9 @@
+mutation Login($cpf:String!, $senha:String!) {
+  login(input: {cpf: $cpf, senhaUser: $senha}) {
+    errors {
+      field
+      message
+    }
+    accessToken
+  }
+}

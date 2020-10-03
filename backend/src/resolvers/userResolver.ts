@@ -127,11 +127,35 @@ export class userResolver {
         @Arg('input') input: LoginInput,
         @Ctx() {res}: MyContext
     ): Promise<UserResponse | Boolean> {
+        if(!input.cpf) {
+            return {errors: [{
+                field: 'cpf',
+                message: 'Este campo é obrigatório'
+            }]}
+        }
         if(input.cpf.length !== 11) {
+            return {errors: [{
+                field: 'cpf',
+                message: 'Verifique se o CPF foi digitado corretamente'
+            }]}
+        }
+        if(input.cpf === '11111111111' || input.cpf === '22222222222' || input.cpf === '33333333333' || input.cpf === '44444444444' || input.cpf === '55555555555' || input.cpf === '66666666666' || input.cpf === '77777777777' || input.cpf === '88888888888' || input.cpf === '99999999999' || input.cpf === '00000000000') {
+            return {errors: [{
+                field: 'cpf',
+                message: 'CPF inválido'
+            }]}
+        }
+        if(!input.cpf.match(/^[0-9]+$/)) {
+            return {errors: [{
+                field: 'cpf',
+                message: 'Digite apenas os números, sem pontos ou traços'
+            }]}
+        }
+        if(!input.senhaUser) {
             return {
                 errors: [{
-                    field: 'cpf',
-                    message: 'Verifique se o cpf foi digitado corretamente'
+                    field: 'senha',
+                    message: 'Digite sua senha'
                 }]
             }
         }
