@@ -1,28 +1,30 @@
 import { Box } from '@chakra-ui/core';
 import { Formik, Form } from 'formik';
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import { ThemeContext } from 'styled-components';
 import { DefaultButton } from '../../components/DefaultButton';
 import { InputField } from '../../components/inputField';
 import { toErrorMap } from '../../utils/toErrorMap';
 import {useHistory} from 'react-router-dom'
 
-import { Container, Title } from './styles';
+import { Container, EyeIcon, SlashedEyeIcon, Title } from './styles';
 import { request } from 'http';
 import { useRegisterMutation } from '../../generated/graphql';
 import { useRecoilState } from 'recoil';
 import { accessToken } from '../../atoms/accessToken';
+import { darken, shade } from 'polished';
 
 const Cadastro: React.FC = () => {
   const themeContext = useContext(ThemeContext)
   const [register] = useRegisterMutation()
   const history = useHistory()
+  const [isPassword, setIsPassword] = useState<Boolean>(true)
   const [token, setToken] = useRecoilState(accessToken)
 
   return (
     <Container>
       <Box textAlign='center'>
-        <Title>Faça seu cadastro</Title>
+        <Title>CADASTRE-SE</Title>
       </Box>
       <Formik
         initialValues={{nome: '', cpf: '', email: '', senha: '', cep: '', rua: '', numero: '', complemento: ''}}
@@ -40,33 +42,36 @@ const Cadastro: React.FC = () => {
         {({isSubmitting}) => (
           <Form>
             <Box mt={4}>
-              <InputField label='CPF' placeholder='Ex: 12143476789' name='cpf' />
+              <InputField borderColor='blue.200' focusBorderColor='blue.400' variant='flushed' size='lg' placeholder='CPF   ex: 12143476789' name='cpf' />
             </Box>
             <Box mt={4}>
-              <InputField label="Nome Completo" placeholder="Ex: Carlos Alberto de Nóbrega" name='nome' />
+              <InputField borderColor='blue.200' focusBorderColor='blue.400' variant='flushed' size='lg' placeholder="Nome completo   ex: Carlos Alberto de Nóbrega" name='nome' />
             </Box>
             <Box mt={4}>
-              <InputField label='Senha' placeholder='Ex: senha123' name='senha' type='password' />
+              <InputField borderColor='blue.200' focusBorderColor='blue.400' variant='flushed' size='lg' placeholder='Senha   ex: senha123' name='senha' type={isPassword ? 'password' : 'text'} />
             </Box>
             <Box mt={4}>
-              <InputField label='Email' placeholder='Ex: carlos.alberto@gmail.com' name='email' />
+              <InputField borderColor='blue.200' focusBorderColor='blue.400' variant='flushed' size='lg' placeholder='Email   ex: carlos.alberto@gmail.com' name='email' />
             </Box>
             <Box mt={4}>
-              <InputField label='CEP' placeholder='Ex: 45879000' name='cep' />              
+              <InputField borderColor='blue.200' focusBorderColor='blue.400' variant='flushed' size='lg' placeholder='CEP   ex: 45879000' name='cep' />              
             </Box>
             <Box mt={4}>
-              <InputField label='Rua' placeholder='Ex: Zike Tuma' name='rua' />
+              <InputField borderColor='blue.200' focusBorderColor='blue.400' variant='flushed' size='lg' placeholder='Nome da Rua   ex: Zike Tuma' name='rua' />
             </Box>
             <Box mt={4}>
-              <InputField label='Número' placeholder='Ex: 123' name='numero' />
+              <InputField borderColor='blue.200' focusBorderColor='blue.400' variant='flushed' size='lg' placeholder='Número   ex: 123' name='numero' />
             </Box>
             <Box mt={4}>
-              <InputField label='Complemento' placeholder='Ex: Apartamento 34, bloco C' name='complemento' />
+              <InputField borderColor='blue.200' focusBorderColor='blue.400' variant='flushed' size='lg' placeholder='Complemento   ex: Apartamento 34, bloco C' name='complemento' />
             </Box>
             {/* <CustomButton w='100%' type='submit'>Cadastrar</CustomButton> */}
             <Box mt={4} justifyContent='space-between' display='flex'>
               <DefaultButton w='48%' type='button' onClick={() => history.push('/login')} >Já tenho cadastro</DefaultButton>
               <DefaultButton w='48%' isLoading={isSubmitting} type='submit' loadingText="Enviando informações">Cadastrar</DefaultButton>
+            </Box>
+            <Box mt={1}>
+              <DefaultButton w='100%' type='button' onClick={() => setIsPassword(!isPassword)}>{ isPassword ? (<><EyeIcon />Mostrar senha</>) : (<><SlashedEyeIcon />Esconder senha</>) }</DefaultButton>
             </Box>
           </Form>
         )}

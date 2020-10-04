@@ -10,6 +10,7 @@ import { DefaultButton } from '../../components/DefaultButton';
 import { ThemeContext } from 'styled-components';
 import { useRecoilState } from 'recoil';
 import { accessToken } from '../../atoms/accessToken';
+import { shade } from 'polished';
 
 const Login: React.FC = () => {
     const [login] = useLoginMutation()
@@ -20,7 +21,7 @@ const Login: React.FC = () => {
 
     return (
         <Container>
-            <Box textAlign='center'><Title>Entrar</Title></Box>
+            <Box textAlign='center'><Title>ENTRAR</Title></Box>
             <Formik
                 initialValues={{cpf: '', senha: ''}}
                 onSubmit={async (values, {setErrors}) => {
@@ -37,15 +38,15 @@ const Login: React.FC = () => {
                 {({isSubmitting}) => (
                     <Form>
                         <Box mt={4}>
-                            <InputField label='CPF' name='cpf' placeholder='Ex: 12345678910' />
+                            <InputField name='cpf' placeholder='CPF    ex: 12345678910' borderColor='blue.200' focusBorderColor='blue.400' variant='flushed' size='lg' />
                         </Box>
                         <Box mt={4} display='flex'>
-                            <Box w='90%'>
-                                <InputField label='Senha' name='senha' placeholder='Ex: senha123' type={isPassword ? 'password' : 'text'} />
+                            <Box w='100%'>
+                                <InputField name='senha' placeholder='Senha    ex: senha123' variant='flushed' type={isPassword ? 'password' : 'text'} borderColor='blue.200' focusBorderColor='blue.400' size='lg' />
                             </Box>
-                            <Box w='10%' display='flex' justifyContent='center'>
+                            {/* <Box w='10%' display='flex' justifyContent='center'>
                                 <Button type='button' onClick={() => setIsPassword(!isPassword)} >{ isPassword ? (<SlashedEyeIcon />) : (<EyeIcon />) }</Button>
-                            </Box>
+                            </Box> */}
                         </Box>     
                         <Box mt={2} w='100%' display='flex' justifyContent='flex-end' color={themeContext.colors.primary}>
                         </Box>
@@ -53,8 +54,11 @@ const Login: React.FC = () => {
                             <DefaultButton w='48%' type='button' onClick={() => history.push('/cadastro')}>Não estou cadastrado</DefaultButton>
                             <DefaultButton w='48%' type='submit' isLoading={isSubmitting} loadingText='Enviando informações' >Entrar</DefaultButton>
                         </Box>
+                        <Box mt={1} w='100%' display='flex' justifyContent='space-between'>
+                            <DefaultButton w='48%' type='button' onClick={() => history.push('/forgotPassword')}>Esqueci minha senha</DefaultButton>
+                            <DefaultButton w='48%' type='button' onClick={() => setIsPassword(!isPassword)}>{ isPassword ? (<><EyeIcon />Mostrar senha</>) : (<><SlashedEyeIcon />Esconder senha</>) }</DefaultButton>
+                        </Box>
                         <Box mt={1} w='100%'>
-                            <DefaultButton w='100%' type='button' onClick={() => history.push('/forgotPassword')}>Esqueci minha senha</DefaultButton>
                         </Box>
                     </Form>
                 )}

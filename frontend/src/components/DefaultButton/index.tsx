@@ -1,8 +1,11 @@
 import React from 'react'
 import { Button, ButtonProps } from "@chakra-ui/core"
 
-export const DefaultButton: React.FC<ButtonProps> = ({w = '100%', variantColor = 'blue', mt={mt: 4}, children, ...props}: ButtonProps) => {
+export const DefaultButton: React.FC<ButtonProps> = 
+    ({w = '100%', backgroundColor = 'blue.400', color = 'gray.200', mt={mt: 4}, children, _hover={backgroundColor: 'blue.600'}, ...props}: ButtonProps) => {
     return (
-        <Button w={w} variantColor={variantColor} mt={mt} {...props}>{children}</Button>
+        <Button w={w} backgroundColor={backgroundColor} color={color} mt={mt} {...props} _hover={_hover}>
+            {children}
+        </Button>
     )
 }

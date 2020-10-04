@@ -5,6 +5,7 @@ import idk from './styles/themes/idk'
 import customTheme from './theme'
 
 import { CSSReset, ThemeProvider as ChakraThemeProvider } from '@chakra-ui/core';
+import {ThemeProvider as EmotionThemeProvider} from 'emotion-theming'
 import Header from './components/Header';
 import { Route, Switch } from 'react-router-dom';
 import Cadastro from './pages/Cadastro';
@@ -43,15 +44,17 @@ function App({ children }: any) {
     <ApolloProvider client={client}>
       <ThemeProvider theme={idk}>
         <ChakraThemeProvider theme={customTheme}>
-          <CSSReset />
-          {children}
-          <Header />
-          <Switch>
-            {/* <Route exact path='/' component={} /> */}
-            <Route path='/cadastro' component={Cadastro} />
-            <Route path='/login' component={Login} />
-          </Switch>
-          <GlobalStyles />
+          <EmotionThemeProvider theme={customTheme}>
+            <CSSReset />
+            {children}
+            <Header />
+            <Switch>
+              {/* <Route exact path='/' component={} /> */}
+              <Route path='/cadastro' component={Cadastro} />
+              <Route path='/login' component={Login} />
+            </Switch>
+            <GlobalStyles />
+          </EmotionThemeProvider>
         </ChakraThemeProvider>
       </ThemeProvider>
     </ApolloProvider>

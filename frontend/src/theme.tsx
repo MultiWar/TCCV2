@@ -1,17 +1,16 @@
-import { theme as chakraTheme } from '@chakra-ui/core'
+import { theme, DefaultTheme } from '@chakra-ui/core'
 import React from 'react'
 
-const fonts = { ...chakraTheme.fonts, mono: `'Menlo', monospace` }
+const fonts = { ...theme.fonts, mono: `'Menlo', monospace` }
 
 const breakpoints = ['40em', '52em', '64em']
 
-const theme = {
-  ...chakraTheme,
+const customTheme: DefaultTheme = {
+  ...theme,
   colors: {
-    ...chakraTheme.colors,
+    ...theme.colors,
     black: '#16161D',
-    blue: 
-    {
+    blue: {
       50: '#dff4ff',
       100: '#b5dbfd',
       200: '#88c1f6',
@@ -22,12 +21,17 @@ const theme = {
       700: '#024276',
       800: '#002849',
       900: '#000e1e',
+    },
+    gray: {
+      ...theme.colors.gray,
+      200: '#eee',
+      800: '#333'
     }
   },
   fonts,
   breakpoints,
   icons: {
-    ...chakraTheme.icons,
+    ...theme.icons,
     logo: {
       path: (
         <svg
@@ -49,4 +53,4 @@ const theme = {
   },
 }
 
-export default theme
+export default customTheme
