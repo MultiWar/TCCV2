@@ -6,5 +6,7 @@ export const Container = styled.div`
     justify-content: space-between;
     height: 50px;
     background: ${props => props.theme.colors.secondary};
-    color: ${props => props.theme.colors.secondaryText}
+    color: ${props => props.theme.colors.secondaryText};
+    padding-left: 20px;
+    padding-right: 20px;
 `

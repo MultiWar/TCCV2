@@ -1,7 +1,6 @@
 import { FormControl, FormErrorMessage, FormLabel, Input, InputProps, Textarea } from "@chakra-ui/core"
 import { useField } from "formik"
-import React, { InputHTMLAttributes, useContext } from "react"
-import { ThemeContext } from "styled-components"
+import React from "react"
 
 type CustomInputProps = InputProps & {
     type?: string
@@ -12,7 +11,6 @@ type CustomInputProps = InputProps & {
 }
 
 export const InputField: React.FC<CustomInputProps> = ({isTextArea=false, placeholder, type='text', ...props}) => {
-    const themeContext = useContext(ThemeContext)
     const [field, {error}] = useField(props)
     let InputOrTextArea = Input
     if(isTextArea) {

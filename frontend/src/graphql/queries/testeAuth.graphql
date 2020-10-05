@@ -1,0 +1,3 @@
+query TesteAuth {
+  testeAuth
+}

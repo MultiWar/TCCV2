@@ -1,0 +1,9 @@
+query Me {
+  me {
+    cpf
+    email
+    nomeUser
+    fone
+    endereco
+  }
+}

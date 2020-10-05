@@ -3,20 +3,19 @@ import React, {useContext, useState} from 'react';
 import { useLoginMutation } from '../../generated/graphql';
 import { toErrorMap } from '../../utils/toErrorMap';
 import { useHistory } from "react-router-dom";
-import { Button, Container, EyeIcon, SlashedEyeIcon, Title } from './styles';
+import { Container, EyeIcon, SlashedEyeIcon, Title } from './styles';
 import { Box } from '@chakra-ui/core';
 import { InputField } from '../../components/inputField';
 import { DefaultButton } from '../../components/DefaultButton';
 import { ThemeContext } from 'styled-components';
 import { useRecoilState } from 'recoil';
 import { accessToken } from '../../atoms/accessToken';
-import { shade } from 'polished';
 
 const Login: React.FC = () => {
     const [login] = useLoginMutation()
     const themeContext = useContext(ThemeContext)
     const history = useHistory()
-    const [token, setToken] = useRecoilState(accessToken)
+    const [, setToken] = useRecoilState(accessToken)
     const [isPassword, setIsPassword] = useState<Boolean>(true)
 
     return (
@@ -51,12 +50,12 @@ const Login: React.FC = () => {
                         <Box mt={2} w='100%' display='flex' justifyContent='flex-end' color={themeContext.colors.primary}>
                         </Box>
                         <Box mt={2} display='flex' justifyContent='space-between'>
-                            <DefaultButton w='48%' type='button' onClick={() => history.push('/cadastro')}>Não estou cadastrado</DefaultButton>
+                            <DefaultButton w='48%' type='button' onClick={() => setIsPassword(!isPassword)}>{ isPassword ? (<><EyeIcon />Mostrar senha</>) : (<><SlashedEyeIcon />Esconder senha</>) }</DefaultButton>
                             <DefaultButton w='48%' type='submit' isLoading={isSubmitting} loadingText='Enviando informações' >Entrar</DefaultButton>
                         </Box>
                         <Box mt={1} w='100%' display='flex' justifyContent='space-between'>
+                            <DefaultButton w='48%' type='button' onClick={() => history.push('/cadastro')}>Não estou cadastrado</DefaultButton>
                             <DefaultButton w='48%' type='button' onClick={() => history.push('/forgotPassword')}>Esqueci minha senha</DefaultButton>
-                            <DefaultButton w='48%' type='button' onClick={() => setIsPassword(!isPassword)}>{ isPassword ? (<><EyeIcon />Mostrar senha</>) : (<><SlashedEyeIcon />Esconder senha</>) }</DefaultButton>
                         </Box>
                         <Box mt={1} w='100%'>
                         </Box>

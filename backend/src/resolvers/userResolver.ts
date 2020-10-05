@@ -53,6 +53,9 @@ class RegisterInput {
     email: string
 
     @Field()
+    telefone: string
+
+    @Field()
     cep: string
 
     @Field()
@@ -92,6 +95,11 @@ export class userResolver {
             return {errors: errosEmail}
         }
 
+        const errosTelefone = validateTelefone(input.telefone)
+        if(errosTelefone) {
+            return {errors: errosTelefone}
+        }
+
         const errosEndereco = validateEndereco(input.cep, input.rua, input.numero)
         if(errosEndereco) {
             return {errors: errosEndereco}
@@ -104,7 +112,7 @@ export class userResolver {
         const hashedPassword = await argon.hash(senhaIntermed)
         let user: User
         try {
-            user = await User.create({cpf: input.cpf, senhaUser: hashedPassword, nomeUser: input.nomeUser, salt, email: input.email, endereco: endereco}).save()
+            user = await User.create({cpf: input.cpf, senhaUser: hashedPassword, nomeUser: input.nomeUser, fone: input.telefone, salt, email: input.email, endereco: endereco}).save()
         }
         catch(err) {
             if(err.number === 2627) {

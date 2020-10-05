@@ -14,10 +14,11 @@ import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@ap
 import { setContext } from '@apollo/client/link/context'
 import { useRecoilState } from 'recoil';
 import { accessToken } from './atoms/accessToken';
+import Loja from './pages/Loja';
 
 function App({ children }: any) {
 
-  const [token, setToken] = useRecoilState(accessToken)
+  const [token, ] = useRecoilState(accessToken)
 
   const httpLink = createHttpLink({
     uri: 'http://localhost:3333/graphql'
@@ -34,7 +35,13 @@ function App({ children }: any) {
 
   const client = new ApolloClient({
     link: authLink.concat(httpLink),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      typePolicies: {
+        me: {
+          keyFields: ['idUser']
+        }
+      }
+    }),
     credentials: 'include'
   })
 
@@ -52,6 +59,7 @@ function App({ children }: any) {
               {/* <Route exact path='/' component={} /> */}
               <Route path='/cadastro' component={Cadastro} />
               <Route path='/login' component={Login} />
+              <Route exact path='/' component={Loja} />
             </Switch>
             <GlobalStyles />
           </EmotionThemeProvider>

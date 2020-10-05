@@ -131,6 +131,7 @@ export type RegisterInput = {
   nomeUser: Scalars['String'];
   senhaUser: Scalars['String'];
   email: Scalars['String'];
+  telefone: Scalars['String'];
   cep: Scalars['String'];
   rua: Scalars['String'];
   numero: Scalars['String'];
@@ -165,6 +166,7 @@ export type RegisterMutationVariables = Exact<{
   nome: Scalars['String'];
   senha: Scalars['String'];
   email: Scalars['String'];
+  telefone: Scalars['String'];
   cep: Scalars['String'];
   rua: Scalars['String'];
   numero: Scalars['String'];
@@ -182,6 +184,44 @@ export type RegisterMutation = (
       & Pick<FieldError, 'field' | 'message'>
     )>> }
   ) }
+);
+
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeQuery = (
+  { __typename?: 'Query' }
+  & { me: (
+    { __typename?: 'tblUser' }
+    & Pick<TblUser, 'cpf' | 'email' | 'nomeUser' | 'fone' | 'endereco'>
+  ) }
+);
+
+export type ProdutosQueryVariables = Exact<{
+  orderBy?: Maybe<Scalars['String']>;
+  pagina?: Maybe<Scalars['Int']>;
+  direction?: Maybe<Scalars['String']>;
+  categorias?: Maybe<Array<Scalars['String']>>;
+  tarjas?: Maybe<Array<Scalars['String']>>;
+  concentracoes?: Maybe<Array<Scalars['String']>>;
+  principioAtivo?: Maybe<Array<Scalars['String']>>;
+}>;
+
+
+export type ProdutosQuery = (
+  { __typename?: 'Query' }
+  & { produtos: Array<(
+    { __typename?: 'tblProduto' }
+    & Pick<TblProduto, 'idProduto' | 'nomeProduto' | 'descricao' | 'categoria' | 'preco' | 'tarja' | 'principioAtivo' | 'concentracao'>
+  )> }
+);
+
+export type TesteAuthQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TesteAuthQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'testeAuth'>
 );
 
 
@@ -223,8 +263,8 @@ export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const RegisterDocument = gql`
-    mutation Register($cpf: String!, $nome: String!, $senha: String!, $email: String!, $cep: String!, $rua: String!, $numero: String!, $complemento: String) {
-  register(input: {cpf: $cpf, nomeUser: $nome, senhaUser: $senha, email: $email, cep: $cep, rua: $rua, numero: $numero, complemento: $complemento}) {
+    mutation Register($cpf: String!, $nome: String!, $senha: String!, $email: String!, $telefone: String!, $cep: String!, $rua: String!, $numero: String!, $complemento: String) {
+  register(input: {cpf: $cpf, nomeUser: $nome, senhaUser: $senha, email: $email, telefone: $telefone, cep: $cep, rua: $rua, numero: $numero, complemento: $complemento}) {
     errors {
       field
       message
@@ -252,6 +292,7 @@ export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, Regis
  *      nome: // value for 'nome'
  *      senha: // value for 'senha'
  *      email: // value for 'email'
+ *      telefone: // value for 'telefone'
  *      cep: // value for 'cep'
  *      rua: // value for 'rua'
  *      numero: // value for 'numero'
@@ -265,3 +306,115 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const MeDocument = gql`
+    query Me {
+  me {
+    cpf
+    email
+    nomeUser
+    fone
+    endereco
+  }
+}
+    `;
+
+/**
+ * __useMeQuery__
+ *
+ * To run a query within a React component, call `useMeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMeQuery(baseOptions?: Apollo.QueryHookOptions<MeQuery, MeQueryVariables>) {
+        return Apollo.useQuery<MeQuery, MeQueryVariables>(MeDocument, baseOptions);
+      }
+export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery, MeQueryVariables>) {
+          return Apollo.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, baseOptions);
+        }
+export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
+export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
+export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const ProdutosDocument = gql`
+    query Produtos($orderBy: String, $pagina: Int, $direction: String, $categorias: [String!], $tarjas: [String!], $concentracoes: [String!], $principioAtivo: [String!]) {
+  produtos(orderBy: $orderBy, pagina: $pagina, direction: $direction, categorias: $categorias, tarjas: $tarjas, concentracoes: $concentracoes, principioAtivo: $principioAtivo) {
+    idProduto
+    nomeProduto
+    descricao
+    categoria
+    preco
+    tarja
+    principioAtivo
+    concentracao
+  }
+}
+    `;
+
+/**
+ * __useProdutosQuery__
+ *
+ * To run a query within a React component, call `useProdutosQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProdutosQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProdutosQuery({
+ *   variables: {
+ *      orderBy: // value for 'orderBy'
+ *      pagina: // value for 'pagina'
+ *      direction: // value for 'direction'
+ *      categorias: // value for 'categorias'
+ *      tarjas: // value for 'tarjas'
+ *      concentracoes: // value for 'concentracoes'
+ *      principioAtivo: // value for 'principioAtivo'
+ *   },
+ * });
+ */
+export function useProdutosQuery(baseOptions?: Apollo.QueryHookOptions<ProdutosQuery, ProdutosQueryVariables>) {
+        return Apollo.useQuery<ProdutosQuery, ProdutosQueryVariables>(ProdutosDocument, baseOptions);
+      }
+export function useProdutosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProdutosQuery, ProdutosQueryVariables>) {
+          return Apollo.useLazyQuery<ProdutosQuery, ProdutosQueryVariables>(ProdutosDocument, baseOptions);
+        }
+export type ProdutosQueryHookResult = ReturnType<typeof useProdutosQuery>;
+export type ProdutosLazyQueryHookResult = ReturnType<typeof useProdutosLazyQuery>;
+export type ProdutosQueryResult = Apollo.QueryResult<ProdutosQuery, ProdutosQueryVariables>;
+export const TesteAuthDocument = gql`
+    query TesteAuth {
+  testeAuth
+}
+    `;
+
+/**
+ * __useTesteAuthQuery__
+ *
+ * To run a query within a React component, call `useTesteAuthQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTesteAuthQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTesteAuthQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useTesteAuthQuery(baseOptions?: Apollo.QueryHookOptions<TesteAuthQuery, TesteAuthQueryVariables>) {
+        return Apollo.useQuery<TesteAuthQuery, TesteAuthQueryVariables>(TesteAuthDocument, baseOptions);
+      }
+export function useTesteAuthLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TesteAuthQuery, TesteAuthQueryVariables>) {
+          return Apollo.useLazyQuery<TesteAuthQuery, TesteAuthQueryVariables>(TesteAuthDocument, baseOptions);
+        }
+export type TesteAuthQueryHookResult = ReturnType<typeof useTesteAuthQuery>;
+export type TesteAuthLazyQueryHookResult = ReturnType<typeof useTesteAuthLazyQuery>;
+export type TesteAuthQueryResult = Apollo.QueryResult<TesteAuthQuery, TesteAuthQueryVariables>;
