@@ -15,6 +15,8 @@ import { setContext } from '@apollo/client/link/context'
 import { useRecoilState } from 'recoil';
 import { accessToken } from './atoms/accessToken';
 import Loja from './pages/Loja';
+import Teste from './pages/Teste';
+import { ProdutosQuery, ProdutosQueryHookResult, ProdutosQueryResult } from './generated/graphql';
 
 function App({ children }: any) {
 
@@ -39,6 +41,15 @@ function App({ children }: any) {
       typePolicies: {
         me: {
           keyFields: ['idUser']
+        },
+        Query: {
+          fields: {
+            produtos: {
+              merge(existing: ProdutosQueryHookResult, incoming: ProdutosQueryHookResult, {args}) {
+                
+              }
+            }
+          }
         }
       }
     }),
@@ -59,6 +70,7 @@ function App({ children }: any) {
               {/* <Route exact path='/' component={} /> */}
               <Route path='/cadastro' component={Cadastro} />
               <Route path='/login' component={Login} />
+              <Route path='/teste' component={Teste} />
               <Route exact path='/' component={Loja} />
             </Switch>
             <GlobalStyles />

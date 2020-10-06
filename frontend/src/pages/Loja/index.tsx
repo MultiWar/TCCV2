@@ -7,8 +7,11 @@ import { Card } from './styles';
 
 const Loja: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true)
-    const [pagina, setPagina] = useState(1)
-    const {data, loading} = useProdutosQuery({variables: {pagina: pagina}})
+    const {data, loading, error, fetchMore, variables} = useProdutosQuery({
+        variables: {
+            pagina: 1
+        }
+    })
     // useEffect(() => {
     // }, [pagina])
     console.log(isLoading)
@@ -18,7 +21,8 @@ const Loja: React.FC = () => {
         )
     }
     return (
-        <Flex flexDirection='row' wrap='wrap' mx={10} mt={5} justify='space-between'>
+        <>
+        <Flex flexDirection='row' wrap='wrap' mx={10} mt={5} justifyContent={['center', 'center', 'center', 'space-between']}>
             {data?.produtos.map(produto => {
                 return (
                     <Card key={produto.idProduto}>
@@ -38,6 +42,14 @@ const Loja: React.FC = () => {
                 )
             })}
         </Flex>
+        <DefaultButton type='button' onClick={() => {
+            fetchMore({
+                variables: {
+                    pagina: variables?.pagina ? variables.pagina + 1 : 1
+                }
+            })
+        }}>Teste Paginação</DefaultButton>
+        </>
     );
 }
 

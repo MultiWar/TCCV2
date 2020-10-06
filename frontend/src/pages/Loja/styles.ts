@@ -13,5 +13,5 @@ export const Card = styled.div`
     padding-bottom: 20px;
     padding-left: 20px;
     padding-right: 20px;
-    margin-top: 20px;
+    margin: 40px 20px 0;
 `;
