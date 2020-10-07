@@ -1,12 +1,15 @@
-query Produtos($orderBy:String, $pagina: Int, $direction: String, $categorias: [String!], $tarjas: [String!], $concentracoes: [String!], $principioAtivo: [String!]) {
+query Produtos($orderBy:String, $pagina: Int!, $direction: String, $categorias: [String!], $tarjas: [String!], $concentracoes: [String!], $principioAtivo: [String!]) {
   produtos(orderBy:$orderBy, pagina: $pagina, direction: $direction, categorias: $categorias, tarjas: $tarjas, concentracoes: $concentracoes, principioAtivo:$principioAtivo) {
-    idProduto
-    nomeProduto
-    descricao
-    categoria
-    preco
-    tarja
-    principioAtivo
-    concentracao
+    produtos {
+      idProduto
+      nomeProduto
+      descricao
+      categoria
+      preco
+      tarja
+      principioAtivo
+      concentracao
+    }
+    hasMore
   }
 }

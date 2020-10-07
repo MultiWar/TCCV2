@@ -16,7 +16,7 @@ export type Query = {
   testeAuth: Scalars['String'];
   me: TblUser;
   testeAqui: TblUser;
-  produtos: Array<TblProduto>;
+  produtos: ProdutosComPaginacao;
   produto: TblProduto;
 };
 
@@ -45,6 +45,12 @@ export type TblUser = {
   nomeUser: Scalars['String'];
   fone: Scalars['String'];
   endereco: Scalars['String'];
+};
+
+export type ProdutosComPaginacao = {
+  __typename?: 'ProdutosComPaginacao';
+  produtos: Array<TblProduto>;
+  hasMore: Scalars['Boolean'];
 };
 
 export type TblProduto = {
@@ -199,7 +205,7 @@ export type MeQuery = (
 
 export type ProdutosQueryVariables = Exact<{
   orderBy?: Maybe<Scalars['String']>;
-  pagina?: Maybe<Scalars['Int']>;
+  pagina: Scalars['Int'];
   direction?: Maybe<Scalars['String']>;
   categorias?: Maybe<Array<Scalars['String']>>;
   tarjas?: Maybe<Array<Scalars['String']>>;
@@ -210,10 +216,14 @@ export type ProdutosQueryVariables = Exact<{
 
 export type ProdutosQuery = (
   { __typename?: 'Query' }
-  & { produtos: Array<(
-    { __typename?: 'tblProduto' }
-    & Pick<TblProduto, 'idProduto' | 'nomeProduto' | 'descricao' | 'categoria' | 'preco' | 'tarja' | 'principioAtivo' | 'concentracao'>
-  )> }
+  & { produtos: (
+    { __typename?: 'ProdutosComPaginacao' }
+    & Pick<ProdutosComPaginacao, 'hasMore'>
+    & { produtos: Array<(
+      { __typename?: 'tblProduto' }
+      & Pick<TblProduto, 'idProduto' | 'nomeProduto' | 'descricao' | 'categoria' | 'preco' | 'tarja' | 'principioAtivo' | 'concentracao'>
+    )> }
+  ) }
 );
 
 export type TesteAuthQueryVariables = Exact<{ [key: string]: never; }>;
@@ -343,16 +353,19 @@ export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
 export const ProdutosDocument = gql`
-    query Produtos($orderBy: String, $pagina: Int, $direction: String, $categorias: [String!], $tarjas: [String!], $concentracoes: [String!], $principioAtivo: [String!]) {
+    query Produtos($orderBy: String, $pagina: Int!, $direction: String, $categorias: [String!], $tarjas: [String!], $concentracoes: [String!], $principioAtivo: [String!]) {
   produtos(orderBy: $orderBy, pagina: $pagina, direction: $direction, categorias: $categorias, tarjas: $tarjas, concentracoes: $concentracoes, principioAtivo: $principioAtivo) {
-    idProduto
-    nomeProduto
-    descricao
-    categoria
-    preco
-    tarja
-    principioAtivo
-    concentracao
+    produtos {
+      idProduto
+      nomeProduto
+      descricao
+      categoria
+      preco
+      tarja
+      principioAtivo
+      concentracao
+    }
+    hasMore
   }
 }
     `;

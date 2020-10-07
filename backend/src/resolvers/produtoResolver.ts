@@ -1,26 +1,35 @@
-import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Field, Int, Mutation, ObjectType, Query, Resolver } from "type-graphql";
 import { getConnection } from "typeorm";
 import { tblProduto as Produto } from "../entitites/Produto";
+
+@ObjectType()
+export class ProdutosComPaginacao {
+    @Field(() => [Produto])
+    produtos: Produto[]
+
+    @Field(() => Boolean)
+    hasMore: Boolean
+}
 
 @Resolver()
 export class produtoResolver {
 
-    @Query(() => [Produto])
+    @Query(() => ProdutosComPaginacao)
     async produtos(
         @Arg('orderBy', () => String, {nullable: true}) orderBy: string,
-        @Arg('pagina', () => Int, {nullable: true, defaultValue: 1}) pagina: number,
+        @Arg('pagina', () => Int, {defaultValue: 1}) pagina: number,
         @Arg('direction', () => String, {nullable: true}) direction: string,
         @Arg('categorias', () => [String], {nullable: true}) categorias: string[],
         @Arg('tarjas', () => [String], {nullable: true}) tarjas: string[],
         @Arg('concentracoes', () => [String], {nullable: true}) concentracoes: string[],
         @Arg('principioAtivo', () => [String], {nullable: true}) principioAtivo: string[],
-    ): Promise<Produto[]> {
+    ): Promise<ProdutosComPaginacao> {
         const limit = 2
         const qb = getConnection()
             .getRepository(Produto)
             .createQueryBuilder('p')
-            .take(limit)
-            .offset(limit * (pagina - 1))
+            .skip((limit * (pagina - 1)))
+            .take((limit + 1))
         if(orderBy) {
             qb.orderBy(orderBy, direction === 'DESC' ? 'DESC' : 'ASC')
         }
@@ -34,9 +43,10 @@ export class produtoResolver {
             tarjas || categorias ? qb.andWhere('concentracao IN (:...conc)', {conc: concentracoes}) : qb.where('concentracao IN (:...conc)', {conc: concentracoes})
         }
         if(principioAtivo) {
-            tarjas || categorias || concentracoes ? qb.andWhere('principioAtivo IN (:...princAt', {princAt: principioAtivo}) : qb.where('principioAtivo IN (:...princAt', {princAt: principioAtivo})
+            tarjas || categorias || concentracoes ? qb.andWhere('principioAtivo IN (:...princAt)', {princAt: principioAtivo}) : qb.where('principioAtivo IN (:...princAt)', {princAt: principioAtivo})
         }
-        return await qb.getMany()
+        const produtos = await qb.getMany()
+        return {produtos: produtos.slice(0, limit), hasMore: produtos.length === (limit + 1)}
     }
 
     @Query(() => Produto)

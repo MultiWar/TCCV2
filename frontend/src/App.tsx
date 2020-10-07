@@ -16,7 +16,7 @@ import { useRecoilState } from 'recoil';
 import { accessToken } from './atoms/accessToken';
 import Loja from './pages/Loja';
 import Teste from './pages/Teste';
-import { ProdutosQuery, ProdutosQueryHookResult, ProdutosQueryResult } from './generated/graphql';
+import { ProdutosComPaginacao, ProdutosQuery, ProdutosQueryHookResult, ProdutosQueryResult } from './generated/graphql';
 
 function App({ children }: any) {
 
@@ -45,8 +45,12 @@ function App({ children }: any) {
         Query: {
           fields: {
             produtos: {
-              merge(existing: ProdutosQueryHookResult, incoming: ProdutosQueryHookResult, {args}) {
-                
+              keyArgs: ['categorias', 'tarjas', 'concentracoes', 'principioAtivo'],
+              merge(existing: ProdutosComPaginacao | undefined, incoming: ProdutosComPaginacao): ProdutosComPaginacao {
+                return {
+                  ...incoming,
+                  produtos: [...(existing?.produtos || []), ...incoming.produtos ]
+                }
               }
             }
           }
@@ -55,9 +59,6 @@ function App({ children }: any) {
     }),
     credentials: 'include'
   })
-
-  console.log('accessToken: ', token)
-
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={idk}>

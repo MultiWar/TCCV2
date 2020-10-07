@@ -14,4 +14,8 @@ export const Card = styled.div`
     padding-left: 20px;
     padding-right: 20px;
     margin: 40px 20px 0;
+
+    @media (max-width: 800px) {
+        width: 150px
+    }
 `;
