@@ -1,4 +1,4 @@
-import { Box, Checkbox, CheckboxGroup, Collapse, Flex, Heading, Image } from '@chakra-ui/core';
+import { Box, Checkbox, CheckboxGroup, Collapse, Flex, Heading, Image, Radio, RadioGroup, Skeleton, Text } from '@chakra-ui/core';
 import React, { useState } from 'react';
 import { DefaultButton } from '../../components/DefaultButton';
 import { useProdutosQuery } from '../../generated/graphql';
@@ -8,11 +8,12 @@ import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
 
 const Loja: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true)
-    const [isShown, setIsShown] = useState(true)
+    const [isShown, setIsShown] = useState(false)
     const [categoriasEscolhidas, setCategoriasEscolhidas] = useState<string[] | undefined>(undefined)
     const [tarjasEscolhidas, setTarjasEscolhidas] = useState<string[] | undefined>(undefined)
     const [concentracoesEscolhidas, setConcentracoesEscolhidas] = useState<string[] | undefined>(undefined)
     const [principioAtivoEscolhido, setPrincipioAtivoEscolhido] = useState<string[] | undefined>(undefined)
+    const [orderBy, setOrderBy] = useState<string | undefined>(undefined)
     const [pagina, setPagina] = useState(2)
     const {data, loading, error, fetchMore, variables} = useProdutosQuery({
         variables: {
@@ -20,12 +21,29 @@ const Loja: React.FC = () => {
             categorias: categoriasEscolhidas,
             tarjas: tarjasEscolhidas,
             concentracoes: concentracoesEscolhidas,
-            principioAtivo: principioAtivoEscolhido
+            principioAtivo: principioAtivoEscolhido,
+            orderBy: orderBy
         }
     })
     if(loading) {
         return (
-            <Flex></Flex>
+            <>
+                <Box w='100%' mt={4}>
+                    <Skeleton w='100%' h='30px'/>
+                </Box>
+                <Flex flexDirection='row' wrap='wrap' mx={10} mt={5} justifyContent={['center', 'center', 'center', 'space-between']}>
+                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '400px']} borderRadius={8} mt={6} mx='20px' />
+                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '400px']} borderRadius={8} mt={6} mx='20px' />
+                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '400px']} borderRadius={8} mt={6} mx='20px' />
+                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '400px']} borderRadius={8} mt={6} mx='20px' />
+                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '400px']} borderRadius={8} mt={6} mx='20px' />
+                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '400px']} borderRadius={8} mt={6} mx='20px' />
+                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '400px']} borderRadius={8} mt={6} mx='20px' />
+                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '400px']} borderRadius={8} mt={6} mx='20px' />
+                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '400px']} borderRadius={8} mt={6} mx='20px' />
+                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '400px']} borderRadius={8} mt={6} mx='20px' />
+                </Flex>
+            </>
         )
     }
     return (
@@ -95,23 +113,46 @@ const Loja: React.FC = () => {
                             <Checkbox value='principAtivo3' borderColor='blue.400'>Principio Ativo 3</Checkbox>
                         </CheckboxGroup>
                     </Box>
+                    <Box mt={4} w={['100%', '100%', 'unset', 'unset']}>
+                        <Heading size='xl' as='legend'>Ordernar por:</Heading>
+                        <RadioGroup size='lg' name='orderBy' defaultValue={orderBy}
+                            onChange={
+                                (e) => {
+                                    setOrderBy(e.target.value)
+                                    setPagina(2)
+                                }
+                        }>
+                            <Radio value='nomeProduto' borderColor='blue.400'>Nome do produto</Radio>
+                            <Radio value='preco' borderColor='blue.400'>Preço</Radio>
+                            <Radio value='principioAtivo' borderColor='blue.400'>Principio Ativo</Radio>
+                        </RadioGroup>
+                    </Box>
                 </Flex>
             </Collapse>
-            <Flex flexDirection='row' wrap='wrap' mx={10} mt={5} justifyContent={['center', 'center', 'center', 'space-between']}>
+            <Flex flexDirection='row' wrap='wrap' mx={[4, 10]} mt={5} justifyContent={['center', 'center', 'center', 'space-between']}>
                 {data?.produtos.produtos.map(produto => {
                     return (
                         <Card key={produto.idProduto}>
                             <Box w='100%' mb={2} textAlign='center'>
-                                <Heading fontSize={['xl', 'xl', '3xl']}>{produto.nomeProduto}</Heading>
+                                <Heading fontSize={['2xl', '2xl', '3xl']}>{produto.nomeProduto}</Heading>
                             </Box>
-                            <Flex h={['150px', '150px', '300px']} w={['100px', '100px','200px']}>
-                                <Image objectFit='cover' src='https://bit.ly/sage-adebayo' htmlHeight='100%' htmlWidth='100%' borderRadius={8} />
-                            </Flex>
-                            <Flex direction={['column', 'column', 'row']} justify='space-between'>
-                                <DefaultButton w={['100%','100%','48%']}>
-                                    <Link to={`/produtos/${produto.nomeProduto}`}>+ informações</Link>
-                                </DefaultButton>
-                                <DefaultButton w={['100%','100%','48%']} mt={[2, 2, 4]}>+ carrinho</DefaultButton>
+                            <Flex direction={['row', 'column', 'column']}>
+                                <Flex h={['100%', '150px', '300px']} w='100%' mr={2} justify='center'>
+                                    <Image objectFit='cover' src='https://bit.ly/sage-adebayo' htmlHeight='100%' width={['100%', '100px','200px']} borderRadius={8} />
+                                </Flex>
+                                <Flex direction='column' justify={['unset', 'space-between']} align={['center', 'unset']}>
+                                    <Flex direction='column'>
+                                        <Text alignSelf='center' fontSize={['2xl', '3xl']}><strong>R${produto.preco}</strong></Text>
+                                        <Text fontSize={['lg', 'xl']}><strong>Concentração:</strong> {produto.concentracao}</Text>
+                                        <Text><strong>Princípio ativo:</strong> {produto.principioAtivo}</Text>
+                                    </Flex>
+                                    <Flex direction={['column', 'column', 'row']} justify={['unset', 'space-between']} align={['center', 'unset']}>
+                                        <DefaultButton w={['100%','100%','48%']}>
+                                            <Link to={`/produtos/${produto.nomeProduto}`}>+ informações</Link>
+                                        </DefaultButton>
+                                        <DefaultButton w={['100%','100%','48%']} mt={[2, 2, 4]}>+ carrinho</DefaultButton>
+                                    </Flex>
+                                </Flex>
                             </Flex>
                         </Card>
                     )
@@ -126,7 +167,8 @@ const Loja: React.FC = () => {
                         categorias: categoriasEscolhidas,
                         tarjas: tarjasEscolhidas,
                         concentracoes: concentracoesEscolhidas,
-                        principioAtivo: principioAtivoEscolhido
+                        principioAtivo: principioAtivoEscolhido,
+                        orderBy: orderBy
                     }
                 })
             }}>Teste Paginação</DefaultButton>

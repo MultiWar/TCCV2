@@ -17,6 +17,7 @@ import { accessToken } from './atoms/accessToken';
 import Loja from './pages/Loja';
 import Teste from './pages/Teste';
 import { ProdutosComPaginacao, ProdutosQuery, ProdutosQueryHookResult, ProdutosQueryResult } from './generated/graphql';
+import SideMenu from './components/SideMenu';
 
 function App({ children }: any) {
 
@@ -45,7 +46,7 @@ function App({ children }: any) {
         Query: {
           fields: {
             produtos: {
-              keyArgs: ['categorias', 'tarjas', 'concentracoes', 'principioAtivo'],
+              keyArgs: ['categorias', 'tarjas', 'concentracoes', 'principioAtivo', 'orderBy'],
               merge(existing: ProdutosComPaginacao | undefined, incoming: ProdutosComPaginacao): ProdutosComPaginacao {
                 return {
                   ...incoming,
@@ -67,6 +68,7 @@ function App({ children }: any) {
             <CSSReset />
             {children}
             <Header />
+            <SideMenu />
             <Switch>
               {/* <Route exact path='/' component={} /> */}
               <Route path='/cadastro' component={Cadastro} />

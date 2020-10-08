@@ -16,6 +16,16 @@ export const Card = styled.div`
     margin: 40px 20px 0;
 
     @media (max-width: 800px) {
-        width: 150px
+        width: 180px;
+        padding-bottom: 5px;
+    }
+
+    @media (max-width: 520px) {
+        width: 100%;
+        padding-bottom: 10px;
+        padding-right: 10px;
+        padding-left: 10px;
+        margin-left: 5px;
+        margin-right: 5px;
     }
 `;
