@@ -149,6 +149,16 @@ export type LoginInput = {
   senhaUser: Scalars['String'];
 };
 
+export type ForgotPasswordMutationVariables = Exact<{
+  email: Scalars['String'];
+}>;
+
+
+export type ForgotPasswordMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'forgotPassword'>
+);
+
 export type LoginMutationVariables = Exact<{
   cpf: Scalars['String'];
   senha: Scalars['String'];
@@ -203,6 +213,19 @@ export type MeQuery = (
   ) }
 );
 
+export type ProdutoQueryVariables = Exact<{
+  idProduto: Scalars['String'];
+}>;
+
+
+export type ProdutoQuery = (
+  { __typename?: 'Query' }
+  & { produto: (
+    { __typename?: 'tblProduto' }
+    & Pick<TblProduto, 'nomeProduto' | 'descricao' | 'categoria' | 'preco' | 'tarja' | 'principioAtivo' | 'concentracao'>
+  ) }
+);
+
 export type ProdutosQueryVariables = Exact<{
   orderBy?: Maybe<Scalars['String']>;
   pagina: Scalars['Int'];
@@ -235,6 +258,36 @@ export type TesteAuthQuery = (
 );
 
 
+export const ForgotPasswordDocument = gql`
+    mutation ForgotPassword($email: String!) {
+  forgotPassword(email: $email)
+}
+    `;
+export type ForgotPasswordMutationFn = Apollo.MutationFunction<ForgotPasswordMutation, ForgotPasswordMutationVariables>;
+
+/**
+ * __useForgotPasswordMutation__
+ *
+ * To run a mutation, you first call `useForgotPasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useForgotPasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [forgotPasswordMutation, { data, loading, error }] = useForgotPasswordMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useForgotPasswordMutation(baseOptions?: Apollo.MutationHookOptions<ForgotPasswordMutation, ForgotPasswordMutationVariables>) {
+        return Apollo.useMutation<ForgotPasswordMutation, ForgotPasswordMutationVariables>(ForgotPasswordDocument, baseOptions);
+      }
+export type ForgotPasswordMutationHookResult = ReturnType<typeof useForgotPasswordMutation>;
+export type ForgotPasswordMutationResult = Apollo.MutationResult<ForgotPasswordMutation>;
+export type ForgotPasswordMutationOptions = Apollo.BaseMutationOptions<ForgotPasswordMutation, ForgotPasswordMutationVariables>;
 export const LoginDocument = gql`
     mutation Login($cpf: String!, $senha: String!) {
   login(input: {cpf: $cpf, senhaUser: $senha}) {
@@ -352,6 +405,45 @@ export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const ProdutoDocument = gql`
+    query Produto($idProduto: String!) {
+  produto(id: $idProduto) {
+    nomeProduto
+    descricao
+    categoria
+    preco
+    tarja
+    principioAtivo
+    concentracao
+  }
+}
+    `;
+
+/**
+ * __useProdutoQuery__
+ *
+ * To run a query within a React component, call `useProdutoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProdutoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProdutoQuery({
+ *   variables: {
+ *      idProduto: // value for 'idProduto'
+ *   },
+ * });
+ */
+export function useProdutoQuery(baseOptions?: Apollo.QueryHookOptions<ProdutoQuery, ProdutoQueryVariables>) {
+        return Apollo.useQuery<ProdutoQuery, ProdutoQueryVariables>(ProdutoDocument, baseOptions);
+      }
+export function useProdutoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProdutoQuery, ProdutoQueryVariables>) {
+          return Apollo.useLazyQuery<ProdutoQuery, ProdutoQueryVariables>(ProdutoDocument, baseOptions);
+        }
+export type ProdutoQueryHookResult = ReturnType<typeof useProdutoQuery>;
+export type ProdutoLazyQueryHookResult = ReturnType<typeof useProdutoLazyQuery>;
+export type ProdutoQueryResult = Apollo.QueryResult<ProdutoQuery, ProdutoQueryVariables>;
 export const ProdutosDocument = gql`
     query Produtos($orderBy: String, $pagina: Int!, $direction: String, $categorias: [String!], $tarjas: [String!], $concentracoes: [String!], $principioAtivo: [String!]) {
   produtos(orderBy: $orderBy, pagina: $pagina, direction: $direction, categorias: $categorias, tarjas: $tarjas, concentracoes: $concentracoes, principioAtivo: $principioAtivo) {

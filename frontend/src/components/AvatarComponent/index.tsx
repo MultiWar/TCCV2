@@ -12,7 +12,7 @@ const AvatarComponent: React.FC = () => {
             <PopoverTrigger>
                 <Box alignItems='center' justifyContent='space-between' w='100%'>
                     <Button background='transparent' _hover={{backgroundColor: '#555'}} h='100%' fontSize='lg' fontWeight='regular'>
-                        <Avatar name={data?.me.nomeUser} mr={2} size='sm' />
+                        <Avatar mr={2} size='sm' />
                         <Text>Gerenciar Conta</Text>
                     </Button>
                 </Box>

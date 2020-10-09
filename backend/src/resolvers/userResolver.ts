@@ -188,7 +188,7 @@ export class userResolver {
                 }]
             }
         }
-        SendRefreshToken(res, refreshAccessToken(user))
+        SendRefreshToken(res, user)
         return {
             accessToken: createAccessToken(user)
         }

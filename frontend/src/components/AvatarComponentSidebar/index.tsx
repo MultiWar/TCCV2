@@ -1,4 +1,4 @@
-import { Avatar, Flex } from '@chakra-ui/core';
+import { Avatar, Flex, Text } from '@chakra-ui/core';
 import React from 'react';
 import { useMeQuery } from '../../generated/graphql';
 
@@ -8,8 +8,15 @@ const AvatarComponentSidebar: React.FC = () => {
     const {data} = useMeQuery()
     return (
         <Flex w='100%' direction='column'>
-            <Flex justify='center'>
-                <Avatar name={data?.me.nomeUser} size='2xl' />
+            <Flex justify='center' mb={2}>
+                <Avatar size='2xl' />
+            </Flex>
+            <Flex direction='column'>
+                <Text fontSize='xl'><strong>Nome: </strong>{data?.me.nomeUser}</Text>
+                <Text fontSize='xl'><strong>CPF: </strong>{data?.me.cpf}</Text>
+                <Text fontSize='xl'><strong>Email: </strong>{data?.me.email}</Text>
+                <Text fontSize='xl'><strong>Telefone: </strong>{data?.me.fone}</Text>
+                <Text fontSize='xl'><strong>Endereço: </strong>{data?.me.endereco}</Text>
             </Flex>
         </Flex>
     );

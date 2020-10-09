@@ -1,4 +1,4 @@
-import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, Stack, Text, useDisclosure } from '@chakra-ui/core';
+import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, Image, Stack, Text, useDisclosure } from '@chakra-ui/core';
 import React from 'react';
 import { DefaultButton } from '../DefaultButton';
 import {useHistory} from 'react-router-dom'
@@ -6,6 +6,7 @@ import {useHistory} from 'react-router-dom'
 import { Container } from './styles';
 import AvatarComponentSidebar from '../AvatarComponentSidebar';
 import { useMeQuery } from '../../generated/graphql';
+import logoBranca from '../../testImages/logoBranco.png'
 
 const SideMenu: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -20,7 +21,8 @@ const SideMenu: React.FC = () => {
           </Button>
         </Flex>
         <Flex w='100%' textAlign='center' justify='center' align='center'>
-          <Text ml='-50px' fontSize='3xl' color='gray.200' justifySelf='center' alignSelf='center' textAlign='center'>MediCare</Text>
+          {/* <Text ml='-50px' fontSize='3xl' color='gray.200' justifySelf='center' alignSelf='center' textAlign='center'>MediCare</Text> */}
+          <Image h='50px' src={logoBranca} />
         </Flex>
       </Flex>
 
@@ -43,8 +45,9 @@ const SideMenu: React.FC = () => {
           </DrawerBody>
           <DrawerFooter>
             {data?.me ? 
-              <Flex>
+              <Flex w='100%' direction='column'>
                 <AvatarComponentSidebar />
+                <DefaultButton w='100%' type='button' onClick={() => history.push('/editarConta')}>Alterar Informações</DefaultButton>
               </Flex> : 
               <Flex w='100%' direction='row' justify='space-between' >
                 <DefaultButton type='button' w='48%' onClick={() => {history.push('/cadastro'); onClose()}}>Se cadastrar</DefaultButton>

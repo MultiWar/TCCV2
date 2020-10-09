@@ -2,7 +2,7 @@ import { Box, Checkbox, CheckboxGroup, Collapse, Flex, Heading, Image, Radio, Ra
 import React, { useState } from 'react';
 import { DefaultButton } from '../../components/DefaultButton';
 import { useProdutosQuery } from '../../generated/graphql';
-import {Link} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 import { Card } from './styles';
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
 
@@ -15,6 +15,9 @@ const Loja: React.FC = () => {
     const [principioAtivoEscolhido, setPrincipioAtivoEscolhido] = useState<string[] | undefined>(undefined)
     const [orderBy, setOrderBy] = useState<string | undefined>(undefined)
     const [pagina, setPagina] = useState(2)
+
+    const history = useHistory()
+
     const {data, loading, error, fetchMore, variables} = useProdutosQuery({
         variables: {
             pagina: 1,
@@ -147,10 +150,10 @@ const Loja: React.FC = () => {
                                         <Text><strong>Princípio ativo:</strong> {produto.principioAtivo}</Text>
                                     </Flex>
                                     <Flex direction={['column', 'column', 'row']} justify={['unset', 'space-between']} align={['center', 'unset']}>
-                                        <DefaultButton w={['100%','100%','48%']}>
-                                            <Link to={`/produtos/${produto.nomeProduto}`}>+ informações</Link>
+                                        <DefaultButton w={['100%','100%','48%']} type='button' onClick={() => history.push(`/produtos/${produto.idProduto}`)}>
+                                            <Text fontSize='lg'>+ informações</Text>
                                         </DefaultButton>
-                                        <DefaultButton w={['100%','100%','48%']} mt={[2, 2, 4]}>+ carrinho</DefaultButton>
+                                        <DefaultButton w={['100%','100%','48%']} mt={[2, 2, 4]}><Text fontSize='lg'>+ carrinho</Text></DefaultButton>
                                     </Flex>
                                 </Flex>
                             </Flex>

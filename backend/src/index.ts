@@ -46,6 +46,7 @@ const main = async () => {
     app.use(cookieParser())
     app.post('/refresh-token', async (req, res) => {
         const token = req.cookies.jid
+        console.log(token)
         if(!token) {
             return res.send({ok: false, acessToken: ''})
         }
@@ -60,7 +61,7 @@ const main = async () => {
         if(!user) {
             return res.send({ok: false, acessToken: ''})
         }
-        SendRefreshToken(res, refreshAccessToken(user))
+        SendRefreshToken(res, user)
         return res.send({ok: true, accessToken: createAccessToken(user)})
     })
 

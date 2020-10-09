@@ -1,5 +1,6 @@
 import { Button, Flex, Stack, Text } from '@chakra-ui/core';
 import React from 'react';
+import { useCookies } from 'react-cookie';
 import {useHistory} from 'react-router-dom'
 import { useRecoilState } from 'recoil';
 import { accessToken } from '../../atoms/accessToken';
@@ -9,8 +10,15 @@ import { Container } from './styles';
 
 const Header: React.FC = () => {
   const [, setToken] = useRecoilState(accessToken)
+  const [cookies, setCookie, removeCookie] = useCookies(['jid'])
   const history = useHistory()
   const {data, loading} = useMeQuery()
+
+  function clearSession() {
+    removeCookie('jid', {})
+    setToken('')
+  }
+
   let endOfNavbar
   if(loading) {
     return (
@@ -35,7 +43,7 @@ const Header: React.FC = () => {
         <Flex maxWidth='200px'>
           <AvatarComponent />
         </Flex>
-        <Button background='transparent' _hover={{backgroundColor: '#555'}} h='100%' px={5} type='button' onClick={() => setToken('')} fontSize='lg' fontWeight='regular'>
+        <Button background='transparent' _hover={{backgroundColor: '#555'}} h='100%' px={5} type='button' onClick={clearSession} fontSize='lg' fontWeight='regular'>
           <Text>Sair da conta</Text>
         </Button>
       </>

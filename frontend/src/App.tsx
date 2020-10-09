@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import GlobalStyles from './styles/global'
 import {ThemeProvider} from 'styled-components'
 import idk from './styles/themes/idk'
@@ -7,24 +7,30 @@ import customTheme from './theme'
 import { CSSReset, ThemeProvider as ChakraThemeProvider } from '@chakra-ui/core';
 import {ThemeProvider as EmotionThemeProvider} from 'emotion-theming'
 import Header from './components/Header';
-import { Route, Switch } from 'react-router-dom';
-import Cadastro from './pages/Cadastro';
-import Login from './pages/Login';
 import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context'
 import { useRecoilState } from 'recoil';
 import { accessToken } from './atoms/accessToken';
-import Loja from './pages/Loja';
-import Teste from './pages/Teste';
-import { ProdutosComPaginacao, ProdutosQuery, ProdutosQueryHookResult, ProdutosQueryResult } from './generated/graphql';
+import { ProdutosComPaginacao } from './generated/graphql';
 import SideMenu from './components/SideMenu';
+import Routes from './Routes';
 
 function App({ children }: any) {
+  const [token, setToken] = useRecoilState(accessToken)
 
-  const [token, ] = useRecoilState(accessToken)
+  useEffect(() => {
+    fetch('http://localhost:3333/refresh-token', {
+      method: 'POST',
+      credentials: 'include'
+    }).then(async response => {
+      const {accessToken} = await response.json()
+      setToken(accessToken)
+    })
+  }, [])
 
   const httpLink = createHttpLink({
-    uri: 'http://localhost:3333/graphql'
+    uri: 'http://localhost:3333/graphql',
+    credentials: 'include'
   })
 
   const authLink = setContext((_, { headers }) => {
@@ -57,8 +63,7 @@ function App({ children }: any) {
           }
         }
       }
-    }),
-    credentials: 'include'
+    })
   })
   return (
     <ApolloProvider client={client}>
@@ -69,13 +74,7 @@ function App({ children }: any) {
             {children}
             <Header />
             <SideMenu />
-            <Switch>
-              {/* <Route exact path='/' component={} /> */}
-              <Route path='/cadastro' component={Cadastro} />
-              <Route path='/login' component={Login} />
-              <Route path='/teste' component={Teste} />
-              <Route exact path='/' component={Loja} />
-            </Switch>
+            <Routes />
             <GlobalStyles />
           </EmotionThemeProvider>
         </ChakraThemeProvider>

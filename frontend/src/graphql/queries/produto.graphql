@@ -1,0 +1,11 @@
+query Produto($idProduto:String!) {
+  produto(id:$idProduto) {
+    nomeProduto,
+    descricao,
+    categoria,
+    preco,
+    tarja,
+    principioAtivo,
+    concentracao
+  }
+}
