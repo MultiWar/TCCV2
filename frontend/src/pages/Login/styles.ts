@@ -26,8 +26,8 @@ export const Title = styled.h1`
 const IconCss = css`
     height: 25px;
     width: 25px;
-    fill: ${props => props.theme.colors.secondaryText};
-    margin-right: 5px
+    fill: ${props => props.theme.colors.primaryText};
+    margin-left: 5px
 
     /* &:hover {
         opacity: 0.5

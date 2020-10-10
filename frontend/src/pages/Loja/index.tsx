@@ -5,20 +5,21 @@ import { useProdutosQuery } from '../../generated/graphql';
 import {useHistory} from 'react-router-dom'
 import { Card } from './styles';
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
+import { storePage } from '../../atoms/storePage';
+import { useRecoilState } from 'recoil';
 
 const Loja: React.FC = () => {
-    const [isLoading, setIsLoading] = useState(true)
     const [isShown, setIsShown] = useState(false)
     const [categoriasEscolhidas, setCategoriasEscolhidas] = useState<string[] | undefined>(undefined)
     const [tarjasEscolhidas, setTarjasEscolhidas] = useState<string[] | undefined>(undefined)
     const [concentracoesEscolhidas, setConcentracoesEscolhidas] = useState<string[] | undefined>(undefined)
     const [principioAtivoEscolhido, setPrincipioAtivoEscolhido] = useState<string[] | undefined>(undefined)
     const [orderBy, setOrderBy] = useState<string | undefined>(undefined)
-    const [pagina, setPagina] = useState(2)
+    const [pagina, setPagina] = useRecoilState(storePage)
 
     const history = useHistory()
 
-    const {data, loading, error, fetchMore, variables} = useProdutosQuery({
+    const {data, loading, fetchMore, variables} = useProdutosQuery({
         variables: {
             pagina: 1,
             categorias: categoriasEscolhidas,

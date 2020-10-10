@@ -3,11 +3,11 @@ import { ACCESS_TOKEN_SECRET, CHANGE_PASSWORD_SECRET, REFRESH_TOKEN_SECRET } fro
 import { tblUser as User } from "../entitites/User";
 
 export const createAccessToken = (user: User) => {
-    return  sign({userId: user.idUser}, ACCESS_TOKEN_SECRET, {expiresIn: '15min'})
+    return  sign({userId: user.idUser}, ACCESS_TOKEN_SECRET, {expiresIn: '15m'})
 }
 
 export const refreshAccessToken = (user: User) => {
-    return sign({userId: user.idUser}, REFRESH_TOKEN_SECRET, {expiresIn: '75d'})
+    return sign({userId: user.idUser}, REFRESH_TOKEN_SECRET, {expiresIn: '60d'})
 }
 
 export const changePassword = (user: User) => {

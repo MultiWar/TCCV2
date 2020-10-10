@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  @media(min-width: 520px) {
+  @media(min-width: 740px) {
       display: none;
   }
   height: 100%;

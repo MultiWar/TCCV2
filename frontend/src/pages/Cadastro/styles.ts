@@ -21,8 +21,8 @@ export const Container = styled.div`
 const IconCss = css`
     height: 25px;
     width: 25px;
-    fill: ${props => props.theme.colors.secondaryText};
-    margin-right: 5px   
+    fill: ${props => props.theme.colors.primaryText};
+    margin-left: 5px   
 `;
 
 export const EyeIcon = styled(AiOutlineEye)`

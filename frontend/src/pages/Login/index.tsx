@@ -4,7 +4,7 @@ import { useLoginMutation, useForgotPasswordMutation } from '../../generated/gra
 import { toErrorMap } from '../../utils/toErrorMap';
 import { useHistory } from "react-router-dom";
 import { Container, EyeIcon, SlashedEyeIcon, Title } from './styles';
-import { Box, Flex, Heading, Modal, ModalContent, ModalOverlay, useDisclosure, useToast } from '@chakra-ui/core';
+import { Box, Button, Flex, Heading, InputGroup, InputRightElement, Modal, ModalContent, ModalOverlay, useDisclosure, useToast } from '@chakra-ui/core';
 import { InputField } from '../../components/inputField';
 import { DefaultButton } from '../../components/DefaultButton';
 import { ThemeContext } from 'styled-components';
@@ -21,6 +21,10 @@ const Login: React.FC = () => {
 
     const {isOpen, onOpen, onClose} = useDisclosure()
     const toast = useToast()
+
+    const onFocus = {
+        
+    }
 
     return (
         <>
@@ -85,7 +89,12 @@ const Login: React.FC = () => {
                             </Box>
                             <Box mt={4} display='flex'>
                                 <Box w='100%'>
-                                    <InputField name='senha' placeholder='Senha    ex: senha123' variant='flushed' type={isPassword ? 'password' : 'text'} borderColor='blue.200' focusBorderColor='blue.400' size='lg' />
+                                    <InputGroup id='inputGroup' borderBottomWidth='2px' borderBottomColor='blue.200' display='flex' onFocus={() => {document.getElementById('inputGroup')!.style.borderBottomColor = themeContext.colors.primary}} onBlur={() => {document.getElementById('inputGroup')!.style.borderBottomColor = '#88c1f6'}}>
+                                        <InputField borderBottomWidth='0' w='168%' name='senha' placeholder='Senha    ex: senha123' variant='flushed' type={isPassword ? 'password' : 'text'} borderColor='blue.200' focusBorderColor='blue.400' size='lg' />
+                                        <InputRightElement minW='200px' mr='-10px'>
+                                            <Button color='gray.800' background='transparent' type='button' onClick={() => setIsPassword(!isPassword)}>{ isPassword ? (<>Mostrar senha{' '}<EyeIcon /></>) : (<>Esconder senha{' '}<SlashedEyeIcon /></>) }</Button>
+                                        </InputRightElement>
+                                    </InputGroup>
                                 </Box>
                                 {/* <Box w='10%' display='flex' justifyContent='center'>
                                     <Button type='button' onClick={() => setIsPassword(!isPassword)} >{ isPassword ? (<SlashedEyeIcon />) : (<EyeIcon />) }</Button>
@@ -93,13 +102,13 @@ const Login: React.FC = () => {
                             </Box>     
                             <Box mt={2} w='100%' display='flex' justifyContent='flex-end' color={themeContext.colors.primary}>
                             </Box>
-                            <Box mt={2} display='flex' justifyContent='space-between'>
-                                <DefaultButton w='48%' type='button' onClick={() => setIsPassword(!isPassword)}>{ isPassword ? (<><EyeIcon />Mostrar senha</>) : (<><SlashedEyeIcon />Esconder senha</>) }</DefaultButton>
-                                <DefaultButton w='48%' type='submit' isLoading={isSubmitting} loadingText='Enviando informações' >Entrar</DefaultButton>
-                            </Box>
                             <Box mt={1} w='100%' display='flex' justifyContent='space-between'>
                                 <DefaultButton w='48%' type='button' onClick={() => history.push('/cadastro')}>Não estou cadastrado</DefaultButton>
                                 <DefaultButton w='48%' type='button' onClick={onOpen}>Esqueci minha senha</DefaultButton>
+                            </Box>
+                            <Box mt={2} display='flex' justifyContent='space-between'>
+                                {/* <DefaultButton w='48%' type='button' onClick={() => setIsPassword(!isPassword)}>{ isPassword ? (<><EyeIcon />Mostrar senha</>) : (<><SlashedEyeIcon />Esconder senha</>) }</DefaultButton> */}
+                                <DefaultButton w='100%' type='submit' isLoading={isSubmitting} loadingText='Enviando informações' >Entrar</DefaultButton>
                             </Box>
                             <Box mt={1} w='100%'>
                             </Box>

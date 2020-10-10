@@ -8,7 +8,7 @@ import { userResolver } from "./resolvers/userResolver"
 import cookieParser from 'cookie-parser'
 import { verify } from 'jsonwebtoken'
 import { REFRESH_TOKEN_SECRET } from './consts'
-import { createAccessToken, refreshAccessToken } from './utils/auth'
+import { createAccessToken } from './utils/auth'
 import { SendRefreshToken } from './utils/sedRefreshToken'
 import { tblAgenda as Agenda } from './entitites/Agenda'
 import { tblDetalhePedido as DetalhesPedido } from './entitites/DetalhesPedido'
@@ -61,7 +61,7 @@ const main = async () => {
         if(!user) {
             return res.send({ok: false, acessToken: ''})
         }
-        SendRefreshToken(res, user)
+        SendRefreshToken(res, token)
         return res.send({ok: true, accessToken: createAccessToken(user)})
     })
 

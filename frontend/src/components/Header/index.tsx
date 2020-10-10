@@ -1,22 +1,23 @@
-import { Button, Flex, Stack, Text } from '@chakra-ui/core';
+import { Button, Flex, Image, Stack, Text } from '@chakra-ui/core';
 import React from 'react';
-import { useCookies } from 'react-cookie';
 import {useHistory} from 'react-router-dom'
 import { useRecoilState } from 'recoil';
 import { accessToken } from '../../atoms/accessToken';
-import { useMeQuery } from '../../generated/graphql';
+import { useMeQuery, useLogoutMutation } from '../../generated/graphql';
 import AvatarComponent from '../AvatarComponent';
 import { Container } from './styles';
+import logoBranca from '../../testImages/logoBrancoHorizontal.png'
 
 const Header: React.FC = () => {
   const [, setToken] = useRecoilState(accessToken)
-  const [cookies, setCookie, removeCookie] = useCookies(['jid'])
+  const [logout, {client}] = useLogoutMutation()
   const history = useHistory()
   const {data, loading} = useMeQuery()
 
-  function clearSession() {
-    removeCookie('jid', {})
+  async function clearSession() {
     setToken('')
+    await logout()
+    await client.resetStore()
   }
 
   let endOfNavbar
@@ -39,14 +40,14 @@ const Header: React.FC = () => {
   }
   else {
     endOfNavbar = (
-      <>
+      <Flex direction='row' flexShrink={1}>
         <Flex maxWidth='200px'>
           <AvatarComponent />
         </Flex>
-        <Button background='transparent' _hover={{backgroundColor: '#555'}} h='100%' px={5} type='button' onClick={clearSession} fontSize='lg' fontWeight='regular'>
+        <Button display={['none', 'none', 'none', 'unset']} background='transparent' _hover={{backgroundColor: '#555'}} h='100%' px={5} type='button' onClick={clearSession} fontSize='lg' fontWeight='regular'>
           <Text>Sair da conta</Text>
         </Button>
-      </>
+      </Flex>
     )
   }
 
@@ -59,11 +60,12 @@ const Header: React.FC = () => {
               </Button>
             </Stack>
           </Flex>
+          <Image h='50px' mb={2} src={logoBranca} mr={['unset', '-50px', '-50px', '-200px']} />
           <Flex>
             {endOfNavbar}
           </Flex>
       </Container>
   );
-}
+} 
 
 export default Header;

@@ -26,7 +26,7 @@ function App({ children }: any) {
       const {accessToken} = await response.json()
       setToken(accessToken)
     })
-  }, [])
+  })
 
   const httpLink = createHttpLink({
     uri: 'http://localhost:3333/graphql',

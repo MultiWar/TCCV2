@@ -188,11 +188,20 @@ export class userResolver {
                 }]
             }
         }
-        SendRefreshToken(res, user)
+        const token = refreshAccessToken(user)
+        SendRefreshToken(res, token)
         return {
             accessToken: createAccessToken(user)
         }
         // return true
+    }
+
+    @Mutation(() => Boolean)
+    logout(
+        @Ctx() {res}: MyContext
+    ): Boolean {
+        SendRefreshToken(res, '')
+        return true
     }
 
     @Query(() => String)
