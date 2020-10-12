@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { DefaultButton } from '../../components/DefaultButton';
 import { useProdutosQuery } from '../../generated/graphql';
 import {useHistory} from 'react-router-dom'
-import { Card } from './styles';
+import { Card, CardContainer, CardImageContainer, ProductButtons, ProductInformationAndButtons, ProductInformations } from './styles';
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
 import { storePage } from '../../atoms/storePage';
 import { useRecoilState } from 'recoil';
@@ -140,24 +140,34 @@ const Loja: React.FC = () => {
                             <Box w='100%' mb={2} textAlign='center'>
                                 <Heading fontSize={['2xl', '2xl', '3xl']}>{produto.nomeProduto}</Heading>
                             </Box>
-                            <Flex direction={['row', 'column', 'column']}>
-                                <Flex h={['100%', '150px', '300px']} w='100%' mr={2} justify='center'>
-                                    <Image objectFit='cover' src='https://bit.ly/sage-adebayo' htmlHeight='100%' width={['100%', '100px','200px']} borderRadius={8} />
-                                </Flex>
-                                <Flex direction='column' justify={['unset', 'space-between']} align={['center', 'unset']}>
-                                    <Flex direction='column'>
+                            {/* <Flex direction={['row', 'column', 'column']}> */}
+                            <CardContainer>
+                                <CardImageContainer>
+                                {/* <Flex h={['100%', '150px', '300px']} w='100%' mr={2} justify='center'> */}
+                                    <Image objectFit='cover' src='https://bit.ly/sage-adebayo' h='100%' width={['100%', '100px','200px']} borderRadius={8} />
+                                {/* </Flex> */}
+                                </CardImageContainer>
+                                {/* <Flex direction='column' pb='0' justify={['unset', 'space-between']} align={['center', 'unset']} minH={['242px', 'unset']}> */}
+                                <ProductInformationAndButtons>
+                                    <ProductInformations>
+                                    {/* <Flex direction='column'> */}
                                         <Text alignSelf='center' fontSize={['2xl', '3xl']}><strong>R${produto.preco}</strong></Text>
                                         <Text fontSize={['lg', 'xl']}><strong>Concentração:</strong> {produto.concentracao}</Text>
                                         <Text><strong>Princípio ativo:</strong> {produto.principioAtivo}</Text>
-                                    </Flex>
-                                    <Flex direction={['column', 'column', 'row']} justify={['unset', 'space-between']} align={['center', 'unset']}>
+                                    {/* </Flex> */}
+                                    </ProductInformations>
+                                    <ProductButtons>
+                                    {/* <Flex direction={['column', 'column', 'row']} alignSelf='flex-end' justify={['unset', 'space-between']} align={['center', 'unset']}> */}
                                         <DefaultButton w={['100%','100%','48%']} type='button' onClick={() => history.push(`/produtos/${produto.idProduto}`)}>
                                             <Text fontSize='lg'>+ informações</Text>
                                         </DefaultButton>
                                         <DefaultButton w={['100%','100%','48%']} mt={[2, 2, 4]}><Text fontSize='lg'>+ carrinho</Text></DefaultButton>
-                                    </Flex>
-                                </Flex>
-                            </Flex>
+                                    {/* </Flex> */}
+                                    </ProductButtons>
+                                </ProductInformationAndButtons>
+                                {/* </Flex> */}
+                            {/* </Flex> */}
+                            </CardContainer>
                         </Card>
                     )
                 })}

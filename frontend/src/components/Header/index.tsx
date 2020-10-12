@@ -60,7 +60,7 @@ const Header: React.FC = () => {
               </Button>
             </Stack>
           </Flex>
-          <Image h='50px' mb={2} src={logoBranca} mr={['unset', '-50px', '-50px', '-200px']} />
+          <Image h='50px' mb={2} src={logoBranca} mr = {(!data && !loading) ? ['unset', '-72px', '-72px', '-75px'] : ['unset', '-50px', '-50px', '-200px']} />
           <Flex>
             {endOfNavbar}
           </Flex>
