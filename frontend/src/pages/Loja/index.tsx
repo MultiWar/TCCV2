@@ -1,4 +1,4 @@
-import { Box, Checkbox, CheckboxGroup, Collapse, Flex, Heading, Image, Radio, RadioGroup, Skeleton, Text } from '@chakra-ui/core';
+import { Box, Button, Checkbox, CheckboxGroup, Collapse, Flex, Heading, Image, Radio, RadioGroup, Skeleton, Text } from '@chakra-ui/core';
 import React, { useState } from 'react';
 import { DefaultButton } from '../../components/DefaultButton';
 import { useProdutosQuery } from '../../generated/graphql';
@@ -7,6 +7,8 @@ import { Card, CardContainer, CardImageContainer, ProductButtons, ProductInforma
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
 import { storePage } from '../../atoms/storePage';
 import { useRecoilState } from 'recoil';
+import { ShoppingCart } from '../../atoms/cart'
+import {useIsInCart} from '../../utils/cartStuff'
 
 const Loja: React.FC = () => {
     const [isShown, setIsShown] = useState(false)
@@ -15,7 +17,56 @@ const Loja: React.FC = () => {
     const [concentracoesEscolhidas, setConcentracoesEscolhidas] = useState<string[] | undefined>(undefined)
     const [principioAtivoEscolhido, setPrincipioAtivoEscolhido] = useState<string[] | undefined>(undefined)
     const [orderBy, setOrderBy] = useState<string | undefined>(undefined)
+
     const [pagina, setPagina] = useRecoilState(storePage)
+
+    const [cart, setCart] = useRecoilState(ShoppingCart)
+
+    interface Produto {
+        idProduto: string,
+        nomeProduto: string,
+        preco: string,
+        quantidade: number
+        // imagemProduto: ImageBitmap
+    }
+    
+    const addToCart = (produto: Produto) => {
+        setCart(prevCart => [...prevCart, produto])
+        const carrinhoAntigo = localStorage.getItem('carrinho')
+        let carrinhoAntigoJson
+        let carrinhoNovo
+        if(carrinhoAntigo) {
+            carrinhoAntigoJson = JSON.parse(carrinhoAntigo)
+            carrinhoNovo = [...carrinhoAntigoJson, produto]
+        }
+        else {
+            carrinhoAntigoJson = undefined
+            carrinhoNovo = [produto]
+        }
+        localStorage.setItem('carrinho', JSON.stringify(carrinhoNovo))
+    }
+    
+    const getCart = (): Produto[] => {
+        return cart
+    }
+    
+    const removeFromCart = (id: string) => {
+        let willBeRemovedIndex: number;
+        if(cart.length > 0) {
+            cart.map((produto, index) => {
+                if(produto.idProduto === id) {
+                    willBeRemovedIndex = index
+                }
+            })
+            setCart(prevCart => prevCart.splice(willBeRemovedIndex, 1))
+            localStorage.setItem('carrinho', JSON.stringify(cart))
+        } 
+    }
+    
+    const clearCart = () => {
+        setCart([])
+        localStorage.removeItem('carrinho')
+    }
 
     const history = useHistory()
 
@@ -135,6 +186,12 @@ const Loja: React.FC = () => {
             </Collapse>
             <Flex flexDirection='row' wrap='wrap' mx={[4, 10]} mt={5} justifyContent={['center', 'center', 'center', 'space-between']}>
                 {data?.produtos.produtos.map(produto => {
+                    let isAlreadyInCart = false
+                    cart.map(produtoNoCarrinho => {
+                        if(produtoNoCarrinho.idProduto === produto.idProduto) {
+                            isAlreadyInCart = true
+                        }
+                        })
                     return (
                         <Card key={produto.idProduto}>
                             <Box w='100%' mb={2} textAlign='center'>
@@ -161,7 +218,10 @@ const Loja: React.FC = () => {
                                         <DefaultButton w={['100%','100%','48%']} type='button' onClick={() => history.push(`/produtos/${produto.idProduto}`)}>
                                             <Text fontSize='lg'>+ informações</Text>
                                         </DefaultButton>
-                                        <DefaultButton w={['100%','100%','48%']} mt={[2, 2, 4]}><Text fontSize='lg'>+ carrinho</Text></DefaultButton>
+                                        { isAlreadyInCart
+                                            ? <Button w={['100%','100%','48%']} mt={[2, 2, 4]} variantColor='red' type='button' onClick={() => removeFromCart(produto.idProduto)}><Text fontSize='lg'>- carrinho</Text></Button> 
+                                            : <DefaultButton w={['100%','100%','48%']} mt={[2, 2, 4]} type='button' onClick={() => addToCart({...produto, quantidade: 1})} ><Text fontSize='lg'>+ carrinho</Text></DefaultButton>
+                                        }
                                     {/* </Flex> */}
                                     </ProductButtons>
                                 </ProductInformationAndButtons>
