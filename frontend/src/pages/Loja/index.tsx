@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 import { DefaultButton } from '../../components/DefaultButton';
 import { useProdutosQuery } from '../../generated/graphql';
 import {useHistory} from 'react-router-dom'
-import { Card, CardContainer, CardImageContainer, ProductButtons, ProductInformationAndButtons, ProductInformations } from './styles';
-import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
+import { FlechaBaixo, FlechaCima, Card, CardContainer, CardImageContainer, ProductButtons, ProductInformationAndButtons, ProductInformations } from './styles';
 import { storePage } from '../../atoms/storePage';
 import { useRecoilState } from 'recoil';
 import { ShoppingCart } from '../../atoms/cart'
@@ -51,16 +50,9 @@ const Loja: React.FC = () => {
     }
     
     const removeFromCart = (id: string) => {
-        let willBeRemovedIndex: number;
-        if(cart.length > 0) {
-            cart.map((produto, index) => {
-                if(produto.idProduto === id) {
-                    willBeRemovedIndex = index
-                }
-            })
-            setCart(prevCart => prevCart.splice(willBeRemovedIndex, 1))
-            localStorage.setItem('carrinho', JSON.stringify(cart))
-        } 
+        let carrinhoAntigo = [...cart]
+        let carrinhoNovo = carrinhoAntigo.filter(produto => produto.idProduto !== id)
+        setCart(carrinhoNovo)
     }
     
     const clearCart = () => {
@@ -83,8 +75,8 @@ const Loja: React.FC = () => {
     if(loading) {
         return (
             <>
-                <Box w='100%' mt={4}>
-                    <Skeleton w='100%' h='30px'/>
+                <Box w='100%' mt={0}>
+                    <Skeleton w='100%' h='40px'/>
                 </Box>
                 <Flex flexDirection='row' wrap='wrap' mx={10} mt={5} justifyContent={['center', 'center', 'center', 'space-between']}>
                     <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '400px']} borderRadius={8} mt={6} mx='20px' />
@@ -103,8 +95,8 @@ const Loja: React.FC = () => {
     }
     return (
         <Flex direction='column' mt={0}>
-            <DefaultButton type='button' onClick={() => setIsShown(prevState => !prevState)} backgroundColor='gray.400' _hover={{backgroundColor:'gray.500'}}>
-                {isShown ? (<>Esconder Filtros <BsChevronUp /></>) : (<>Mostrar Filtros <BsChevronDown /></>)}
+            <DefaultButton mt={0} fontSize='xl' borderRadius={0} type='button' onClick={() => setIsShown(prevState => !prevState)} backgroundColor='gray.400' _hover={{backgroundColor:'gray.500'}}>
+                {isShown ? (<>Esconder Filtros <FlechaCima /></>) : (<>Mostrar Filtros <FlechaBaixo /></>)}
             </DefaultButton>
             <Collapse w='100%' isOpen={isShown}>
                 <Flex w='100%' justify='center' mt={2}>
@@ -197,24 +189,17 @@ const Loja: React.FC = () => {
                             <Box w='100%' mb={2} textAlign='center'>
                                 <Heading fontSize={['2xl', '2xl', '3xl']}>{produto.nomeProduto}</Heading>
                             </Box>
-                            {/* <Flex direction={['row', 'column', 'column']}> */}
                             <CardContainer>
                                 <CardImageContainer>
-                                {/* <Flex h={['100%', '150px', '300px']} w='100%' mr={2} justify='center'> */}
                                     <Image objectFit='cover' src='https://bit.ly/sage-adebayo' h='100%' width={['100%', '100px','200px']} borderRadius={8} />
-                                {/* </Flex> */}
                                 </CardImageContainer>
-                                {/* <Flex direction='column' pb='0' justify={['unset', 'space-between']} align={['center', 'unset']} minH={['242px', 'unset']}> */}
                                 <ProductInformationAndButtons>
                                     <ProductInformations>
-                                    {/* <Flex direction='column'> */}
                                         <Text alignSelf='center' fontSize={['2xl', '3xl']}><strong>R${produto.preco}</strong></Text>
                                         <Text fontSize={['lg', 'xl']}><strong>Concentração:</strong> {produto.concentracao}</Text>
                                         <Text><strong>Princípio ativo:</strong> {produto.principioAtivo}</Text>
-                                    {/* </Flex> */}
                                     </ProductInformations>
                                     <ProductButtons>
-                                    {/* <Flex direction={['column', 'column', 'row']} alignSelf='flex-end' justify={['unset', 'space-between']} align={['center', 'unset']}> */}
                                         <DefaultButton w={['100%','100%','48%']} type='button' onClick={() => history.push(`/produtos/${produto.idProduto}`)}>
                                             <Text fontSize='lg'>+ informações</Text>
                                         </DefaultButton>
@@ -222,11 +207,8 @@ const Loja: React.FC = () => {
                                             ? <Button w={['100%','100%','48%']} mt={[2, 2, 4]} variantColor='red' type='button' onClick={() => removeFromCart(produto.idProduto)}><Text fontSize='lg'>- carrinho</Text></Button> 
                                             : <DefaultButton w={['100%','100%','48%']} mt={[2, 2, 4]} type='button' onClick={() => addToCart({...produto, quantidade: 1})} ><Text fontSize='lg'>+ carrinho</Text></DefaultButton>
                                         }
-                                    {/* </Flex> */}
                                     </ProductButtons>
                                 </ProductInformationAndButtons>
-                                {/* </Flex> */}
-                            {/* </Flex> */}
                             </CardContainer>
                         </Card>
                     )

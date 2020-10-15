@@ -12,7 +12,7 @@ export const Container = styled.div`
     background-color: ${props => lighten(0.05, props.theme.colors.secondaryText)};
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 2px 2px 5px #333;
+    box-shadow: 2px 2px 8px #333;
 
     @media(max-width: 520px) {
         width: 90%;

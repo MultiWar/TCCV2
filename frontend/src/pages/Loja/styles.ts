@@ -1,4 +1,17 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
+
+const iconCss = css`
+    margin-left: 5px;
+`
+
+export const FlechaBaixo = styled(BsChevronDown)`
+    ${iconCss}
+`
+
+export const FlechaCima = styled(BsChevronUp)`
+    ${iconCss}
+`
 
 export const Card = styled.div`
     display: flex;
@@ -8,7 +21,7 @@ export const Card = styled.div`
     height: 100%;
     width: 300px;
     border-radius: 8px;
-    box-shadow: 2px 2px 3px #333;
+    box-shadow: 2px 2px 8px #333;
     align-items: center;
     padding-bottom: 20px;
     padding-left: 20px;
@@ -42,7 +55,6 @@ export const CardImageContainer = styled.div`
     display: flex;
     width: 100%;
     height: 300px;
-    margin-right: 8px;
     justify-content: center;
 
     @media(max-width: 520px) {
@@ -77,7 +89,6 @@ export const ProductInformationAndButtons = styled.div`
     @media(max-width: 520px) {
         min-height: 242px;
         align-content: center;
-        justify-content: center;
     }
 `;
 
@@ -87,16 +98,10 @@ export const ProductInformations = styled.div`
 `;
 
 export const ProductButtons = styled.div`
-    flex-direction: row;
+    display: flex;
     justify-content: space-between;
 
     @media(max-width: 800px) {
         flex-direction: column
-    }
-
-    @media(max-width: 520px) {
-        align-self: flex-end;
-        justify-content: unset;
-        align-content: center;
     }
 `
