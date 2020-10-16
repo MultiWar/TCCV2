@@ -53,6 +53,7 @@ const Loja: React.FC = () => {
         let carrinhoAntigo = [...cart]
         let carrinhoNovo = carrinhoAntigo.filter(produto => produto.idProduto !== id)
         setCart(carrinhoNovo)
+        localStorage.setItem('carrinho', JSON.stringify(carrinhoNovo))
     }
     
     const clearCart = () => {

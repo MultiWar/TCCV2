@@ -4,7 +4,7 @@ import { useLoginMutation, useForgotPasswordMutation } from '../../generated/gra
 import { toErrorMap } from '../../utils/toErrorMap';
 import { useHistory } from "react-router-dom";
 import { Container, EyeIcon, SlashedEyeIcon, Title } from './styles';
-import { Box, Button, Flex, Heading, InputGroup, InputRightElement, Modal, ModalContent, ModalOverlay, useDisclosure, useToast } from '@chakra-ui/core';
+import { Box, Button, Flex, Heading, InputGroup, InputRightElement, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, useDisclosure, useToast } from '@chakra-ui/core';
 import { InputField } from '../../components/inputField';
 import { DefaultButton } from '../../components/DefaultButton';
 import { ThemeContext } from 'styled-components';
@@ -31,40 +31,43 @@ const Login: React.FC = () => {
             <Modal isOpen={isOpen} onClose={onClose} size='xl'>
                 <ModalOverlay />
                 <ModalContent>
-                    <Flex p='30px' borderRadius={8}>
-                        <Formik initialValues={{email: ''}} onSubmit={
-                            async values => {
-                                const response = await forgotPassword({variables: values})
-                                if(response.data?.forgotPassword !== true) {
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <Flex p='30px' borderRadius={8}>
+                            <Formik initialValues={{email: ''}} onSubmit={
+                                async values => {
+                                    const response = await forgotPassword({variables: values})
+                                    if(response.data?.forgotPassword !== true) {
+                                        return toast({
+                                            position: 'top',
+                                            title: 'Falha',
+                                            description: 'Email não cadastrado. Por favor, crie uma conta clicando em "Não estou cadastrado".',
+                                            status: 'error',
+                                            duration: 10000,
+                                            isClosable: true
+                                        })
+                                    }
                                     return toast({
                                         position: 'top',
-                                        title: 'Falha',
-                                        description: 'Email não cadastrado. Por favor, crie uma conta clicando em "Não estou cadastrado".',
-                                        status: 'error',
+                                        title: 'Sucesso!',
+                                        description: 'Email enviado com sucesso. Clique no link enviado para recuperar sua senha.',
+                                        status: 'success',
                                         duration: 10000,
                                         isClosable: true
                                     })
-                                }
-                                return toast({
-                                    position: 'top',
-                                    title: 'Sucesso!',
-                                    description: 'Email enviado com sucesso. Clique no link enviado para recuperar sua senha.',
-                                    status: 'success',
-                                    duration: 10000,
-                                    isClosable: true
-                                })
 
-                            }
-                        }>
-                            {({isSubmitting}) => (
-                                <Form>
-                                    <Heading as='legend' fontSize='2xl'>Insira seu email para receber o link para trocar sua senha</Heading>
-                                    <InputField name='email' placeholder='Email   ex: carlos.alberto@gmail.com' mt={4} />
-                                    <DefaultButton type='submit' isLoading={isSubmitting} mt={4}>Enviar email de recuperação de senha</DefaultButton>
-                                </Form>
-                            )}
-                        </Formik>
-                    </Flex>
+                                }
+                            }>
+                                {({isSubmitting}) => (
+                                    <Form>
+                                        <Heading as='legend' fontSize='2xl'>Insira seu email para receber o link para trocar sua senha</Heading>
+                                        <InputField name='email' placeholder='Email   ex: carlos.alberto@gmail.com' mt={4} />
+                                        <DefaultButton type='submit' isLoading={isSubmitting} mt={4}>Enviar email de recuperação de senha</DefaultButton>
+                                    </Form>
+                                )}
+                            </Formik>
+                        </Flex>
+                    </ModalBody>
                 </ModalContent>
             </Modal>
             <Container>
@@ -106,7 +109,7 @@ const Login: React.FC = () => {
                                 <DefaultButton w='48%' type='button' onClick={() => history.push('/cadastro')}>Não estou cadastrado</DefaultButton>
                                 <DefaultButton w='48%' type='button' onClick={onOpen}>Esqueci minha senha</DefaultButton>
                             </Box>
-                            <Box mt={2} display='flex' justifyContent='space-between'>
+                            <Box display='flex' justifyContent='space-between'>
                                 {/* <DefaultButton w='48%' type='button' onClick={() => setIsPassword(!isPassword)}>{ isPassword ? (<><EyeIcon />Mostrar senha</>) : (<><SlashedEyeIcon />Esconder senha</>) }</DefaultButton> */}
                                 <DefaultButton w='100%' type='submit' isLoading={isSubmitting} loadingText='Enviando informações' >Entrar</DefaultButton>
                             </Box>

@@ -47,7 +47,7 @@ const SideMenu: React.FC = () => {
             {data?.me ? 
               <Flex w='100%' direction='column'>
                 <AvatarComponentSidebar />
-                <DefaultButton w='100%' type='button' onClick={() => history.push('/editarConta')}>Alterar Informações</DefaultButton>
+                <DefaultButton w='100%' type='button' onClick={() => history.push('/conta')}>Gerenciar Conta</DefaultButton>
               </Flex> : 
               <Flex w='100%' direction='row' justify='space-between' >
                 <DefaultButton type='button' w='48%' onClick={() => {history.push('/cadastro'); onClose()}}>Se cadastrar</DefaultButton>
