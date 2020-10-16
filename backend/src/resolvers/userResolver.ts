@@ -239,7 +239,7 @@ export class userResolver {
             return false
         }
         const token = changePassword(user)
-        sendEmail(email,`<a href="http://localhost:3000/change-password/${token}">trocar senha</a>`)
+        sendEmail(email,`<a href="http://localhost:3000/trocarSenha/${token}">trocar senha</a>`)
         return true
     }
 
@@ -247,7 +247,8 @@ export class userResolver {
     async changePassword(
         @Arg('senha') senha: string,
         @Arg('confirmarSenha') confirmarSenha: string,
-        @Arg('token') token: string
+        @Arg('token') token: string,
+        @Ctx() {res}: MyContext 
     ): Promise<UserResponse> {
         const valid = verify(token, CHANGE_PASSWORD_SECRET) as {userId: string, iat: number, exp: number}
         if(!valid) {
@@ -274,13 +275,14 @@ export class userResolver {
         if(senha !== confirmarSenha) {
             return {
                 errors: [{
-                    field: 'confimarSenha',
+                    field: 'confirmarSenha',
                     message: 'as senhas devem bater'
                 }]
             }
         }
         user.senhaUser = await argon.hash(user.salt + senha)
         await user.save()
+        SendRefreshToken(res, refreshAccessToken(user))
         return {accessToken: createAccessToken(user)}
     }
 
