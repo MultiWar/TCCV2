@@ -216,7 +216,6 @@ const Loja: React.FC = () => {
                 })}
             </Flex>
             <DefaultButton type='button' onClick={() => {
-                console.log(variables)
                 setPagina(prevPagina => prevPagina + 1)
                 fetchMore({
                     variables: {

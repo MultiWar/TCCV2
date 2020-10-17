@@ -39,7 +39,7 @@ const AvatarComponent: React.FC = () => {
                     <Text><strong>CEP:</strong> {data?.me.endereco.split(',')[0]}</Text>
                     <Text><strong>Endereço:</strong> {`${data?.me.endereco.split(',')[1]}, ${data?.me.endereco.split(',')[2]}` + data?.me.endereco.split(',')[3] ? `, ${data?.me.endereco.split(',')[3]}` : ''}</Text>
                     <DefaultButton w='100%' type='button' onClick={() => history.push('/conta')}>Editar informações da conta</DefaultButton>
-                    <DefaultButton display={['unset', 'unset', 'unset', 'none']} w='100%' type='button' onClick={clearSession}>Sair da conta</DefaultButton>
+                    <DefaultButton mt={2} w='100%' type='button' onClick={clearSession}>Sair da conta</DefaultButton>
                 </PopoverBody>
             </PopoverContent>
         </Popover>

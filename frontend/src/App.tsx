@@ -46,13 +46,14 @@ function App({ children }: any) {
     link: authLink.concat(httpLink),
     cache: new InMemoryCache({
       typePolicies: {
-        me: {
-          keyFields: ['idUser']
-        },
         Query: {
           fields: {
             produtos: {
               keyArgs: ['categorias', 'tarjas', 'concentracoes', 'principioAtivo', 'orderBy'],
+              read(existing, {args}) {
+                console.log(args)
+                return existing
+              },
               merge(existing: ProdutosComPaginacao | undefined, incoming: ProdutosComPaginacao): ProdutosComPaginacao {
                 return {
                   ...incoming,

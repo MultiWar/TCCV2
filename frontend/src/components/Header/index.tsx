@@ -7,6 +7,7 @@ import { useMeQuery, useLogoutMutation } from '../../generated/graphql';
 import AvatarComponent from '../AvatarComponent';
 import { Container } from './styles';
 import logoBranca from '../../testImages/logoBrancoHorizontal.png'
+import CartComponent from '../CartComponent';
 
 const Header: React.FC = () => {
   const [, setToken] = useRecoilState(accessToken)
@@ -41,12 +42,10 @@ const Header: React.FC = () => {
   else {
     endOfNavbar = (
       <Flex direction='row' flexShrink={1}>
-        <Flex maxWidth='200px'>
+        <Flex maxWidth='330px'>
+          <CartComponent />
           <AvatarComponent />
         </Flex>
-        <Button display={['none', 'none', 'none', 'unset']} background='transparent' _hover={{backgroundColor: '#555'}} h='100%' px={5} type='button' onClick={clearSession} fontSize='lg' fontWeight='regular'>
-          <Text>Sair da conta</Text>
-        </Button>
       </Flex>
     )
   }
@@ -60,7 +59,7 @@ const Header: React.FC = () => {
               </Button>
             </Stack>
           </Flex>
-          <Image h='50px' mb={2} src={logoBranca} mr = {(!data && !loading) ? ['unset', '-72px', '-72px', '-75px'] : ['unset', '-50px', '-50px', '-200px']} />
+          <Image h='50px' mb={2} src={logoBranca} mr = {(!data && !loading) ? ['unset', '-72px', '-72px', '-75px'] : ['unset', '-50px', '-170px', '-170px']} />
           <Flex>
             {endOfNavbar}
           </Flex>
