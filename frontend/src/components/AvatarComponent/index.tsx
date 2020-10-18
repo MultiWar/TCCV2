@@ -5,6 +5,7 @@ import { useRecoilState } from 'recoil'
 import { accessToken } from '../../atoms/accessToken'
 import { useLogoutMutation, useMeQuery } from '../../generated/graphql'
 import { DefaultButton } from '../DefaultButton'
+import { Container } from './styles'
 
 const AvatarComponent: React.FC = () => {
     const history = useHistory()
@@ -21,7 +22,7 @@ const AvatarComponent: React.FC = () => {
     return (
         <Popover placement='bottom-end'>
             <PopoverTrigger>
-                <Box alignItems='center' justifyContent='space-between' w='100%'>
+                <Box alignItems='center' justifyContent='space-between' w='100%' display={['none', 'none','none', 'unset']}>
                     <Button background='transparent' _hover={{backgroundColor: '#555'}} h='100%' fontSize='lg' fontWeight='regular'>
                         <Avatar mr={2} size='sm' />
                         <Text>Gerenciar Conta</Text>

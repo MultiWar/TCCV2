@@ -7,6 +7,7 @@ import { Container } from './styles';
 import AvatarComponentSidebar from '../AvatarComponentSidebar';
 import { useMeQuery } from '../../generated/graphql';
 import logoBranca from '../../testImages/logoBrancoHorizontal.png'
+import CartComponent from '../CartComponent';
 
 const SideMenu: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -14,15 +15,18 @@ const SideMenu: React.FC = () => {
   const {data} = useMeQuery()
   return (
     <Container>
-      <Flex direction='row' w='100%' backgroundColor='gray.800'>
+      <Flex direction='row' w='100%' backgroundColor='gray.800' justify='space-between' pr={3}>
         <Flex w='50px' h='100%' borderRadius={8}>
           <Button backgroundColor='gray.800' color='gray.200' _hover={{ backgroundColor: 'gray.900' }} onClick={onOpen} alignSelf='center' h='55px' w='55px'>
             <Text fontSize='3xl'> = </Text>
           </Button>
         </Flex>
-        <Flex w='100%' textAlign='center' justify='center' align='center' ml='-50px'>
+        <Flex w='100%' textAlign='center' justify='center' justifySelf='center' mr='-90px'>
           {/* <Text ml='-50px' fontSize='3xl' color='gray.200' justifySelf='center' alignSelf='center' textAlign='center'>MediCare</Text> */}
           <Image h='50px' mb={2} src={logoBranca} />
+        </Flex>
+        <Flex color='gray.200'>
+          <CartComponent />
         </Flex>
       </Flex>
 

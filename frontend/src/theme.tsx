@@ -3,7 +3,7 @@ import React from 'react'
 
 const fonts = { ...theme.fonts, mono: `'Menlo', monospace` }
 
-const breakpoints = ['520px', '800px', '1100px', '1200px']
+const breakpoints = ['520px', '800px', '950px', '1200px']
 
 const customTheme: DefaultTheme = {
   ...theme,

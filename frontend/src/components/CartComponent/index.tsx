@@ -1,9 +1,11 @@
-import { Popover, PopoverTrigger, Box, Button, PopoverContent, PopoverHeader, PopoverArrow, PopoverBody, Text, Icon, Stack, Flex, Image, Select } from '@chakra-ui/core';
+import { Popover, PopoverTrigger, Box, Button, PopoverContent, PopoverHeader, PopoverArrow, PopoverBody, Text, Icon, Stack, Flex, Image } from '@chakra-ui/core';
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import { ShoppingCart } from '../../atoms/cart';
 import { FiShoppingCart } from 'react-icons/fi'
 import { DefaultButton } from '../DefaultButton';
+import { Link } from 'react-router-dom';
+import { LinkBloco } from './styles';
 
 // import { Container } from './styles';
 
@@ -14,6 +16,28 @@ const CartComponent: React.FC = () => {
         let carrinhoNovo = carrinhoAntigo.filter(produto => produto.idProduto !== id)
         setCart(carrinhoNovo)
         localStorage.setItem('carrinho', JSON.stringify(carrinhoNovo))
+    }
+
+    const handleIncreaseQuantity = (id: string) => {
+        const newCart = cart.map(produto => {
+            if(produto.idProduto === id) {
+                return {...produto, quantidade: produto.quantidade + 1}
+            }
+            return produto
+        })
+        setCart(newCart)
+        localStorage.setItem('carrinho', JSON.stringify(newCart))
+    }
+
+    const handleLowerQuantity = (id: string) => {
+        const newCart = cart.map(produto => {
+            if(produto.idProduto === id) {
+                return {...produto, quantidade: produto.quantidade - 1}
+            }
+            return produto
+        })
+        setCart(newCart)
+        localStorage.setItem('carrinho', JSON.stringify(newCart))
     }
 
     const [cart, setCart] = useRecoilState(ShoppingCart)
@@ -27,28 +51,27 @@ const CartComponent: React.FC = () => {
                     </Button>
                 </Box>
             </PopoverTrigger>
-            <PopoverContent zIndex={4} bg='gray.200' border='0' width='300px'>
+            <PopoverContent zIndex={4} bg='gray.200' border='1px solid black' width='300px'>
                 <PopoverHeader fontWeight='bold' color='gray.800'>
                 </PopoverHeader>
                 <PopoverArrow />
                 <PopoverBody color='gray.800'>
-                    <Stack>
-                        {cart.map(produto => (
-                            <Flex backgroundColor='gray.300' border='1px solid black' pl={2} w='100%' justify='space-between' borderRadius={4}>
-                                <Flex>
-                                    <Image src='https://bit.ly/sage-adebayo' w='20%' alt={produto.nomeProduto} mr={2}/>
+                    <Stack spacing={4}>
+                        {cart.map((produto, index) => (
+                            <Flex backgroundColor='gray.300' border='1px solid black' pr={2} w='100%' justify='space-between' borderRadius={4}>
+                                <Flex p={1}>
+                                    <Image src='https://bit.ly/sage-adebayo' borderRadius={4} w='20%' alt={produto.nomeProduto} mr={2}/>
                                     <Text alignSelf='center' fontSize='xl' color='gray.800'>{produto.nomeProduto}</Text>
-
                                 </Flex>
                                 <Flex>
-                                    <Flex>
+                                    <Flex p={1}>
                                         <Text fontSize='xl' color='gray.800' alignSelf='center' >{produto.quantidade}</Text>
-                                        <Flex direction='column'>
-                                            <Button size='xs' background='transparent' border='1px solid black'>+</Button>
-                                            <Button size='xs' background='transparent' border='1px solid black'>-</Button>
+                                        <Flex direction='column' ml={2}>
+                                            <Button size='xs' type='button' onClick={() => handleIncreaseQuantity(produto.idProduto)} background='transparent' p={1} border='1px solid black' fontSize='lg'>+</Button>
+                                            <Button size='xs' type='button' onClick={() => handleLowerQuantity(produto.idProduto)} background='transparent' p={1} isDisabled={produto.quantidade === 1 ? true : false} border='1px solid black' fontSize='lg'>-</Button>
                                         </Flex>
                                     </Flex>
-                                    <Button ml={4} variantColor='red' onClick={() => removeFromCart(produto.idProduto)}>X</Button>
+                                    <Button alignSelf='center' ml={2} variantColor='red' onClick={() => removeFromCart(produto.idProduto)}>X</Button>
                                 </Flex>
                             </Flex>
                         ))}
