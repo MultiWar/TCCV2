@@ -1,0 +1,8 @@
+mutation ChangeUserInformation($email:String!, $telefone:String!, $cep: String!, $rua:String!, $numero:String!, $complemento:String) {
+  changeInformations(email: $email, telefone:$telefone, cep:$cep, rua:$rua, numero:$numero, complemento:$complemento){
+    errors {
+      field
+      message
+    }
+  }
+}

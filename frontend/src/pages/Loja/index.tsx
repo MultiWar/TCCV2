@@ -17,7 +17,7 @@ const Loja: React.FC = () => {
     const [principioAtivoEscolhido, setPrincipioAtivoEscolhido] = useState<string[] | undefined>(undefined)
     const [orderBy, setOrderBy] = useState<string | undefined>(undefined)
 
-    const [pagina, setPagina] = useRecoilState(storePage)
+    const [pagina, setPagina] = useState(2)
 
     const [cart, setCart] = useRecoilState(ShoppingCart)
 
@@ -103,9 +103,9 @@ const Loja: React.FC = () => {
                 <Flex w='100%' justify='center' mt={2}>
                     <Heading size='2xl'>FILTRAR PRODUTOS</Heading>
                 </Flex>
-                <Flex w='100%' direction={['column', 'column', 'row', 'row']} wrap='wrap' px={10} alignItems={['center', 'center', 'flex-start', 'flex-start']} justify={['center', 'center','space-between','space-between']}>
-                    <Box mt={4} w={['100%', '100%', 'unset', 'unset']} >
-                        <Heading size='xl' as='legend'>Categorias</Heading>
+                <Flex w='100%' direction={['column', 'column', 'row']} wrap='wrap' px={10} alignItems={['center', 'center', 'flex-start']} justify={['center', 'center','space-between']}>
+                    <Box mt={4} w={['100%', '100%', 'unset']} >
+                        <Heading size='xl' as='legend' >Categorias</Heading>
                         <CheckboxGroup size='lg' name='categorias' defaultValue={categoriasEscolhidas} 
                             onChange={
                                 (value) => {
@@ -118,7 +118,7 @@ const Loja: React.FC = () => {
                             <Checkbox value='higiene' borderColor='blue.400'>Higiene</Checkbox>
                         </CheckboxGroup>
                     </Box>
-                    <Box mt={4} w={['100%', '100%', 'unset', 'unset']}>
+                    <Box mt={4} w={['100%', '100%', 'unset']}>
                         <Heading size='xl' as='legend'>Tarjas</Heading>
                         <CheckboxGroup size='lg' name='tarjas' defaultValue={tarjasEscolhidas}
                             onChange={
@@ -133,7 +133,7 @@ const Loja: React.FC = () => {
                             <Checkbox value='vinho' borderColor='blue.400'>Vinho</Checkbox>
                         </CheckboxGroup>
                     </Box>
-                    <Box mt={4} w={['100%', '100%', 'unset', 'unset']}>
+                    <Box mt={4} w={['100%', '100%', 'unset']}>
                         <Heading size='xl' as='legend'>Concentrações</Heading>
                         <CheckboxGroup size='lg' name='concentracoes' defaultValue={concentracoesEscolhidas}
                             onChange={
@@ -147,7 +147,7 @@ const Loja: React.FC = () => {
                             <Checkbox value='25mg' borderColor='blue.400'>25mg</Checkbox>
                         </CheckboxGroup>
                     </Box>
-                    <Box mt={4} w={['100%', '100%', 'unset', 'unset']}>
+                    <Box mt={4} w={['100%', '100%', 'unset']}>
                         <Heading size='xl' as='legend'>Principios Ativos</Heading>
                         <CheckboxGroup size='lg' name='principioAtivo' defaultValue={principioAtivoEscolhido}
                             onChange={
@@ -161,7 +161,7 @@ const Loja: React.FC = () => {
                             <Checkbox value='principAtivo3' borderColor='blue.400'>Principio Ativo 3</Checkbox>
                         </CheckboxGroup>
                     </Box>
-                    <Box mt={4} w={['100%', '100%', 'unset', 'unset']}>
+                    <Box mt={4} w={['100%', '100%', 'unset']}>
                         <Heading size='xl' as='legend'>Ordernar por:</Heading>
                         <RadioGroup size='lg' name='orderBy' defaultValue={orderBy}
                             onChange={
@@ -188,7 +188,7 @@ const Loja: React.FC = () => {
                     return (
                         <Card key={produto.idProduto}>
                             <Box w='100%' mb={2} textAlign='center'>
-                                <Heading fontSize={['2xl', '2xl', '3xl']}>{produto.nomeProduto}</Heading>
+                                <Heading fontSize={['2xl', '3xl']}>{produto.nomeProduto}</Heading>
                             </Box>
                             <CardContainer>
                                 <CardImageContainer>
@@ -201,12 +201,12 @@ const Loja: React.FC = () => {
                                         <Text><strong>Princípio ativo:</strong> {produto.principioAtivo}</Text>
                                     </ProductInformations>
                                     <ProductButtons>
-                                        <DefaultButton w={['100%','100%','48%']} type='button' onClick={() => history.push(`/produtos/${produto.idProduto}`)}>
+                                        <DefaultButton w={['100%','48%']} type='button' onClick={() => history.push(`/produtos/${produto.idProduto}`)}>
                                             <Text fontSize='lg'>+ informações</Text>
                                         </DefaultButton>
                                         { isAlreadyInCart
-                                            ? <Button w={['100%','100%','48%']} mt={[2, 2, 4]} variantColor='red' type='button' onClick={() => removeFromCart(produto.idProduto)}><Text fontSize='lg'>- carrinho</Text></Button> 
-                                            : <DefaultButton w={['100%','100%','48%']} mt={[2, 2, 4]} type='button' onClick={() => addToCart({...produto, quantidade: 1})} ><Text fontSize='lg'>+ carrinho</Text></DefaultButton>
+                                            ? <Button w={['100%', '48%']} mt={[2, 4]} variantColor='red' type='button' onClick={() => removeFromCart(produto.idProduto)}><Text fontSize='lg'>- carrinho</Text></Button> 
+                                            : <DefaultButton w={['100%','48%']} mt={[2, 4]} type='button' onClick={() => addToCart({...produto, quantidade: 1})} ><Text fontSize='lg'>+ carrinho</Text></DefaultButton>
                                         }
                                     </ProductButtons>
                                 </ProductInformationAndButtons>

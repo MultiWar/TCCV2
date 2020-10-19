@@ -1,5 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { lighten } from 'polished';
+import { FaUserEdit } from 'react-icons/fa'
 
 export const Container = styled.div`
     margin: 50px auto;
@@ -17,6 +18,13 @@ export const Container = styled.div`
     }
 `;
 
-export const Title = styled.h1`
-    font-size: ${props => props.theme.sizes.title}
+const IconCss = css`
+    height: 25px;
+    width: 25px;
+    fill: ${props => props.theme.colors.secondaryText};
+    margin-left: 8px
+`;
+
+export const EditIcon = styled(FaUserEdit)`
+    ${IconCss}
 `;

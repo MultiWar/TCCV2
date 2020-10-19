@@ -50,11 +50,8 @@ function App({ children }: any) {
           fields: {
             produtos: {
               keyArgs: ['categorias', 'tarjas', 'concentracoes', 'principioAtivo', 'orderBy'],
-              read(existing, {args}) {
+              merge(existing: ProdutosComPaginacao | undefined, incoming: ProdutosComPaginacao, {args}): ProdutosComPaginacao {
                 console.log(args)
-                return existing
-              },
-              merge(existing: ProdutosComPaginacao | undefined, incoming: ProdutosComPaginacao): ProdutosComPaginacao {
                 return {
                   ...incoming,
                   produtos: [...(existing?.produtos || []), ...incoming.produtos ]

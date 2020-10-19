@@ -28,11 +28,6 @@ export const Card = styled.div`
     padding-right: 20px;
     margin: 40px 20px 0;
 
-    @media (max-width: 800px) {
-        width: 180px;
-        padding-bottom: 5px;
-    }
-
     @media (max-width: 520px) {
         width: 421px;
         padding-bottom: 10px;
@@ -47,13 +42,14 @@ export const CardContainer = styled.div`
     display: flex;
     flex-direction: column;
     @media(max-width: 520px) {
+        justify-content: space-between;
+        width: 100%;
         flex-direction: row
     }
 `;
 
 export const CardImageContainer = styled.div`
     display: flex;
-    width: 100%;
     height: 300px;
     justify-content: center;
 
@@ -87,6 +83,7 @@ export const ProductInformationAndButtons = styled.div`
     justify-content: space-between;
     
     @media(max-width: 520px) {
+        width: 170px;
         min-height: 242px;
         align-content: center;
     }
@@ -101,7 +98,7 @@ export const ProductButtons = styled.div`
     display: flex;
     justify-content: space-between;
 
-    @media(max-width: 800px) {
+    @media(max-width: 520px) {
         flex-direction: column
     }
 `

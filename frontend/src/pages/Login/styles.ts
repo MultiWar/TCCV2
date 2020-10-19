@@ -15,7 +15,7 @@ export const Container = styled.div`
     box-shadow: 2px 2px 8px #333;
 
     @media(max-width: 520px) {
-        width: 90%;
+        width: 90%; 
     }
 `;
 
@@ -28,12 +28,6 @@ const IconCss = css`
     width: 25px;
     fill: ${props => props.theme.colors.primaryText};
     margin-left: 5px
-
-    /* &:hover {
-        opacity: 0.5
-        fill: ${props => shade(0.3, props.theme.colors.secondaryText)}
-    } */
-    
 `;
 
 export const EyeIcon = styled(AiOutlineEye)`

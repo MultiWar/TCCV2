@@ -21,7 +21,7 @@ const SideMenu: React.FC = () => {
             <Text fontSize='3xl'> = </Text>
           </Button>
         </Flex>
-        <Flex w='100%' textAlign='center' justify='center' justifySelf='center' mr='-90px'>
+        <Flex w='100%' textAlign='center' justify='center' justifySelf='center' mr={['8','-90px']}>
           {/* <Text ml='-50px' fontSize='3xl' color='gray.200' justifySelf='center' alignSelf='center' textAlign='center'>MediCare</Text> */}
           <Image h='50px' mb={2} src={logoBranca} />
         </Flex>

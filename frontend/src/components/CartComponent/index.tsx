@@ -44,7 +44,7 @@ const CartComponent: React.FC = () => {
     return (
         <Popover placement='bottom-end' closeOnBlur={false}>
             <PopoverTrigger>
-                <Box alignItems='center' justifyContent='space-between' w='100%'>
+                <Box alignItems='center' justifyContent='space-between' w='100%' display={['none', 'unset']}>
                     <Button background='transparent' _hover={{backgroundColor: '#555'}} h='100%' fontSize='lg' fontWeight='regular'>
                         <Box as={FiShoppingCart} mr={2}/>
                         <Text>Carrinho</Text>
