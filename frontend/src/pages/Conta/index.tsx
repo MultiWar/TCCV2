@@ -39,19 +39,19 @@ const Conta: React.FC = () => {
                 <Flex w='100%' direction='column' mt={4}>
                     <Formik
                         initialValues={{
-                            email: data?.me.email, 
-                            telefone: data?.me.fone, 
-                            cep: data?.me.endereco.split(',')[0], 
-                            rua: data?.me.endereco.split(',')[1], 
-                            numero: data?.me.endereco.split(',')[2], 
-                            complemento: data?.me.endereco.split(',')[3] || ''
+                            email: user.email, 
+                            telefone: user.fone, 
+                            cep: user.endereco.split(',')[0], 
+                            rua: user.endereco.split(',')[1], 
+                            numero: user.endereco.split(',')[2], 
+                            complemento: user.endereco.split(',')[3] || ''
                         }}
                         onSubmit={async (values, {setErrors}) => {
-                            const email = values.email || data?.me.email as string
-                            const telefone = values.telefone || data?.me.fone as string
-                            const cep =  values.cep || data?.me.endereco.split(',')[0] as string
-                            const rua = values.rua || data?.me.endereco.split(',')[1] as string
-                            const numero = values.numero || data?.me.endereco.split(',')[2] as string
+                            const email = values.email || user.email as string
+                            const telefone = values.telefone || user.fone as string
+                            const cep =  values.cep || user.endereco.split(',')[0] as string
+                            const rua = values.rua || user.endereco.split(',')[1] as string
+                            const numero = values.numero || user.endereco.split(',')[2] as string
                             const response = await changeUserInformation({variables: {
                                 email, telefone, cep, rua, numero, complemento: values.complemento
                             }})
@@ -60,6 +60,7 @@ const Conta: React.FC = () => {
                                 setErrors(toErrorMap(response.data.changeInformations.errors))
                             }
                             else {
+                                setUser({cpf: user.cpf, nomeUser: user.nomeUser, email: values.email,fone: values.telefone, endereco: ([values.cep, values.rua, values.numero, values.complemento].join())})
                                 setIsEditable(prevState => !prevState)
                             }
                         }}
@@ -67,7 +68,7 @@ const Conta: React.FC = () => {
                         {({isSubmitting}) => (
                             <Form>
                                 <Stack w='100%'>
-                                    <Text fontSize='2xl'><strong>CPF: </strong>{data?.me.cpf}</Text>
+                                    <Text fontSize='2xl'><strong>CPF: </strong>{user.cpf}</Text>
                                     <Flex w='100%'>
                                         <Text fontSize='2xl' mr={3}><strong>Email: </strong></Text>
                                         <InputField name='email'  placeholder='Email' />
