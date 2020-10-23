@@ -1,15 +1,19 @@
 import { Popover, PopoverTrigger, Box, Button, PopoverContent, PopoverHeader, PopoverArrow, PopoverBody, Text, Icon, Stack, Flex, Image } from '@chakra-ui/core';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { ShoppingCart } from '../../atoms/cart';
 import { FiShoppingCart } from 'react-icons/fi'
 import { DefaultButton } from '../DefaultButton';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { LinkBloco } from './styles';
 
 // import { Container } from './styles';
 
 const CartComponent: React.FC = () => {
+    const [isLoading, setIsLoading] = useState(false)
+    const [cart, setCart] = useRecoilState(ShoppingCart)
+
+    const history = useHistory()
 
     const removeFromCart = (id: string) => {
         let carrinhoAntigo = [...cart]
@@ -40,7 +44,6 @@ const CartComponent: React.FC = () => {
         localStorage.setItem('carrinho', JSON.stringify(newCart))
     }
 
-    const [cart, setCart] = useRecoilState(ShoppingCart)
     return (
         <Popover placement='bottom-end' closeOnBlur={false}>
             <PopoverTrigger>
@@ -56,9 +59,12 @@ const CartComponent: React.FC = () => {
                 </PopoverHeader>
                 <PopoverArrow />
                 <PopoverBody color='gray.800'>
+                    {isLoading ? (
+                        <div>Loading...</div>
+                    ) : 
                     <Stack spacing={4}>
                         {cart.map((produto, index) => (
-                            <Flex backgroundColor='gray.300' border='1px solid black' pr={2} w='100%' justify='space-between' borderRadius={4}>
+                            <Flex key={produto.idProduto} backgroundColor='gray.300' border='1px solid black' pr={2} w='100%' justify='space-between' borderRadius={4}>
                                 <Flex p={1}>
                                     <Image src='https://bit.ly/sage-adebayo' borderRadius={4} w='20%' alt={produto.nomeProduto} mr={2}/>
                                     <Text alignSelf='center' fontSize='xl' color='gray.800'>{produto.nomeProduto}</Text>
@@ -75,7 +81,8 @@ const CartComponent: React.FC = () => {
                                 </Flex>
                             </Flex>
                         ))}
-                    </Stack>
+                    <DefaultButton mt={2} onClick={() => history.push('/confirmarCompra')}>Finalizar Compra</DefaultButton>
+                </Stack>}
                 </PopoverBody>
             </PopoverContent>
         </Popover>

@@ -215,19 +215,22 @@ const Loja: React.FC = () => {
                     )
                 })}
             </Flex>
-            <DefaultButton type='button' onClick={() => {
-                setPagina(prevPagina => prevPagina + 1)
-                fetchMore({
-                    variables: {
-                        pagina: pagina,
-                        categorias: categoriasEscolhidas,
-                        tarjas: tarjasEscolhidas,
-                        concentracoes: concentracoesEscolhidas,
-                        principioAtivo: principioAtivoEscolhido,
-                        orderBy: orderBy
-                    }
-                })
-            }}>Teste Paginação</DefaultButton>
+            {data?.produtos.hasMore ? 
+                <DefaultButton alignSelf='center' mt={6} type='button' w={['100%','250px']} onClick={() => {
+                    setPagina(prevPagina => prevPagina + 1)
+                    fetchMore({
+                        variables: {
+                            pagina: pagina,
+                            categorias: categoriasEscolhidas,
+                            tarjas: tarjasEscolhidas,
+                            concentracoes: concentracoesEscolhidas,
+                            principioAtivo: principioAtivoEscolhido,
+                            orderBy: orderBy
+                        }
+                    })
+                }}>Carregar mais produtos</DefaultButton> :
+                <Text alignSelf='center' mt={6} fontSize='2xl'>Não há mais produtos em nosso catálogo</Text>
+            }
         </Flex>
     );
 }

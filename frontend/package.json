@@ -15,6 +15,7 @@
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "@urql/exchange-auth": "^0.1.0",
+    "apollo-link-token-refresh": "^0.3.2",
     "emotion-theming": "^10.0.27",
     "formik": "^2.1.6",
     "graphql": "^15.3.0",
