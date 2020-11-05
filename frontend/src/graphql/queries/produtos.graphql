@@ -9,6 +9,7 @@ query Produtos($orderBy:String, $pagina: Int!, $direction: String, $categorias: 
       tarja
       principioAtivo
       concentracao
+      imagem
     }
     hasMore
   }

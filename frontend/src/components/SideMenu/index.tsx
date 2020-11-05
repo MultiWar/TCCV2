@@ -5,14 +5,29 @@ import {useHistory} from 'react-router-dom'
 
 import { Container } from './styles';
 import AvatarComponentSidebar from '../AvatarComponentSidebar';
-import { useMeQuery } from '../../generated/graphql';
+import { useLogoutMutation, useMeQuery } from '../../generated/graphql';
 import logoBranca from '../../testImages/logoBrancoHorizontal.png'
 import CartComponent from '../CartComponent';
+import { useRecoilState } from 'recoil';
+import { ShoppingCart } from '../../atoms/cart';
+import { accessToken } from '../../atoms/accessToken';
 
 const SideMenu: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const history = useHistory()
   const {data} = useMeQuery()
+  const [token, setToken] = useRecoilState(accessToken)
+  const [_, setCart] = useRecoilState(ShoppingCart)
+  const [logout, {client}] = useLogoutMutation()
+
+  async function clearSession() {
+      setToken('')
+      await logout()
+      await client.resetStore()
+      setCart([])
+      localStorage.setItem('carrinho', JSON.stringify([]))
+  }
+  
   return (
     <Container>
       <Flex direction='row' w='100%' backgroundColor='gray.800' justify='space-between' pr={3}>
@@ -35,7 +50,7 @@ const SideMenu: React.FC = () => {
         <DrawerContent backgroundColor='gray.800' color='gray.200'>
           <DrawerCloseButton />
           <DrawerHeader></DrawerHeader>
-          <DrawerBody>
+          <DrawerBody mt={2}>
             <Flex direction='column' justify='space-between'>
               <Stack mb={20}>
                 <Button type='button' background='transparent' _hover={{backgroundColor: 'gray.900'}} onClick={() => {history.push('/'); onClose()}}>
@@ -48,14 +63,15 @@ const SideMenu: React.FC = () => {
             </Flex>
           </DrawerBody>
           <DrawerFooter>
-            {data?.me ? 
+            {data?.me ?
               <Flex w='100%' direction='column'>
                 <AvatarComponentSidebar />
-                <DefaultButton w='100%' type='button' onClick={() => history.push('/conta')}>Gerenciar Conta</DefaultButton>
-              </Flex> : 
-              <Flex w='100%' direction='row' justify='space-between' >
-                <DefaultButton type='button' w='48%' onClick={() => {history.push('/cadastro'); onClose()}}>Se cadastrar</DefaultButton>
-                <DefaultButton type='button' w='48%' onClick={() => {history.push('/login'); onClose()}}>Entrar</DefaultButton>
+                <DefaultButton w='100%' type='button' fontSize='xl' onClick={() => history.push('/conta')}>Gerenciar Conta</DefaultButton>
+                <DefaultButton w='100%' type='button' fontSize='xl' onClick={clearSession}>Sair da conta</DefaultButton>
+              </Flex> :
+              <Flex w='100%' direction='column' justify='space-between' >
+                <DefaultButton type='button' w='100%' fontSize='xl' onClick={() => {history.push('/cadastro'); onClose()}}>Se cadastrar</DefaultButton>
+                <DefaultButton type='button' w='100%' fontSize='xl' onClick={() => {history.push('/login'); onClose()}}>Entrar</DefaultButton>
               </Flex>
             }
           </DrawerFooter>

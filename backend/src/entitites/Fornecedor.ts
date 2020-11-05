@@ -3,9 +3,9 @@ import { tblProduto } from "./Produto";
 
 @Entity()
 export class tblFornecedor extends BaseEntity {
-
-    @PrimaryGeneratedColumn('uuid')
-    idFornecedor!: string
+    //idFornecedor should eventually be changed back to uuid
+    @PrimaryGeneratedColumn()
+    idFornecedor!: number
 
     @Column('varchar', {length: 32})
     representante!: string

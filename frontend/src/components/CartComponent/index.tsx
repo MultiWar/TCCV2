@@ -15,14 +15,14 @@ const CartComponent: React.FC = () => {
 
     const history = useHistory()
 
-    const removeFromCart = (id: string) => {
+    const removeFromCart = (id: number) => {
         let carrinhoAntigo = [...cart]
         let carrinhoNovo = carrinhoAntigo.filter(produto => produto.idProduto !== id)
         setCart(carrinhoNovo)
         localStorage.setItem('carrinho', JSON.stringify(carrinhoNovo))
     }
 
-    const handleIncreaseQuantity = (id: string) => {
+    const handleIncreaseQuantity = (id: number) => {
         const newCart = cart.map(produto => {
             if(produto.idProduto === id) {
                 return {...produto, quantidade: produto.quantidade + 1}
@@ -33,7 +33,7 @@ const CartComponent: React.FC = () => {
         localStorage.setItem('carrinho', JSON.stringify(newCart))
     }
 
-    const handleLowerQuantity = (id: string) => {
+    const handleLowerQuantity = (id: number) => {
         const newCart = cart.map(produto => {
             if(produto.idProduto === id) {
                 return {...produto, quantidade: produto.quantidade - 1}
@@ -54,7 +54,7 @@ const CartComponent: React.FC = () => {
                     </Button>
                 </Box>
             </PopoverTrigger>
-            <PopoverContent zIndex={4} bg='gray.200' border='1px solid black' width='300px'>
+            <PopoverContent zIndex={4} bg='gray.200' border='1px solid black' width='350px'>
                 <PopoverHeader fontWeight='bold' color='gray.800'>
                 </PopoverHeader>
                 <PopoverArrow />
@@ -66,8 +66,8 @@ const CartComponent: React.FC = () => {
                         {cart.map((produto, index) => (
                             <Flex key={produto.idProduto} backgroundColor='gray.300' border='1px solid black' pr={2} w='100%' justify='space-between' borderRadius={4}>
                                 <Flex p={1}>
-                                    <Image src='https://bit.ly/sage-adebayo' borderRadius={4} w='20%' alt={produto.nomeProduto} mr={2}/>
-                                    <Text alignSelf='center' fontSize='xl' color='gray.800'>{produto.nomeProduto}</Text>
+                                    <Image src='https://picsum.photos/200/300' borderRadius={4} w='20%' alt={produto.nomeProduto} mr={2}/>
+                                    <Text alignSelf='center' fontSize='xl' color='gray.800' isTruncated>{produto.nomeProduto}</Text>
                                 </Flex>
                                 <Flex>
                                     <Flex p={1}>

@@ -8,10 +8,10 @@ import { tblProgEntrega } from "./ProgEntrega";
 @ObjectType()
 @Entity()
 export class tblProduto extends BaseEntity {
-
+    //both idProduto and idFornecedor shoud eventually be replaced back to uuid and string
     @Field()
-    @PrimaryGeneratedColumn('uuid')
-    idProduto!: string
+    @PrimaryGeneratedColumn()
+    idProduto!: number
 
     @Field()
     @Column('varchar', {length: 20})
@@ -36,6 +36,10 @@ export class tblProduto extends BaseEntity {
     @Field()
     @Column('varchar', {length: 50})
     principioAtivo?: string
+
+    @Field()
+    @Column('varchar', {length: 100})
+    imagem: string
     
     @Field()
     @Column('varchar', {length: 5})

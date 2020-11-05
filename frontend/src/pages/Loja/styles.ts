@@ -19,6 +19,7 @@ export const Card = styled.div`
     flex-direction: column;
     background-color: ${props => props.theme.colors.cardOrModalBackground};
     height: 100%;
+    min-height: 587px;
     width: 300px;
     border-radius: 8px;
     box-shadow: 2px 2px 8px #333;
@@ -30,7 +31,8 @@ export const Card = styled.div`
 
     @media (max-width: 520px) {
         width: 421px;
-        padding-bottom: 10px;
+        min-height: unset;
+        padding-bottom: 13px;
         padding-right: 10px;
         padding-left: 10px;
         margin-left: 5px;
@@ -40,9 +42,12 @@ export const Card = styled.div`
 
 export const CardContainer = styled.div`
     display: flex;
+    flex: 1;
     flex-direction: column;
+    height: 100%;
     @media(max-width: 520px) {
-        justify-content: space-between;
+        flex: unset;
+        justify-content: space-around;
         width: 100%;
         flex-direction: row
     }
@@ -79,10 +84,12 @@ export const CardImageContainer = styled.div`
 
 export const ProductInformationAndButtons = styled.div`
     display: flex;
+    flex: 1;
     flex-direction: column;
     justify-content: space-between;
     
     @media(max-width: 520px) {
+        flex: unset;
         width: 170px;
         min-height: 242px;
         align-content: center;

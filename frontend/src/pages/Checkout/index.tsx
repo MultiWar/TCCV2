@@ -1,9 +1,16 @@
 import React from 'react';
+import { Flex, Heading } from '@chakra-ui/core';
 
-// import { Container } from './styles';
+import { Card } from './styles';
 
 const Checkout: React.FC = () => {
-  return <div />;
+  return (
+    <Flex justify='center'>
+      <Card>
+        <Heading>Finalizar compra</Heading>
+      </Card>
+    </Flex>
+  );
 }
 
 export default Checkout;

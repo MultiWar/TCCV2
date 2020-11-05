@@ -1,9 +1,10 @@
 import {atom} from 'recoil'
 
 interface Produto {
-    idProduto: string,
+    idProduto: number,
     nomeProduto: string,
     preco: string,
+    imagem: string,
     quantidade: number
     // imagemProduto: ImageBitmap
 }

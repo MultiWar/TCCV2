@@ -3,6 +3,7 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { accessToken } from '../../atoms/accessToken'
+import { ShoppingCart } from '../../atoms/cart'
 import { useLogoutMutation, useMeQuery } from '../../generated/graphql'
 import { DefaultButton } from '../DefaultButton'
 import { Container } from './styles'
@@ -11,12 +12,15 @@ const AvatarComponent: React.FC = () => {
     const history = useHistory()
     const {data} = useMeQuery()
     const [token, setToken] = useRecoilState(accessToken)
+    const [_, setCart] = useRecoilState(ShoppingCart)
     const [logout, {client}] = useLogoutMutation()
 
     async function clearSession() {
         setToken('')
         await logout()
         await client.resetStore()
+        setCart([])
+        localStorage.setItem('carrinho', JSON.stringify([]))
     }
     
     return (
@@ -38,7 +42,7 @@ const AvatarComponent: React.FC = () => {
                     <Text><strong>Nome:</strong> {data?.me.nomeUser}</Text>
                     <Text><strong>CPF:</strong> {data?.me.cpf}</Text>
                     <Text><strong>CEP:</strong> {data?.me.endereco.split(',')[0]}</Text>
-                    <Text><strong>Endereço:</strong> {`${data?.me.endereco.split(',')[1]}, ${data?.me.endereco.split(',')[2]}` + data?.me.endereco.split(',')[3] ? `, ${data?.me.endereco.split(',')[3]}` : ''}</Text>
+                    <Text><strong>Endereço:</strong> {data?.me.endereco}</Text>
                     <DefaultButton w='100%' type='button' onClick={() => history.push('/conta')}>Editar informações da conta</DefaultButton>
                     <DefaultButton mt={2} w='100%' type='button' onClick={clearSession}>Sair da conta</DefaultButton>
                 </PopoverBody>

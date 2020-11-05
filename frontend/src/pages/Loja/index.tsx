@@ -1,19 +1,19 @@
-import { Box, Button, Checkbox, CheckboxGroup, Collapse, Flex, Heading, Image, Radio, RadioGroup, Skeleton, Text } from '@chakra-ui/core';
+import { Box, Button, Checkbox, CheckboxGroup, Collapse, Flex, Heading, Image, Radio, RadioGroup, Skeleton, Stack, Text } from '@chakra-ui/core';
 import React, { useState } from 'react';
 import { DefaultButton } from '../../components/DefaultButton';
 import { useProdutosQuery } from '../../generated/graphql';
 import {useHistory} from 'react-router-dom'
 import { FlechaBaixo, FlechaCima, Card, CardContainer, CardImageContainer, ProductButtons, ProductInformationAndButtons, ProductInformations } from './styles';
-import { storePage } from '../../atoms/storePage';
 import { useRecoilState } from 'recoil';
 import { ShoppingCart } from '../../atoms/cart'
-import {useIsInCart} from '../../utils/cartStuff'
 
 const Loja: React.FC = () => {
     const [isShown, setIsShown] = useState(false)
+    const [concentracoes1, setConcentracoes1] = useState<string[]>([])
+    const [concentracoes2, setConcentracoes2] = useState<string[]>([])
+    const [concentracoesEscolhidas, setConcentracoesEscolhidas] = useState<string[] | undefined>(undefined)
     const [categoriasEscolhidas, setCategoriasEscolhidas] = useState<string[] | undefined>(undefined)
     const [tarjasEscolhidas, setTarjasEscolhidas] = useState<string[] | undefined>(undefined)
-    const [concentracoesEscolhidas, setConcentracoesEscolhidas] = useState<string[] | undefined>(undefined)
     const [principioAtivoEscolhido, setPrincipioAtivoEscolhido] = useState<string[] | undefined>(undefined)
     const [orderBy, setOrderBy] = useState<string | undefined>(undefined)
 
@@ -22,10 +22,12 @@ const Loja: React.FC = () => {
     const [cart, setCart] = useRecoilState(ShoppingCart)
 
     interface Produto {
-        idProduto: string,
+        //idProduto should eventuaylly return to being a string. Also change in recoilState and in all function parameters, incluind from this file and from cart component
+        idProduto: number,
         nomeProduto: string,
         preco: string,
-        quantidade: number
+        quantidade: number,
+        imagem: string
         // imagemProduto: ImageBitmap
     }
     
@@ -49,16 +51,29 @@ const Loja: React.FC = () => {
         return cart
     }
     
-    const removeFromCart = (id: string) => {
+    const removeFromCart = (id: number) => {
         let carrinhoAntigo = [...cart]
         let carrinhoNovo = carrinhoAntigo.filter(produto => produto.idProduto !== id)
-        setCart(carrinhoNovo)
+        setCart(carrinhoNovo) 
         localStorage.setItem('carrinho', JSON.stringify(carrinhoNovo))
     }
     
     const clearCart = () => {
         setCart([])
         localStorage.removeItem('carrinho')
+    }
+
+    const getDefaultValue = (): string[] | undefined => {
+        if(concentracoes1.length > 0 && concentracoes2.length > 0) {
+            return concentracoes1.concat(concentracoes2)
+        }
+        if(concentracoes1.length > 0 && concentracoes2.length === 0) {
+            return concentracoes1
+        }
+        if(concentracoes2.length > 0 && concentracoes1.length === 0) {
+            return concentracoes2
+        }
+        return undefined
     }
 
     const history = useHistory()
@@ -68,11 +83,12 @@ const Loja: React.FC = () => {
             pagina: 1,
             categorias: categoriasEscolhidas,
             tarjas: tarjasEscolhidas,
-            concentracoes: concentracoesEscolhidas,
+            concentracoes: getDefaultValue(),
             principioAtivo: principioAtivoEscolhido,
             orderBy: orderBy
         }
     })
+    console.log(variables)
     if(loading) {
         return (
             <>
@@ -103,9 +119,9 @@ const Loja: React.FC = () => {
                 <Flex w='100%' justify='center' mt={2}>
                     <Heading size='2xl'>FILTRAR PRODUTOS</Heading>
                 </Flex>
-                <Flex w='100%' direction={['column', 'column', 'row']} wrap='wrap' px={10} alignItems={['center', 'center', 'flex-start']} justify={['center', 'center','space-between']}>
-                    <Box mt={4} w={['100%', '100%', 'unset']} >
-                        <Heading size='xl' as='legend' >Categorias</Heading>
+                <Flex w='100%' direction={['column', 'column', 'row']} wrap='wrap' px={10} alignItems={['center', 'center', 'flex-start']} justify={['center', 'center','space-around']}>
+                    <Box mt={4} w={['100%', '100%', 'unset']}>
+                        <Heading size='xl' as='legend' mb={2}>Categorias</Heading>
                         <CheckboxGroup size='lg' name='categorias' defaultValue={categoriasEscolhidas} 
                             onChange={
                                 (value) => {
@@ -114,12 +130,14 @@ const Loja: React.FC = () => {
                                 }
                         }>
                             <Checkbox value='remedio' borderColor='blue.400'>Remédios</Checkbox>
-                            <Checkbox value='cuidados pessoais' borderColor='blue.400'>Cuidados Pessoais</Checkbox>
-                            <Checkbox value='higiene' borderColor='blue.400'>Higiene</Checkbox>
+                            <Checkbox value='higiene pessoal' borderColor='blue.400'>Higiene pessoal</Checkbox>
+                            <Checkbox value='beleza' borderColor='blue.400'>Beleza</Checkbox>
+                            <Checkbox value='curativo' borderColor='blue.400'>Curativo</Checkbox>
+                            <Checkbox value='suplemento' borderColor='blue.400'>Suplemento</Checkbox>
                         </CheckboxGroup>
                     </Box>
                     <Box mt={4} w={['100%', '100%', 'unset']}>
-                        <Heading size='xl' as='legend'>Tarjas</Heading>
+                        <Heading size='xl' as='legend' mb={2}>Tarjas</Heading>
                         <CheckboxGroup size='lg' name='tarjas' defaultValue={tarjasEscolhidas}
                             onChange={
                                 (value) => {
@@ -129,26 +147,47 @@ const Loja: React.FC = () => {
                         }>
                             <Checkbox value='preta' borderColor='blue.400'>Preta</Checkbox>
                             <Checkbox value='vermelha' borderColor='blue.400'>Vermelha</Checkbox>
-                            <Checkbox value='azul' borderColor='blue.400'>Azul</Checkbox>
-                            <Checkbox value='vinho' borderColor='blue.400'>Vinho</Checkbox>
+                            <Checkbox value='amarela' borderColor='blue.400'>Amarela</Checkbox>
                         </CheckboxGroup>
                     </Box>
+                    <Flex mt={4} w={['100%', '100%', 'unset']} direction='column'>
+                        <Heading size='xl' as='legend' mb={2}>Concentrações</Heading>
+                        <Flex justify={['unset', 'unset','space-around']}>
+                            <CheckboxGroup mr={[8, 8, 'unset']} size='lg' name='concentracoes1' defaultValue={concentracoes1}
+                                onChange={
+                                    (value) => {
+                                        setConcentracoes1((value as string[]).length > 0 ? value as string[] : [])
+                                        setConcentracoesEscolhidas(concentracoes1?.concat(concentracoes2 || []) || undefined)
+                                        setPagina(2)
+                                    }
+                            }>
+
+                                <Checkbox value='1%' borderColor='blue.400'>1%</Checkbox>
+                                <Checkbox value='2.5%' borderColor='blue.400'>2,5%</Checkbox>
+                                <Checkbox value='3%' borderColor='blue.400'>3%</Checkbox>
+                                <Checkbox value='3.5%' borderColor='blue.400'>3,5%</Checkbox>
+                                <Checkbox value='4%' borderColor='blue.400'>4%</Checkbox>
+                                <Checkbox value='4.5%' borderColor='blue.400'>4,5%</Checkbox>
+                            </CheckboxGroup>
+                            <CheckboxGroup size='lg' name='concentracoes2' defaultValue={concentracoes2}
+                                onChange={
+                                    (value) => {
+                                        setConcentracoes2((value as string[]).length > 0 ? value as string[] : [])
+                                        setConcentracoesEscolhidas(concentracoes1?.concat(concentracoes2 || []) || undefined)
+                                        setPagina(2)
+                                    }
+                            }>
+                                <Checkbox value='5%' borderColor='blue.400'>5%</Checkbox>
+                                <Checkbox value='6%' borderColor='blue.400'>6%</Checkbox>
+                                <Checkbox value='7%' borderColor='blue.400'>7%</Checkbox>
+                                <Checkbox value='8%' borderColor='blue.400'>8%</Checkbox>
+                                <Checkbox value='9%' borderColor='blue.400'>9%</Checkbox>
+                                <Checkbox value='10%' borderColor='blue.400'>10%</Checkbox>
+                            </CheckboxGroup>
+                        </Flex>
+                    </Flex>
                     <Box mt={4} w={['100%', '100%', 'unset']}>
-                        <Heading size='xl' as='legend'>Concentrações</Heading>
-                        <CheckboxGroup size='lg' name='concentracoes' defaultValue={concentracoesEscolhidas}
-                            onChange={
-                                (value) => {
-                                    setConcentracoesEscolhidas((value as string[]).length > 0 ? value as string[] : undefined)
-                                    setPagina(2)
-                                }
-                        }>
-                            <Checkbox value='5mg' borderColor='blue.400'>5mg</Checkbox>
-                            <Checkbox value='10mg' borderColor='blue.400'>10mg</Checkbox>
-                            <Checkbox value='25mg' borderColor='blue.400'>25mg</Checkbox>
-                        </CheckboxGroup>
-                    </Box>
-                    <Box mt={4} w={['100%', '100%', 'unset']}>
-                        <Heading size='xl' as='legend'>Principios Ativos</Heading>
+                        <Heading size='xl' as='legend' mb={2}>Principios Ativos</Heading>
                         <CheckboxGroup size='lg' name='principioAtivo' defaultValue={principioAtivoEscolhido}
                             onChange={
                                 (value) => {
@@ -162,7 +201,7 @@ const Loja: React.FC = () => {
                         </CheckboxGroup>
                     </Box>
                     <Box mt={4} w={['100%', '100%', 'unset']}>
-                        <Heading size='xl' as='legend'>Ordernar por:</Heading>
+                        <Heading size='xl' as='legend' mb={2}>Ordernar por:</Heading>
                         <RadioGroup size='lg' name='orderBy' defaultValue={orderBy}
                             onChange={
                                 (e) => {
@@ -187,12 +226,12 @@ const Loja: React.FC = () => {
                         })
                     return (
                         <Card key={produto.idProduto}>
-                            <Box w='100%' mb={2} textAlign='center'>
+                            <Box w='100%' mb={2} textAlign='center' pt={2}>
                                 <Heading fontSize={['2xl', '3xl']}>{produto.nomeProduto}</Heading>
                             </Box>
                             <CardContainer>
                                 <CardImageContainer>
-                                    <Image objectFit='cover' src='https://bit.ly/sage-adebayo' h='100%' width={['100%', '100px','200px']} borderRadius={8} />
+                                    <Image objectFit='cover' src='https://picsum.photos/200/300' h='100%' width={['100%', '100px','200px']} borderRadius={8} />
                                 </CardImageContainer>
                                 <ProductInformationAndButtons>
                                     <ProductInformations>
@@ -216,7 +255,7 @@ const Loja: React.FC = () => {
                 })}
             </Flex>
             {data?.produtos.hasMore ? 
-                <DefaultButton alignSelf='center' mt={6} type='button' w={['100%','250px']} onClick={() => {
+                <DefaultButton alignSelf='center' mt={6} fontSize='xl' maxWidth={['421px', 'unset']} type='button' w={['100%','250px']} onClick={() => {
                     setPagina(prevPagina => prevPagina + 1)
                     fetchMore({
                         variables: {
@@ -229,7 +268,7 @@ const Loja: React.FC = () => {
                         }
                     })
                 }}>Carregar mais produtos</DefaultButton> :
-                <Text alignSelf='center' mt={6} fontSize='2xl'>Não há mais produtos em nosso catálogo</Text>
+                <Text alignSelf='center' mt={6} fontWeight='semibold' fontSize='2xl'>Não há mais produtos em nosso catálogo</Text>
             }
         </Flex>
     );

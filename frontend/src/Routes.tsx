@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Switch } from "react-router-dom";
 import Cadastro from './pages/Cadastro';
 import ChangePassword from './pages/ChangePassword';
+import Checkout from './pages/Checkout';
 import Conta from './pages/Conta';
 import Login from './pages/Login';
 import Loja from './pages/Loja';
@@ -18,6 +19,7 @@ const Routes = () => {
             <Route path='/produtos/:produto' component={Produtos} />
             <Route path='/trocarSenha/:paramToken' component={ChangePassword} />
             <Route path='/conta' component={Conta} />
+            <Route path='/confirmarCompra' component={Checkout} />
         </Switch>
     )
 }

@@ -15,12 +15,6 @@ const Header: React.FC = () => {
   const history = useHistory()
   const {data, loading} = useMeQuery()
 
-  async function clearSession() {
-    setToken('')
-    await logout()
-    await client.resetStore()
-  }
-
   let endOfNavbar
   if(loading) {
     return (

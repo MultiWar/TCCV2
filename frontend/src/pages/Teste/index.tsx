@@ -1,19 +1,28 @@
+import { Heading } from '@chakra-ui/core';
 import React from 'react';
-import styled from 'styled-components'
 
-import { Container, DivLaranja, DivsVerde, WrapperDivsVerde } from './styles';
+import { Container, Title, Card, CardContainer, ImageReplacer, TextoEBotoes, Texto, Botoes } from './styles';
 
 const Teste: React.FC = () => {
-  return (
-      <Container>
-          <DivLaranja></DivLaranja>
-          <WrapperDivsVerde>
-              <DivsVerde></DivsVerde>
-              <DivsVerde></DivsVerde>
-              <DivsVerde></DivsVerde>
-          </WrapperDivsVerde>
-      </Container>
-  );
+    return (
+        <Container>
+            <Card>
+                <Title>
+                    <Heading>asdasdasd</Heading>
+                </Title>
+                <CardContainer>
+                    <ImageReplacer />
+                    <TextoEBotoes> 
+                        <Texto>sdasdasdasdasd</Texto>
+                        <Botoes> 
+                            <button>1</button>
+                            <button>2</button>
+                        </Botoes>
+                    </TextoEBotoes>
+                </CardContainer>
+            </Card>
+        </Container>
+    );
 }
 
 

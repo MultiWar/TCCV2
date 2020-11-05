@@ -1,4 +1,4 @@
-import { Avatar, Flex, Heading, Stack, stringOrNumber, Text } from '@chakra-ui/core';
+import { Avatar, Flex, Heading, Skeleton, Stack, stringOrNumber, Text } from '@chakra-ui/core';
 import { Form, Formik } from 'formik';
 import React, { useState } from 'react';
 import { DefaultButton } from '../../components/DefaultButton';
@@ -27,6 +27,16 @@ const Conta: React.FC = () => {
         endereco: data?.me.endereco as string
     })
     const [isEditable, setIsEditable] = useState(false)
+
+    if(loading) {
+        return (
+            <Flex direction='column' w='420px'>
+                <Skeleton w='100%' h='80px' />
+                <Skeleton w='80px' h='80px' mt={4} />
+            </Flex> 
+        )
+    }
+
     if(!data && !loading) {
         
     }

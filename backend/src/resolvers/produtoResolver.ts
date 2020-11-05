@@ -24,7 +24,7 @@ export class produtoResolver {
         @Arg('concentracoes', () => [String], {nullable: true}) concentracoes: string[],
         @Arg('principioAtivo', () => [String], {nullable: true}) principioAtivo: string[],
     ): Promise<ProdutosComPaginacao> {
-        const limit = 2
+        const limit = 15
         const qb = getConnection()
             .getRepository(Produto)
             .createQueryBuilder('p')

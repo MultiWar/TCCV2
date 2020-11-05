@@ -55,13 +55,14 @@ export type ProdutosComPaginacao = {
 
 export type TblProduto = {
   __typename?: 'tblProduto';
-  idProduto: Scalars['String'];
+  idProduto: Scalars['Float'];
   nomeProduto: Scalars['String'];
   descricao: Scalars['String'];
   categoria: Scalars['String'];
   preco: Scalars['String'];
   tarja: Scalars['String'];
   principioAtivo: Scalars['String'];
+  imagem: Scalars['String'];
   concentracao: Scalars['String'];
   idFornecedor: Scalars['String'];
 };
@@ -293,7 +294,7 @@ export type ProdutosQuery = (
     & Pick<ProdutosComPaginacao, 'hasMore'>
     & { produtos: Array<(
       { __typename?: 'tblProduto' }
-      & Pick<TblProduto, 'idProduto' | 'nomeProduto' | 'descricao' | 'categoria' | 'preco' | 'tarja' | 'principioAtivo' | 'concentracao'>
+      & Pick<TblProduto, 'idProduto' | 'nomeProduto' | 'descricao' | 'categoria' | 'preco' | 'tarja' | 'principioAtivo' | 'concentracao' | 'imagem'>
     )> }
   ) }
 );
@@ -612,6 +613,7 @@ export const ProdutosDocument = gql`
       tarja
       principioAtivo
       concentracao
+      imagem
     }
     hasMore
   }
