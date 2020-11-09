@@ -6,7 +6,7 @@ export const Container = styled.div`
     margin: 50px auto;
     display: flex;
     width: 30%;
-    min-width: 450px;
+    min-width: 420px;
     flex-direction: column;
     background-color: ${props => lighten(0.05, props.theme.colors.secondaryText)};
     padding: 30px;

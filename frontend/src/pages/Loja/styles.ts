@@ -19,7 +19,7 @@ export const Card = styled.div`
     flex-direction: column;
     background-color: ${props => props.theme.colors.cardOrModalBackground};
     height: 100%;
-    min-height: 587px;
+    min-height: 593px;
     width: 300px;
     border-radius: 8px;
     box-shadow: 2px 2px 8px #333;

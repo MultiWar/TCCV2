@@ -1,5 +1,5 @@
+import React, { useState } from 'react';
 import { Button, Flex, Image, Stack, Text } from '@chakra-ui/core';
-import React from 'react';
 import {useHistory} from 'react-router-dom'
 import { useRecoilState } from 'recoil';
 import { accessToken } from '../../atoms/accessToken';
@@ -8,10 +8,12 @@ import AvatarComponent from '../AvatarComponent';
 import { Container } from './styles';
 import logoBranca from '../../testImages/logoBrancoHorizontal.png'
 import CartComponent from '../CartComponent';
+import SearchBar from '../SearchBar';
 
 const Header: React.FC = () => {
   const [, setToken] = useRecoilState(accessToken)
   const [logout, {client}] = useLogoutMutation()
+  const [isSearchBarVisible, setIsSearchBarVisible] = useState(false)
   const history = useHistory()
   const {data, loading} = useMeQuery()
 
@@ -53,7 +55,7 @@ const Header: React.FC = () => {
               </Button>
             </Stack>
           </Flex>
-          <Image h='50px' mb={2} src={logoBranca} mr = {(!data && !loading) ? ['unset', '-72px', '-72px', '-75px'] : ['unset', '-50px', '-170px', '-170px']} />
+          {isSearchBarVisible ? (null) : <Image h='50px' mb={2} src={logoBranca} mr = {(!data && !loading) ? ['unset', '-72px', '-72px', '-75px'] : ['unset', '-50px', '-170px', '-170px']} />}
           <Flex>
             {endOfNavbar}
           </Flex>

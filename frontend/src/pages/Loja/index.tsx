@@ -96,16 +96,16 @@ const Loja: React.FC = () => {
                     <Skeleton w='100%' h='40px'/>
                 </Box>
                 <Flex flexDirection='row' wrap='wrap' mx={10} mt={5} justifyContent={['center', 'center', 'center', 'space-between']}>
-                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '400px']} borderRadius={8} mt={6} mx='20px' />
-                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '400px']} borderRadius={8} mt={6} mx='20px' />
-                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '400px']} borderRadius={8} mt={6} mx='20px' />
-                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '400px']} borderRadius={8} mt={6} mx='20px' />
-                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '400px']} borderRadius={8} mt={6} mx='20px' />
-                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '400px']} borderRadius={8} mt={6} mx='20px' />
-                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '400px']} borderRadius={8} mt={6} mx='20px' />
-                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '400px']} borderRadius={8} mt={6} mx='20px' />
-                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '400px']} borderRadius={8} mt={6} mx='20px' />
-                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '400px']} borderRadius={8} mt={6} mx='20px' />
+                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '593px']} borderRadius={8} mt={6} mx='20px' />
+                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '593px']} borderRadius={8} mt={6} mx='20px' />
+                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '593px']} borderRadius={8} mt={6} mx='20px' />
+                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '593px']} borderRadius={8} mt={6} mx='20px' />
+                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '593px']} borderRadius={8} mt={6} mx='20px' />
+                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '593px']} borderRadius={8} mt={6} mx='20px' />
+                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '593px']} borderRadius={8} mt={6} mx='20px' />
+                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '593px']} borderRadius={8} mt={6} mx='20px' />
+                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '593px']} borderRadius={8} mt={6} mx='20px' />
+                    <Skeleton w={['100%', '150px', '300px']} h={['200px', '200px', '593px']} borderRadius={8} mt={6} mx='20px' />
                 </Flex>
             </>
         )
