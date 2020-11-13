@@ -8,7 +8,7 @@ export const Card = styled.div`
     min-width: 420px;
     flex-direction: column;
     background-color: ${props => lighten(0.05, props.theme.colors.secondaryText)};
-    padding: 30px;
+    padding: 15px 30px 30px;
     border-radius: 10px;
     box-shadow: 2px 2px 8px #333;
 
