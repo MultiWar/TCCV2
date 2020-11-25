@@ -23,6 +23,7 @@ export class produtoResolver {
         @Arg('tarjas', () => [String], {nullable: true}) tarjas: string[],
         @Arg('concentracoes', () => [String], {nullable: true}) concentracoes: string[],
         @Arg('principioAtivo', () => [String], {nullable: true}) principioAtivo: string[],
+        @Arg('query', () => String, {nullable: true}) query: string
     ): Promise<ProdutosComPaginacao> {
         const limit = 15
         const qb = getConnection()
@@ -44,6 +45,9 @@ export class produtoResolver {
         }
         if(principioAtivo) {
             tarjas || categorias || concentracoes ? qb.andWhere('principioAtivo IN (:...princAt)', {princAt: principioAtivo}) : qb.where('principioAtivo IN (:...princAt)', {princAt: principioAtivo})
+        }
+        if(query) {
+            tarjas || categorias || concentracoes || principioAtivo ? qb.andWhere('nomeProduto LIKE :query', {query: `%${query}%`}) : qb.where('nomeProduto LIKE :query', {query: `%${query}%`})
         }
         const produtos = await qb.getMany()
         return {produtos: produtos.slice(0, limit), hasMore: produtos.length === (limit + 1)}

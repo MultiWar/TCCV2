@@ -14,5 +14,10 @@ export const Card = styled.div`
 
     @media(max-width: 520px) {
         width: 80%;
+        min-width: unset;
+    }
+
+    @media(max-width: 410px) {
+        padding: 15px
     }
 `;

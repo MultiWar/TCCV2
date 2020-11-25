@@ -10,47 +10,20 @@ export const Container = styled.div`
     margin-top: 30px;
 `;
 
-export const Title = styled.div``;
+export const DivInput = styled.div`
+    width: 300px;
+    border-bottom: 2px solid #88c1f6;
 
-export const Card = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 400px;
-    height: 100%;
-    min-height: 500px;
-    justify-content: column;
-    background-color: lightgreen;
-    padding-bottom: 15px;
+    &:focus-within {
+        border-bottom: 2px solid ${props => props.theme.colors.primary};
+        transition: 0.5s;
+    }
 `
 
-export const CardContainer = styled.div`
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    background-color: #ddd;
-`
-
-export const ImageReplacer = styled.div`
-    background-color: #555;
-    width: 250px;
-    height: 250px;
-    margin-bottom: 30px;
-`
-
-export const TextoEBotoes = styled.div`
-    display: flex;
-    flex: 1;
-    background-color: red;
-    flex-direction: column;
-    justify-content: space-between;
-`
-
-export const Texto = styled.div`
-    display: flex;
-`
-
-export const Botoes = styled.div`
-    display: flex;
-    justify-content: space-around;
-`
+export const InputTeste = styled.input`
+    width: 100%;
+    height: 35px;
+    background: transparent;
+    border-radius: 8px;
+    outline: none;
+`;

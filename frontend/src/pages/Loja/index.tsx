@@ -6,6 +6,7 @@ import {useHistory} from 'react-router-dom'
 import { FlechaBaixo, FlechaCima, Card, CardContainer, CardImageContainer, ProductButtons, ProductInformationAndButtons, ProductInformations } from './styles';
 import { useRecoilState } from 'recoil';
 import { ShoppingCart } from '../../atoms/cart'
+import { searchQuery } from '../../atoms/searchQuery';
 
 const Loja: React.FC = () => {
     const [isShown, setIsShown] = useState(false)
@@ -20,6 +21,7 @@ const Loja: React.FC = () => {
     const [pagina, setPagina] = useState(2)
 
     const [cart, setCart] = useRecoilState(ShoppingCart)
+    const [query] = useRecoilState(searchQuery)
 
     interface Produto {
         //idProduto should eventuaylly return to being a string. Also change in recoilState and in all function parameters, incluind from this file and from cart component
@@ -85,10 +87,12 @@ const Loja: React.FC = () => {
             tarjas: tarjasEscolhidas,
             concentracoes: getDefaultValue(),
             principioAtivo: principioAtivoEscolhido,
-            orderBy: orderBy
+            orderBy: orderBy,
+            query: window.location.href.split('=')[1]
         }
     })
     console.log(variables)
+    console.log()
     if(loading) {
         return (
             <>
@@ -241,11 +245,11 @@ const Loja: React.FC = () => {
                                     </ProductInformations>
                                     <ProductButtons>
                                         <DefaultButton w={['100%','48%']} type='button' onClick={() => history.push(`/produtos/${produto.idProduto}`)}>
-                                            <Text fontSize='lg'>+ informações</Text>
+                                            <Text fontSize='lg'>Informações</Text>
                                         </DefaultButton>
                                         { isAlreadyInCart
                                             ? <Button w={['100%', '48%']} mt={[2, 4]} variantColor='red' type='button' onClick={() => removeFromCart(produto.idProduto)}><Text fontSize='lg'>- carrinho</Text></Button> 
-                                            : <DefaultButton w={['100%','48%']} mt={[2, 4]} type='button' onClick={() => addToCart({...produto, quantidade: 1})} ><Text fontSize='lg'>+ carrinho</Text></DefaultButton>
+                                            : <Button w={['100%','48%']} mt={[2, 4]} variantColor='green' type='button' onClick={() => addToCart({...produto, quantidade: 1})} ><Text fontSize='lg'>+ carrinho</Text></Button>
                                         }
                                     </ProductButtons>
                                 </ProductInformationAndButtons>
@@ -264,7 +268,8 @@ const Loja: React.FC = () => {
                             tarjas: tarjasEscolhidas,
                             concentracoes: concentracoesEscolhidas,
                             principioAtivo: principioAtivoEscolhido,
-                            orderBy: orderBy
+                            orderBy: orderBy,
+                            query: window.location.href.split('=')[1]
                         }
                     })
                 }}>Carregar mais produtos</DefaultButton> :

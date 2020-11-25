@@ -22,6 +22,7 @@ export type Query = {
 
 
 export type QueryProdutosArgs = {
+  query?: Maybe<Scalars['String']>;
   principioAtivo?: Maybe<Array<Scalars['String']>>;
   concentracoes?: Maybe<Array<Scalars['String']>>;
   tarjas?: Maybe<Array<Scalars['String']>>;
@@ -284,6 +285,7 @@ export type ProdutosQueryVariables = Exact<{
   tarjas?: Maybe<Array<Scalars['String']>>;
   concentracoes?: Maybe<Array<Scalars['String']>>;
   principioAtivo?: Maybe<Array<Scalars['String']>>;
+  query?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -602,8 +604,8 @@ export type ProdutoQueryHookResult = ReturnType<typeof useProdutoQuery>;
 export type ProdutoLazyQueryHookResult = ReturnType<typeof useProdutoLazyQuery>;
 export type ProdutoQueryResult = Apollo.QueryResult<ProdutoQuery, ProdutoQueryVariables>;
 export const ProdutosDocument = gql`
-    query Produtos($orderBy: String, $pagina: Int!, $direction: String, $categorias: [String!], $tarjas: [String!], $concentracoes: [String!], $principioAtivo: [String!]) {
-  produtos(orderBy: $orderBy, pagina: $pagina, direction: $direction, categorias: $categorias, tarjas: $tarjas, concentracoes: $concentracoes, principioAtivo: $principioAtivo) {
+    query Produtos($orderBy: String, $pagina: Int!, $direction: String, $categorias: [String!], $tarjas: [String!], $concentracoes: [String!], $principioAtivo: [String!], $query: String) {
+  produtos(orderBy: $orderBy, pagina: $pagina, direction: $direction, categorias: $categorias, tarjas: $tarjas, concentracoes: $concentracoes, principioAtivo: $principioAtivo, query: $query) {
     produtos {
       idProduto
       nomeProduto
@@ -639,6 +641,7 @@ export const ProdutosDocument = gql`
  *      tarjas: // value for 'tarjas'
  *      concentracoes: // value for 'concentracoes'
  *      principioAtivo: // value for 'principioAtivo'
+ *      query: // value for 'query'
  *   },
  * });
  */

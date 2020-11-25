@@ -28,57 +28,72 @@ export const Card = styled.div`
     padding-left: 20px;
     padding-right: 20px;
     margin: 40px 20px 0;
+    position: relative;
 
     @media (max-width: 520px) {
-        width: 421px;
+        width: 95%;
         min-height: unset;
+        min-width: unset;
         padding-bottom: 13px;
         padding-right: 10px;
         padding-left: 10px;
         margin-left: 5px;
         margin-right: 5px;
     }
+
+    > p, h1, h2, h3, strong, button {
+        opacity: 1
+    }
+
+    /* @media(max-width: 460px) {
+        align-items: center;
+    } */
 `;
 
 export const CardContainer = styled.div`
     display: flex;
     flex: 1;
     flex-direction: column;
+    align-items: center;
     height: 100%;
+
     @media(max-width: 520px) {
         flex: unset;
         justify-content: space-around;
         width: 100%;
-        flex-direction: row
+        flex-direction: row;
+        align-items: unset;
+    }
+
+    @media(max-width: 400px) {
+        flex-direction: column;
+        justify-content: unset;
+        align-items: center;
+        height: auto;
     }
 `;
 
 export const CardImageContainer = styled.div`
     display: flex;
     height: 300px;
+    width: 200px;
     justify-content: center;
-
-    @media(max-width: 520px) {
-        height: 242px;
-
-        > img {
-            width: 242px;
-            height: 242px;
-        }
-    }
-
-    @media(max-width: 800px) {
-        height: 300px;
-        
-        > img {
-            width: 100px
-        }
-    }
+    flex-shrink: 1;
 
     > img {
         height: 100%;
-        width: 200px;
+        width: 100%;
         border-radius: 15px;
+    }
+
+    @media(max-width: 460px) {
+        width: 150px;
+        height: 250px;
+    }
+
+    @media(max-width: 400px) {
+        width: 180px;
+        height: 180px;
     }
 `;
 
@@ -93,6 +108,10 @@ export const ProductInformationAndButtons = styled.div`
         width: 170px;
         min-height: 242px;
         align-content: center;
+    }
+
+    @media(max-width: 400px) {
+        width: 100%
     }
 `;
 

@@ -103,7 +103,7 @@ function App({ children }: any) {
         Query: {
           fields: {
             produtos: {
-              keyArgs: ['categorias', 'tarjas', 'concentracoes', 'principioAtivo', 'orderBy'],
+              keyArgs: ['categorias', 'tarjas', 'concentracoes', 'principioAtivo', 'orderBy', 'query'],
               merge(existing: ProdutosComPaginacao | undefined, incoming: ProdutosComPaginacao, {args}): ProdutosComPaginacao {
                 console.log(args)
                 return {

@@ -1,5 +1,5 @@
-query Produtos($orderBy:String, $pagina: Int!, $direction: String, $categorias: [String!], $tarjas: [String!], $concentracoes: [String!], $principioAtivo: [String!]) {
-  produtos(orderBy:$orderBy, pagina: $pagina, direction: $direction, categorias: $categorias, tarjas: $tarjas, concentracoes: $concentracoes, principioAtivo:$principioAtivo) {
+query Produtos($orderBy:String, $pagina: Int!, $direction: String, $categorias: [String!], $tarjas: [String!], $concentracoes: [String!], $principioAtivo: [String!], $query: String) {
+  produtos(orderBy:$orderBy, pagina: $pagina, direction: $direction, categorias: $categorias, tarjas: $tarjas, concentracoes: $concentracoes, principioAtivo:$principioAtivo, query: $query) {
     produtos {
       idProduto
       nomeProduto

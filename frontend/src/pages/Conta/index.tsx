@@ -65,9 +65,9 @@ const Conta: React.FC = () => {
     return isEditable ? (
         <Container>
             <Flex w='100%' mt={0} align='center' direction='column'>
-                <Heading size='2xl'>Informações da Conta</Heading>
+                <Heading size='2xl' textAlign='center' >Informações da Conta</Heading>
                 <Avatar size='2xl' mt={10} />
-                <Heading size='xl' mt={2}>{data?.me.nomeUser}</Heading>
+                <Heading size='xl' mt={2} textAlign='center'>{data?.me.nomeUser}</Heading>
                 <Flex w='100%' direction='column' mt={4}>
                     <Formik
                         initialValues={{
@@ -104,31 +104,31 @@ const Conta: React.FC = () => {
                     >
                         {({isSubmitting}) => (
                             <Form>
-                                <Stack w='100%'>
+                                <Stack w='100%' spacing={[3, '']}>
                                     <Text fontSize='2xl'><strong>CPF: </strong>{user?.cpf}</Text>
-                                    <Flex w='100%'>
+                                    <Flex w='100%' direction={['column', 'row']}>
                                         <Text fontSize='2xl' mr={3}><strong>Email: </strong></Text>
-                                        <InputField name='email'  placeholder='Email' />
+                                        <InputField name='email'  placeholder='Email' borderColor='blue.400' />
                                     </Flex>
-                                    <Flex w='100%'>
+                                    <Flex w='100%' direction={['column', 'row']}>
                                         <Text fontSize='2xl' mr={3}><strong>Telefone: </strong></Text>
-                                        <InputField name='telefone'  placeholder='CPF' />
+                                        <InputField name='telefone'  placeholder='Telefone' borderColor='blue.400' />
                                     </Flex>
-                                    <Flex w='100%'>
+                                    <Flex w='100%' direction={['column', 'row']}>
                                         <Text fontSize='2xl' mr={3}><strong>CEP: </strong></Text>
-                                        <InputField name='cep' placeholder='CEP' />
+                                        <InputField name='cep' placeholder='CEP' borderColor='blue.400' />
                                     </Flex>
-                                    <Flex w='100%'>
+                                    <Flex w='100%' direction={['column', 'row']}>
                                         <Text fontSize='2xl' mr={3}><strong>Rua: </strong></Text>
-                                        <InputField name='rua' placeholder='Rua' />
+                                        <InputField name='rua' placeholder='Rua' borderColor='blue.400' />
                                     </Flex>
-                                    <Flex w='100%'>
+                                    <Flex w='100%' direction={['column', 'row']}>
                                         <Text fontSize='2xl' mr={3}><strong>Número: </strong></Text>
-                                        <InputField name='numero' placeholder='Número' />
+                                        <InputField name='numero' placeholder='Número' borderColor='blue.400' />
                                     </Flex>
-                                    <Flex w='100%'>
+                                    <Flex w='100%' direction={['column', 'row']}>
                                         <Text fontSize='2xl' mr={3}><strong>Complemento: </strong></Text>
-                                        <InputField name='complemento' placeholder='Complemento' />
+                                        <InputField name='complemento' placeholder='Complemento' borderColor='blue.400' />
                                     </Flex>
                                 </Stack>
                                 <DefaultButton isLoading={isSubmitting} loadingText='Enviando informações...' type='submit'>Salvar alterações</DefaultButton>

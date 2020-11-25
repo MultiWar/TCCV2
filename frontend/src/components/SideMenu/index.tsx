@@ -1,9 +1,9 @@
-import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, Image, Stack, Text, useDisclosure } from '@chakra-ui/core';
-import React from 'react';
+import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, Image, Input, Stack, Text, useDisclosure } from '@chakra-ui/core';
+import React, { useRef, useState } from 'react';
 import { DefaultButton } from '../DefaultButton';
 import {useHistory} from 'react-router-dom'
 
-import { Container } from './styles';
+import { ButtonContainer, Container, Search, SearchIcon } from './styles';
 import AvatarComponentSidebar from '../AvatarComponentSidebar';
 import { useLogoutMutation, useMeQuery } from '../../generated/graphql';
 import logoBranca from '../../testImages/logoBrancoHorizontal.png'
@@ -11,9 +11,13 @@ import CartComponent from '../CartComponent';
 import { useRecoilState } from 'recoil';
 import { ShoppingCart } from '../../atoms/cart';
 import { accessToken } from '../../atoms/accessToken';
+import SearchBar from '../SearchBar';
+import { motion } from 'framer-motion';
 
 const SideMenu: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [isSearch, setIsSearch] = useState(false)
+  const searchInput = useRef<HTMLInputElement>(null)
   const history = useHistory()
   const {data} = useMeQuery()
   const [token, setToken] = useRecoilState(accessToken)
@@ -26,6 +30,25 @@ const SideMenu: React.FC = () => {
       await client.resetStore()
       setCart([])
       localStorage.setItem('carrinho', JSON.stringify([]))
+  }
+
+  const buttonVariants = {
+    Default: {
+      width: '100%',
+      paddingTop: 3,
+      paddingBottom: 3,
+      backgroundColor: 'transparent',
+      borderRadius: 4,
+      rotate: 0
+    },
+    SearchIconButton: {
+      width: 40,
+      padding: 7.5,
+      height: 40,
+      backgroundColor: '#258BE9',
+      borderRadius: 20,
+      rotate: -270
+    }
   }
   
   return (
@@ -56,9 +79,31 @@ const SideMenu: React.FC = () => {
                 <Button type='button' background='transparent' _hover={{backgroundColor: 'gray.900'}} onClick={() => {history.push('/'); onClose()}}>
                   <Text fontSize='xl'>Página Inicial</Text>
                 </Button>
-                <Button type='button' background='transparent' _hover={{backgroundColor: 'gray.900'}} onClick={() => {history.push('/'); onClose()}}>
-                  <Text fontSize='xl'>Busca</Text>
-                </Button>
+                <Flex background='transparent' borderRadius='20px' >
+                  <motion.button
+                    variants={buttonVariants}
+                    initial={isSearch ? 'SearchIconButton' :"Default"}
+                    animate={isSearch ? 'SearchIconButton' :"Default"}
+                    transition={{
+                      duration: 0.8,
+                      ease: 'easeInOut', 
+                    }}
+                    onClick={() => setIsSearch(prevValue => !prevValue)}
+                  >
+                    {isSearch ? <SearchIcon /> : <Text fontSize='xl'>Busca</Text>}
+                  </motion.button>
+                  {/* <Search ref={searchInput} />
+                  <DefaultButton
+                    w='40px'
+                    h='40px'
+                    borderRadius='50%'
+                    border='1px solid black'
+                    mt={0}
+                    p={3}
+                    onClick={() => {history.push(`/?query=${searchInput.current?.value}`); onClose()}}
+                  ><SearchIcon /></DefaultButton> */}
+                </Flex>
+                  
               </Stack>
             </Flex>
           </DrawerBody>

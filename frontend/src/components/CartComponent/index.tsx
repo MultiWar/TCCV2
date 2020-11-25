@@ -63,6 +63,7 @@ const CartComponent: React.FC = () => {
                     {isLoading ? (
                         <div>Loading...</div>
                     ) : 
+                    cart.length === 0 ? <h1>Seu carrinho está vazio</h1> :
                     <Stack spacing={4}>
                         {cart.map((produto, index) => (
                             <Flex key={produto.idProduto} backgroundColor='gray.200' border='1px solid black' pr={2} w='100%' justify='space-between' borderRadius={4}>

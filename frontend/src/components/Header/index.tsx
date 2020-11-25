@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Button, Flex, Image, Stack, Text } from '@chakra-ui/core';
+import { Box, Button, Flex, Image, Stack, Text } from '@chakra-ui/core';
 import {useHistory} from 'react-router-dom'
-import { useRecoilState } from 'recoil';
+import { atom, useRecoilState } from 'recoil';
 import { accessToken } from '../../atoms/accessToken';
 import { useMeQuery, useLogoutMutation } from '../../generated/graphql';
 import AvatarComponent from '../AvatarComponent';
@@ -10,10 +10,15 @@ import logoBranca from '../../testImages/logoBrancoHorizontal.png'
 import CartComponent from '../CartComponent';
 import SearchBar from '../SearchBar';
 
+export const isSearchBarVisible = atom({
+  key: 'isVisible',
+  default: false
+})
+
 const Header: React.FC = () => {
   const [, setToken] = useRecoilState(accessToken)
+  const [isVisible, setIsVisible] = useRecoilState(isSearchBarVisible)
   const [logout, {client}] = useLogoutMutation()
-  const [isSearchBarVisible, setIsSearchBarVisible] = useState(false)
   const history = useHistory()
   const {data, loading} = useMeQuery()
 
@@ -38,10 +43,8 @@ const Header: React.FC = () => {
   else {
     endOfNavbar = (
       <Flex direction='row' flexShrink={1}>
-        <Flex maxWidth='330px'>
-          <CartComponent />
-          <AvatarComponent />
-        </Flex>
+        <CartComponent />
+        <AvatarComponent />
       </Flex>
     )
   }
@@ -55,7 +58,11 @@ const Header: React.FC = () => {
               </Button>
             </Stack>
           </Flex>
-          {isSearchBarVisible ? (null) : <Image h='50px' mb={2} src={logoBranca} mr = {(!data && !loading) ? ['unset', '-72px', '-72px', '-75px'] : ['unset', '-50px', '-170px', '-170px']} />}
+          <Flex w='100%' justify='space-between'>
+            <Box w='40px' />
+            {isVisible ? (null) : <Image h='50px' mr = {(!data && !loading) ? ['unset', '-72px', '-72px', '-75px'] : ['unset', '-50px', '-170px', '-170px']} mb={2} src={logoBranca}  justifySelf='center' />}
+            <SearchBar />
+          </Flex>
           <Flex>
             {endOfNavbar}
           </Flex>
