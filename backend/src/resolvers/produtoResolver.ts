@@ -64,6 +64,18 @@ export class produtoResolver {
         return produto
     }
 
+    @Query(() => [Produto])
+    async produtosSimilares(
+        @Arg('categoria') categoria: string
+    ): Promise<Produto[]> {
+        const qb = getConnection()
+            .getRepository(Produto)
+            .createQueryBuilder('p')
+            .take(6)
+        const produtos = await qb.where('categoria = :categoria', {categoria}).getMany()
+        return produtos
+    }
+
     @Mutation(() => Produto)
     async criarProdutos(
         @Arg('nome') nome: string,

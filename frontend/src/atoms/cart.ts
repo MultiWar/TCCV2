@@ -4,7 +4,6 @@ interface Produto {
     idProduto: number,
     nomeProduto: string,
     preco: string,
-    imagem: string,
     quantidade: number
     // imagemProduto: ImageBitmap
 }
@@ -15,3 +14,5 @@ export const ShoppingCart = atom<Produto[]>({
     key: 'cart',
     default: carrinhoInicial ? JSON.parse(carrinhoInicial) : []
 })
+
+// SELECT * FROM tblProduto WHERE idProduto IN (SELECT idProduto FROM tblFavoritos WHERE idUsuario = idUsuarioLogado)

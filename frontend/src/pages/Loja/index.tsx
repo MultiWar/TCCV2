@@ -28,9 +28,7 @@ const Loja: React.FC = () => {
         idProduto: number,
         nomeProduto: string,
         preco: string,
-        quantidade: number,
-        imagem: string
-        // imagemProduto: ImageBitmap
+        quantidade: number
     }
     
     const addToCart = (produto: Produto) => {
@@ -49,20 +47,11 @@ const Loja: React.FC = () => {
         localStorage.setItem('carrinho', JSON.stringify(carrinhoNovo))
     }
     
-    const getCart = (): Produto[] => {
-        return cart
-    }
-    
     const removeFromCart = (id: number) => {
         let carrinhoAntigo = [...cart]
         let carrinhoNovo = carrinhoAntigo.filter(produto => produto.idProduto !== id)
         setCart(carrinhoNovo) 
         localStorage.setItem('carrinho', JSON.stringify(carrinhoNovo))
-    }
-    
-    const clearCart = () => {
-        setCart([])
-        localStorage.removeItem('carrinho')
     }
 
     const getDefaultValue = (): string[] | undefined => {
@@ -227,7 +216,7 @@ const Loja: React.FC = () => {
                         if(produtoNoCarrinho.idProduto === produto.idProduto) {
                             isAlreadyInCart = true
                         }
-                        })
+                    })
                     return (
                         <Card key={produto.idProduto}>
                             <Box w='100%' mb={2} textAlign='center' pt={2}>

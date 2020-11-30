@@ -1,0 +1,8 @@
+query ProdutosSimilares ($categoria:String!) {
+  produtosSimilares (categoria: $categoria) {
+    idProduto
+    nomeProduto
+    preco
+    tarja
+  }
+}

@@ -6,6 +6,7 @@ query Produto($idProduto:String!) {
     preco,
     tarja,
     principioAtivo,
-    concentracao
+    concentracao,
+    numeroDeUnidades
   }
 }

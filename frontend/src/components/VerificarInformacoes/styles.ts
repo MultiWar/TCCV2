@@ -4,7 +4,7 @@ export const Container = styled.div`
   
 `;
 
-export const EditInput = styled.input`
+export const RadioButton = styled.input`
     
 `;
 

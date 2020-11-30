@@ -18,6 +18,7 @@ export type Query = {
   testeAqui: TblUser;
   produtos: ProdutosComPaginacao;
   produto: TblProduto;
+  produtosSimilares: Array<TblProduto>;
 };
 
 
@@ -35,6 +36,11 @@ export type QueryProdutosArgs = {
 
 export type QueryProdutoArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryProdutosSimilaresArgs = {
+  categoria: Scalars['String'];
 };
 
 export type TblUser = {
@@ -61,10 +67,11 @@ export type TblProduto = {
   descricao: Scalars['String'];
   categoria: Scalars['String'];
   preco: Scalars['String'];
-  tarja: Scalars['String'];
-  principioAtivo: Scalars['String'];
+  tarja?: Maybe<Scalars['String']>;
+  principioAtivo?: Maybe<Scalars['String']>;
   imagem: Scalars['String'];
-  concentracao: Scalars['String'];
+  concentracao?: Maybe<Scalars['String']>;
+  numeroDeUnidades: Scalars['Float'];
   idFornecedor: Scalars['String'];
 };
 
@@ -273,7 +280,7 @@ export type ProdutoQuery = (
   { __typename?: 'Query' }
   & { produto: (
     { __typename?: 'tblProduto' }
-    & Pick<TblProduto, 'nomeProduto' | 'descricao' | 'categoria' | 'preco' | 'tarja' | 'principioAtivo' | 'concentracao'>
+    & Pick<TblProduto, 'nomeProduto' | 'descricao' | 'categoria' | 'preco' | 'tarja' | 'principioAtivo' | 'concentracao' | 'numeroDeUnidades'>
   ) }
 );
 
@@ -296,9 +303,22 @@ export type ProdutosQuery = (
     & Pick<ProdutosComPaginacao, 'hasMore'>
     & { produtos: Array<(
       { __typename?: 'tblProduto' }
-      & Pick<TblProduto, 'idProduto' | 'nomeProduto' | 'descricao' | 'categoria' | 'preco' | 'tarja' | 'principioAtivo' | 'concentracao' | 'imagem'>
+      & Pick<TblProduto, 'idProduto' | 'nomeProduto' | 'descricao' | 'categoria' | 'preco' | 'tarja' | 'principioAtivo' | 'concentracao'>
     )> }
   ) }
+);
+
+export type ProdutosSimilaresQueryVariables = Exact<{
+  categoria: Scalars['String'];
+}>;
+
+
+export type ProdutosSimilaresQuery = (
+  { __typename?: 'Query' }
+  & { produtosSimilares: Array<(
+    { __typename?: 'tblProduto' }
+    & Pick<TblProduto, 'idProduto' | 'nomeProduto' | 'preco' | 'tarja'>
+  )> }
 );
 
 export type TesteAuthQueryVariables = Exact<{ [key: string]: never; }>;
@@ -574,6 +594,7 @@ export const ProdutoDocument = gql`
     tarja
     principioAtivo
     concentracao
+    numeroDeUnidades
   }
 }
     `;
@@ -615,7 +636,6 @@ export const ProdutosDocument = gql`
       tarja
       principioAtivo
       concentracao
-      imagem
     }
     hasMore
   }
@@ -654,6 +674,42 @@ export function useProdutosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<P
 export type ProdutosQueryHookResult = ReturnType<typeof useProdutosQuery>;
 export type ProdutosLazyQueryHookResult = ReturnType<typeof useProdutosLazyQuery>;
 export type ProdutosQueryResult = Apollo.QueryResult<ProdutosQuery, ProdutosQueryVariables>;
+export const ProdutosSimilaresDocument = gql`
+    query ProdutosSimilares($categoria: String!) {
+  produtosSimilares(categoria: $categoria) {
+    idProduto
+    nomeProduto
+    preco
+    tarja
+  }
+}
+    `;
+
+/**
+ * __useProdutosSimilaresQuery__
+ *
+ * To run a query within a React component, call `useProdutosSimilaresQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProdutosSimilaresQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProdutosSimilaresQuery({
+ *   variables: {
+ *      categoria: // value for 'categoria'
+ *   },
+ * });
+ */
+export function useProdutosSimilaresQuery(baseOptions?: Apollo.QueryHookOptions<ProdutosSimilaresQuery, ProdutosSimilaresQueryVariables>) {
+        return Apollo.useQuery<ProdutosSimilaresQuery, ProdutosSimilaresQueryVariables>(ProdutosSimilaresDocument, baseOptions);
+      }
+export function useProdutosSimilaresLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProdutosSimilaresQuery, ProdutosSimilaresQueryVariables>) {
+          return Apollo.useLazyQuery<ProdutosSimilaresQuery, ProdutosSimilaresQueryVariables>(ProdutosSimilaresDocument, baseOptions);
+        }
+export type ProdutosSimilaresQueryHookResult = ReturnType<typeof useProdutosSimilaresQuery>;
+export type ProdutosSimilaresLazyQueryHookResult = ReturnType<typeof useProdutosSimilaresLazyQuery>;
+export type ProdutosSimilaresQueryResult = Apollo.QueryResult<ProdutosSimilaresQuery, ProdutosSimilaresQueryVariables>;
 export const TesteAuthDocument = gql`
     query TesteAuth {
   testeAuth

@@ -8,13 +8,14 @@ import { tblProgEntrega } from "./ProgEntrega";
 @ObjectType()
 @Entity()
 export class tblProduto extends BaseEntity {
-    //both idProduto and idFornecedor shoud eventually be replaced back to uuid and string
+    // both idProduto and idFornecedor shoud eventually be replaced back to uuid and string
+    // SPOILER: they won't
     @Field()
     @PrimaryGeneratedColumn()
     idProduto!: number
 
     @Field()
-    @Column('varchar', {length: 20})
+    @Column('varchar', {length: 40})
     nomeProduto!: string
     
     @Field()
@@ -29,21 +30,25 @@ export class tblProduto extends BaseEntity {
     @Column('money')
     preco!: string
     
-    @Field()
-    @Column('varchar', {length: 10})
+    @Field({nullable: true})
+    @Column('varchar', {length: 10, nullable: true})
     tarja?: string
     
-    @Field()
-    @Column('varchar', {length: 50})
+    @Field({nullable: true})
+    @Column('varchar', {length: 60, nullable: true})
     principioAtivo?: string
 
     @Field()
-    @Column('varchar', {length: 100})
-    imagem: string
+    @Column('varchar', {length: 1200})
+    imagem: string 
+    
+    @Field({nullable: true})
+    @Column('varchar', {length: 10, nullable: true})
+    concentracao?: string 
     
     @Field()
-    @Column('varchar', {length: 5})
-    concentracao?: string
+    @Column('int')
+    numeroDeUnidades?: Number
 
     @Field(() => String)
     @ManyToOne(() => tblFornecedor, fornecedor => fornecedor.produtos)
