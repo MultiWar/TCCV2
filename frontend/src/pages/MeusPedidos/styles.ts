@@ -5,7 +5,7 @@ export const Container = styled.div`
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
-    max-width: 1000px;
+    max-width: 800px;
     margin: 50px auto;
 
     @media(max-width: 510px) {
@@ -21,15 +21,16 @@ export const Card = styled.div`
     flex: 1;
     justify-content: space-between;
     max-width: 250px;
+    min-width: 230px;
     min-height: 330px;
     flex-direction: column;
     background-color: ${props => lighten(0.05, props.theme.colors.secondaryText)};
     padding: 10px 25px;
     border-radius: 10px;
     box-shadow: 2px 2px 8px #333;
+    margin-top: 25px;
 
     @media(max-width: 520px) { 
-        margin-top: 25px;
         width: 90%;
     }
 `;

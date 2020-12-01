@@ -4,6 +4,7 @@ import { Button, Flex, Heading, Image, Stack, Text } from '@chakra-ui/core';
 import {useRecoilState} from 'recoil'
 import { ShoppingCart } from '../../atoms/cart';
 import { TabIndex } from '../../atoms/tabIndex';
+import { subtotal as subtt } from '../../atoms/subtt';
 import useGetTotal from '../../utils/getTotal';
 import { useHistory } from 'react-router-dom';
 import { DefaultButton } from '../DefaultButton';
@@ -13,6 +14,7 @@ import { DefaultButton } from '../DefaultButton';
 const ListaProdutosCheckout: React.FC = () => {
   const [cart, setCart] = useRecoilState(ShoppingCart)
   const [tabIndex, setTabIndex] = useRecoilState(TabIndex)
+  const [, setSubtotal] = useRecoilState(subtt)
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const subtotal = useGetTotal()
   const history = useHistory()
@@ -129,7 +131,7 @@ const ListaProdutosCheckout: React.FC = () => {
             </Flex>
           ))}
           <Text fontSize={['xl', '2xl', '3xl']} >Subtotal: R$ {subtotal}</Text>
-          <DefaultButton onClick={() => setTabIndex(prevValue => prevValue + 1)}>Prosseguir</DefaultButton>
+          <DefaultButton onClick={() => {setTabIndex(prevValue => prevValue + 1); setSubtotal(subtotal)}}>Prosseguir</DefaultButton>
         </Stack>
       </Flex>
   );

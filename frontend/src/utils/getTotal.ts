@@ -1,7 +1,7 @@
 import {useRecoilState} from 'recoil'
 import { ShoppingCart } from '../atoms/cart';
 
-export default function useGetTotal (): Number {
+export default function useGetTotal (): number {
     const [cart] = useRecoilState(ShoppingCart)
 
     let somaPrecos = 0;

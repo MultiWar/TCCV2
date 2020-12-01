@@ -10065,6 +10065,16 @@ package-json@^6.3.0:
     registry-url "^5.0.0"
     semver "^6.2.0"
 
+pagarme-js-types@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/pagarme-js-types/-/pagarme-js-types-2.6.0.tgz#3c6ab507f11af336409812fc60ace0d745c1ad8d"
+  integrity sha512-ff0XFEE83StzyfiMYhOdjjRdtaEiX7dBPMLWpCq9JcshFZxZh8zIU3ph8L5eQH+R9mKNXp9uUzlcqfOhEb9EYw==
+
+pagarme@^4.13.0:
+  version "4.13.0"
+  resolved "https://registry.yarnpkg.com/pagarme/-/pagarme-4.13.0.tgz#f15cd9186f5df6072acc82ce12834e7fef2f5b0e"
+  integrity sha512-5fOQTyw8pCbJvbqXdjlakKs2IU70vghcyalXZHMFSyO2vPJtzKpWbYnXC5EzAvF/zfNhRhuIIOGZZR4FAO4Vqw==
+
 pako@~1.0.5:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.11.tgz#6c9599d340d54dfd3946380252a35705a6b992bf"

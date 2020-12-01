@@ -41,8 +41,8 @@ export const Card = styled.div`
         margin-right: 5px;
     }
 
-    > p, h1, h2, h3, strong, button {
-        opacity: 1
+    & h2 {
+        font-family: 'Raleway';
     }
 
     /* @media(max-width: 460px) {
@@ -71,6 +71,8 @@ export const CardContainer = styled.div`
         align-items: center;
         height: auto;
     }
+    
+    
 `;
 
 export const CardImageContainer = styled.div`
@@ -118,6 +120,10 @@ export const ProductInformationAndButtons = styled.div`
 export const ProductInformations = styled.div`
     display: flex;
     flex-direction: column;
+
+    & strong {
+        font-family: 'Montserrat'
+    }
 `;
 
 export const ProductButtons = styled.div`

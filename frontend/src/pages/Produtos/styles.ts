@@ -84,6 +84,7 @@ export const Categoria = styled.div`
     justify-content: center;
     align-items: center;
     > h4 {
+        font-family: 'Raleway';
         font-size: 18px;
         margin-top: 5px;
         margin-bottom: 7px;
@@ -100,6 +101,7 @@ export const Tarja = styled.div<{cor: {background: string, text: string}}>`
     border-left: 2px solid black;
     border-right: 2px solid black;
     > h2 {
+        font-family: 'Raleway';
         color: ${props => props.cor.text};
         font-size: 28px;
     }
@@ -122,6 +124,8 @@ export const CardComprar = styled.div`
     margin: 40px 0;
     padding: 20px 10px;
     > h1 {
+        font-family: 'Montserrat';
+        font-weight: 600;
         font-size: 35px;
     }
 `
@@ -157,6 +161,8 @@ export const NomeRemedio = styled.div`
     line-height: 1.1;
     
     > h1 {
+        font-family: 'Raleway';
+        font-weight: 600;
         font-size: 40px;
     }
 `
@@ -189,6 +195,7 @@ export const Descricao = styled.div`
     padding: 6px;
     
     > p {
+        font-family: 'Raleway';
         font-size: 18px;
     }
 `

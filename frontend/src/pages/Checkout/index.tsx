@@ -6,6 +6,7 @@ import { useRecoilState } from 'recoil';
 import ListaProdutosCheckout from '../../components/ListaProdutosCheckout';
 import { TabIndex } from '../../atoms/tabIndex';
 import VerificarInformacoes from '../../components/VerificarInformacoes';
+import ConfirmPurchase from '../../components/ConfirmPurchase';
 
 const Checkout: React.FC = () => {
   const [tabIndex, setTabIndex] = useRecoilState(TabIndex)
@@ -41,6 +42,9 @@ const Checkout: React.FC = () => {
             </TabPanel>
             <TabPanel>
               <VerificarInformacoes />
+            </TabPanel>
+            <TabPanel>
+              <ConfirmPurchase />
             </TabPanel>
           </TabPanels>
         </Tabs>

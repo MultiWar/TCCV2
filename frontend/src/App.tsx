@@ -114,6 +114,9 @@ function App({ children }: any) {
             },
             me: {
               keyArgs: ['idUser']
+            },
+            meusPedidos: {
+              keyArgs: ['cpf']
             }
           }
         }
