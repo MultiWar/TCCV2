@@ -98,6 +98,7 @@ export type TblDetalhePedido = {
   __typename?: 'tblDetalhePedido';
   idPedido: Scalars['String'];
   idProduto: Scalars['Float'];
+  nomeProduto: Scalars['String'];
   qtde: Scalars['Float'];
 };
 
@@ -196,6 +197,7 @@ export type LoginInput = {
 
 export type ProdutoAdicionado = {
   idProduto: Scalars['Float'];
+  nomeProduto: Scalars['String'];
   quantidade: Scalars['Float'];
 };
 
@@ -336,7 +338,7 @@ export type MeusPedidosQuery = (
     & Pick<TblPedido, 'idPedido' | 'status' | 'valorFinal' | 'dataPedido' | 'dataEntrega'>
     & { detalhesPedido: Array<(
       { __typename?: 'tblDetalhePedido' }
-      & Pick<TblDetalhePedido, 'idProduto' | 'qtde'>
+      & Pick<TblDetalhePedido, 'idProduto' | 'nomeProduto' | 'qtde'>
     )> }
   )> }
 );
@@ -697,6 +699,7 @@ export const MeusPedidosDocument = gql`
     dataEntrega
     detalhesPedido {
       idProduto
+      nomeProduto
       qtde
     }
   }

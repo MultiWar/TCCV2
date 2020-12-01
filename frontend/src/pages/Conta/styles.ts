@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import { lighten } from 'polished';
-import { FaUserEdit } from 'react-icons/fa'
+import { FaUserEdit, FaClipboardList } from 'react-icons/fa'
+import { IoIosList } from 'react-icons/io'
 
 export const Container = styled.div`
     margin: 50px auto;
@@ -23,9 +24,13 @@ const IconCss = css`
     height: 25px;
     width: 25px;
     fill: ${props => props.theme.colors.secondaryText};
-    margin-left: 8px
+    margin-left: 8px;
 `;
 
 export const EditIcon = styled(FaUserEdit)`
-    ${IconCss}
+    ${IconCss};
 `;
+
+export const ListIcon = styled(FaClipboardList)`
+    ${IconCss};
+`

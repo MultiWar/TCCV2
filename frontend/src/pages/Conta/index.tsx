@@ -1,12 +1,13 @@
 import { Avatar, Flex, Heading, Skeleton, Stack, stringOrNumber, Text } from '@chakra-ui/core';
 import { Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { DefaultButton } from '../../components/DefaultButton';
 import { InputField } from '../../components/inputField';
 import { useMeQuery, useChangeUserInformationMutation } from '../../generated/graphql';
 import { toErrorMap } from '../../utils/toErrorMap';
 
-import { Container, EditIcon } from './styles';
+import { Container, EditIcon, ListIcon } from './styles';
 
 interface User {
     nomeUser: string,
@@ -21,6 +22,8 @@ const Conta: React.FC = () => {
     const [changeUserInformation] = useChangeUserInformationMutation()
     const [isLoading, setIsLoading] = useState(true)
     const [user, setUser] = useState<User | undefined>(undefined)
+
+    const history = useHistory()
 
     const getData = () => {
         setUser({
@@ -54,6 +57,7 @@ const Conta: React.FC = () => {
                     <Skeleton w='40%' h='28px' mt='10px' />
                     <Skeleton w='80%' h='28px' mt='10px' />
                     <Skeleton w='100%' h='40px' mt={5} />
+                    <Skeleton w='100%' h='40px' mt={2} />
                 </Flex>
             </Flex>
         )
@@ -154,6 +158,7 @@ const Conta: React.FC = () => {
                     {user?.endereco.split(',')[3] ? <Text fontSize='2xl'><strong>Complemento: </strong>{user?.endereco.split(',')[3]}</Text> : null}
                 </Flex>
                 <DefaultButton onClick={() => setIsEditable(prevState => !prevState)}>Editar Informações <EditIcon /></DefaultButton>
+                <DefaultButton mt={2} onClick={() => history.push('/conta/pedidos')}>Meus Pedidos <ListIcon /></DefaultButton>
             </Flex>
         </Container>
     );

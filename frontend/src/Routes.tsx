@@ -6,6 +6,7 @@ import Checkout from './pages/Checkout';
 import Conta from './pages/Conta';
 import Login from './pages/Login';
 import Loja from './pages/Loja';
+import MeusPedidos from './pages/MeusPedidos';
 import Produtos from './pages/Produtos';
 import Teste from './pages/Teste';
 
@@ -18,7 +19,8 @@ const Routes = () => {
             <Route path='/teste' component={Teste} />
             <Route path='/produtos/:produto' component={Produtos} />
             <Route path='/trocarSenha/:paramToken' component={ChangePassword} />
-            <Route path='/conta' component={Conta} />
+            <Route exact path='/conta' component={Conta} />
+            <Route exact path='/conta/pedidos' component={MeusPedidos} />
             <Route path='/confirmarCompra' component={Checkout} />
         </Switch>
     )

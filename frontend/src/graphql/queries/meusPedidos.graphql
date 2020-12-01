@@ -7,6 +7,7 @@ query MeusPedidos($cpf: String!) {
     dataEntrega
     detalhesPedido {
       idProduto
+      nomeProduto
       qtde
     }
   }

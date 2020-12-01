@@ -9,15 +9,19 @@ export class tblDetalhePedido extends BaseEntity {
 
     @Field(() => String)
     @PrimaryColumn('uuid')
-    @ManyToOne(() => tblPedido, pedido => pedido.detalhesPedido)
+    @ManyToOne(() => tblPedido, pedido => pedido.detalhesPedido, {onDelete: 'CASCADE'})
     @JoinColumn({name: 'idPedido'})
     idPedido!: tblPedido
 
     @Field(() => Number)
     @PrimaryColumn('int')
-    @ManyToOne(() => tblProduto, produto => produto.detalhesPedido)
+    @ManyToOne(() => tblProduto, produto => produto.detalhesPedido, {onDelete: 'CASCADE'})
     @JoinColumn({name: 'idProduto'})
     idProduto!: tblProduto
+
+    @Field(() => String)
+    @Column('varchar', {length: 30})
+    nomeProduto: string
 
     @Field()
     @Column('int')

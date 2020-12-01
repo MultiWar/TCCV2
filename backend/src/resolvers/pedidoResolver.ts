@@ -9,6 +9,9 @@ import { tblUser } from '../entitites/User';
 export class ProdutoAdicionado {
     @Field(() => Number)
     idProduto: number
+    
+    @Field(() => String)
+    nomeProduto: string
 
     @Field(() => Number)
     quantidade: number
@@ -51,7 +54,7 @@ export class PedidoResolver {
 
         const date = new Date()
         const orderDay = date.getDate()
-        const orderMonth = date.getMonth()
+        const orderMonth = date.getMonth() + 1
         const orderYear = date.getFullYear()
 
         let dia = orderDay + prazoDeEntrega
@@ -106,6 +109,7 @@ export class PedidoResolver {
                 let Detalhe = new tblDetalhePedido()
                 Detalhe.idPedido = pedido
                 Detalhe.idProduto = product as tblProduto
+                Detalhe.nomeProduto = product?.nomeProduto as string
                 Detalhe.qtde = produto.quantidade
 
                 detalhesPedido.push(Detalhe)

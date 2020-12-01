@@ -40,7 +40,7 @@ export class tblPedido extends BaseEntity {
     idFuncionario?: tblFuncionario
 
     @Field(() => String)
-    @ManyToOne(() => tblUser, user => user.pedidos)
+    @ManyToOne(() => tblUser, user => user.pedidos, {onDelete: 'CASCADE'})
     @JoinColumn({name: 'idUser'})
     idUser!: tblUser
 
