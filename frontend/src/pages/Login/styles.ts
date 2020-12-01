@@ -1,7 +1,7 @@
 import styled, {css} from 'styled-components';
 import {AiOutlineEyeInvisible, AiOutlineEye} from 'react-icons/ai'
 import {Link} from 'react-router-dom'
-import { shade, lighten } from 'polished'
+import { lighten } from 'polished'
 
 export const Container = styled.div`
     margin: 50px auto;

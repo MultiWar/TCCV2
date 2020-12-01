@@ -6,13 +6,12 @@ import { accessToken } from '../../atoms/accessToken'
 import { ShoppingCart } from '../../atoms/cart'
 import { useLogoutMutation, useMeQuery } from '../../generated/graphql'
 import { DefaultButton } from '../DefaultButton'
-import { Container } from './styles'
 
 const AvatarComponent: React.FC = () => {
     const history = useHistory()
     const {data} = useMeQuery()
-    const [token, setToken] = useRecoilState(accessToken)
-    const [_, setCart] = useRecoilState(ShoppingCart)
+    const [, setToken] = useRecoilState(accessToken)
+    const [, setCart] = useRecoilState(ShoppingCart)
     const [logout, {client}] = useLogoutMutation()
 
     async function clearSession() {
@@ -24,7 +23,7 @@ const AvatarComponent: React.FC = () => {
     }
     
     return (
-        <Popover placement='bottom-end'>
+        <Popover placement='bottom-end' closeOnBlur={true}>
             <PopoverTrigger>
                 <Box alignItems='center' justifyContent='space-between' w='100%' display={['none', 'none','none', 'unset']}>
                     <Button background='transparent' _hover={{backgroundColor: '#555'}} h='100%' fontSize='lg' fontWeight='regular'>

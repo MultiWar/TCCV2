@@ -1,18 +1,16 @@
-import { Flex, Text, useToast } from '@chakra-ui/core';
+import { Flex, Text } from '@chakra-ui/core';
 import { Form, Formik } from 'formik';
-import { responsePathAsArray } from 'graphql';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { ShoppingCart } from '../../atoms/cart';
 import { meioDeEnvio } from '../../atoms/meioDeEnvio';
 import { subtotal as subtt } from '../../atoms/subtt';
+import { TabIndex } from '../../atoms/tabIndex';
 import { useFazerPedidoMutation, useMeQuery } from '../../generated/graphql';
-import CartComponent from '../CartComponent';
 import { DefaultButton } from '../DefaultButton';
 import { InputField } from '../inputField';
 
-import { Container } from './styles';
 
 interface ProdutoAdicionado {
     idProduto: number,
@@ -21,12 +19,12 @@ interface ProdutoAdicionado {
 }
  
 const ConfirmPurchase: React.FC = () => {
-    const toast = useToast()
     const history = useHistory()
     const {data} = useMeQuery()
     const [fazerPedido] = useFazerPedidoMutation()
     const [meioDeEnvioEscolhido] = useRecoilState(meioDeEnvio)
     const [cart, setCart] = useRecoilState(ShoppingCart)
+    const [,setTabIndex] = useRecoilState(TabIndex)
     const [subtotal] = useRecoilState(subtt)
 
     let produtos: ProdutoAdicionado[] = []
@@ -54,6 +52,8 @@ const ConfirmPurchase: React.FC = () => {
                 })
                 if(!response.errors) {
                     setCart([])
+                    setTabIndex(0)
+                    history.push('/')
                 }
                 else {
                     alert('foda-se')
@@ -63,19 +63,19 @@ const ConfirmPurchase: React.FC = () => {
             {({isSubmitting}) => (
                 <Form>
                     <Flex mt={4}>
-                        <Text>Número do cartão: </Text>
+                        <Text><strong>Número do cartão: </strong></Text>
                         <InputField name='numeroCartao' placeholder='NÚMERO DO CARTÃO' ml={2} />
                     </Flex>
                     <Flex mt={2}>
-                        <Text>Nome completo: </Text>
+                        <Text><strong>Nome completo: </strong></Text>
                         <InputField name='nomeCompleto' placeholder='NOME COMPLETO' ml={2} />
                     </Flex>
                     <Flex mt={2}>
-                        <Text>Data de validade: </Text>
+                        <Text><strong>Data de validade: </strong></Text>
                         <InputField name='dataDeValidade' placeholder='DATA DE VALIDADE' ml={2} />
                     </Flex>
                     <Flex mt={2}>
-                        <Text>Código de verificação: </Text>
+                        <Text><strong>Código de verificação: </strong></Text>
                         <InputField name='codigoVerificacao' placeholder='CÓDIGO DE VERIFICAÇÃO' ml={2} />
                     </Flex>
                     <DefaultButton type='submit' isLoading={isSubmitting}>Enviar informações</DefaultButton>

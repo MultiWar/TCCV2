@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Button, Flex, Image, Stack, Text } from '@chakra-ui/core';
 import {useHistory} from 'react-router-dom'
 import { atom, useRecoilState } from 'recoil';
-import { accessToken } from '../../atoms/accessToken';
-import { useMeQuery, useLogoutMutation } from '../../generated/graphql';
+import { useMeQuery } from '../../generated/graphql';
 import AvatarComponent from '../AvatarComponent';
 import { Container } from './styles';
 import logoBranca from '../../testImages/logoBrancoHorizontal.png'
@@ -16,9 +15,7 @@ export const isSearchBarVisible = atom({
 })
 
 const Header: React.FC = () => {
-  const [, setToken] = useRecoilState(accessToken)
-  const [isVisible, setIsVisible] = useRecoilState(isSearchBarVisible)
-  const [logout, {client}] = useLogoutMutation()
+  const [isVisible] = useRecoilState(isSearchBarVisible)
   const history = useHistory()
   const {data, loading} = useMeQuery()
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Flex, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/core';
+import { Flex, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/core';
 
 import { Card } from './styles';
 import { useRecoilState } from 'recoil';

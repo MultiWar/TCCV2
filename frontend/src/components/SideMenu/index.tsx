@@ -1,9 +1,9 @@
-import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, Image, Input, Stack, Text, useDisclosure } from '@chakra-ui/core';
-import React, { useRef, useState } from 'react';
+import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, Image, Stack, Text, useDisclosure } from '@chakra-ui/core';
+import React, { useState } from 'react';
 import { DefaultButton } from '../DefaultButton';
 import {useHistory} from 'react-router-dom'
 
-import { ButtonContainer, Container, Search, SearchIcon } from './styles';
+import { Container, SearchIcon } from './styles';
 import AvatarComponentSidebar from '../AvatarComponentSidebar';
 import { useLogoutMutation, useMeQuery } from '../../generated/graphql';
 import logoBranca from '../../testImages/logoBrancoHorizontal.png'
@@ -11,17 +11,16 @@ import CartComponent from '../CartComponent';
 import { useRecoilState } from 'recoil';
 import { ShoppingCart } from '../../atoms/cart';
 import { accessToken } from '../../atoms/accessToken';
-import SearchBar from '../SearchBar';
 import { motion } from 'framer-motion';
+import SearchBar from '../SearchBar';
 
 const SideMenu: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [isSearch, setIsSearch] = useState(false)
-  const searchInput = useRef<HTMLInputElement>(null)
   const history = useHistory()
   const {data} = useMeQuery()
-  const [token, setToken] = useRecoilState(accessToken)
-  const [_, setCart] = useRecoilState(ShoppingCart)
+  const [, setToken] = useRecoilState(accessToken)
+  const [, setCart] = useRecoilState(ShoppingCart)
   const [logout, {client}] = useLogoutMutation()
 
   async function clearSession() {
@@ -80,18 +79,7 @@ const SideMenu: React.FC = () => {
                   <Text fontSize='xl'>Página Inicial</Text>
                 </Button>
                 <Flex background='transparent' borderRadius='20px' >
-                  <motion.button
-                    variants={buttonVariants}
-                    initial={isSearch ? 'SearchIconButton' :"Default"}
-                    animate={isSearch ? 'SearchIconButton' :"Default"}
-                    transition={{
-                      duration: 0.8,
-                      ease: 'easeInOut', 
-                    }}
-                    onClick={() => setIsSearch(prevValue => !prevValue)}
-                  >
-                    {isSearch ? <SearchIcon /> : <Text fontSize='xl'>Busca</Text>}
-                  </motion.button>
+                  <SearchBar />
                   {/* <Search ref={searchInput} />
                   <DefaultButton
                     w='40px'
@@ -110,7 +98,7 @@ const SideMenu: React.FC = () => {
           <DrawerFooter>
             {data?.me ?
               <Flex w='100%' direction='column'>
-                <AvatarComponentSidebar />
+                <CartComponent />
                 <DefaultButton w='100%' type='button' fontSize='xl' onClick={() => history.push('/conta')}>Gerenciar Conta</DefaultButton>
                 <DefaultButton w='100%' type='button' fontSize='xl' onClick={clearSession}>Sair da conta</DefaultButton>
               </Flex> :

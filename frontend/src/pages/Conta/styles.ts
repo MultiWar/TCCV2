@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components';
 import { lighten } from 'polished';
 import { FaUserEdit, FaClipboardList } from 'react-icons/fa'
-import { IoIosList } from 'react-icons/io'
 
 export const Container = styled.div`
     margin: 50px auto;

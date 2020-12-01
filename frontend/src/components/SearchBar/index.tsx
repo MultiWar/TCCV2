@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion'
 
 import { Container, Search, SearchIcon } from './styles';
@@ -10,7 +10,7 @@ import { searchQuery } from '../../atoms/searchQuery';
 
 const SearchBar: React.FC = () => {
   const [isVisible, setIsVisible] = useRecoilState(isSearchBarVisible)
-  const [_, setQuery] = useRecoilState(searchQuery)
+  const [, setQuery] = useRecoilState(searchQuery)
   const searchInput = useRef<HTMLInputElement>(null)
   const history = useHistory()
 
@@ -26,8 +26,6 @@ const SearchBar: React.FC = () => {
     }
     setIsVisible(false)
   }
-
-  const handleOnBlur = () => {} 
 
   return (
     <Container

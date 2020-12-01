@@ -19,7 +19,7 @@ interface ParamTypes {
 const ChangePassword: React.FC<ParamTypes> = () => {
     const [changePassword] = useChangePasswordMutation()
     const {paramToken} = useParams<ParamTypes>()
-    const [_, setToken] = useRecoilState(accessToken)
+    const [, setToken] = useRecoilState(accessToken)
     const [isPassword, setIsPassword] = useState(true)
     const toast = useToast()
     const history = useHistory()

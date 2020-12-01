@@ -22,10 +22,6 @@ const Login: React.FC = () => {
     const {isOpen, onOpen, onClose} = useDisclosure()
     const toast = useToast()
 
-    const onFocus = {
-        
-    }
-
     return (
         <>
             <Modal isOpen={isOpen} onClose={onClose} size='xl'>

@@ -1,17 +1,15 @@
-import { Popover, PopoverTrigger, Box, Button, PopoverContent, PopoverHeader, PopoverArrow, PopoverBody, Text, Icon, Stack, Flex, Image } from '@chakra-ui/core';
-import React, { useEffect, useState } from 'react';
+import { Popover, PopoverTrigger, Box, Button, PopoverContent, PopoverHeader, PopoverArrow, PopoverBody, Text, Stack, Flex, Image } from '@chakra-ui/core';
+import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { ShoppingCart } from '../../atoms/cart';
 import { FiShoppingCart } from 'react-icons/fi'
 import { DefaultButton } from '../DefaultButton';
-import { Link, useHistory } from 'react-router-dom';
-import { LinkBloco } from './styles';
+import { useHistory } from 'react-router-dom';
 
 // import { Container } from './styles';
 
 const CartComponent: React.FC = () => {
-    const [isLoading, setIsLoading] = useState(false)
-    const [subTotal, setSubTotal] = useState(0)
+    const [isLoading] = useState(false)
     const [cart, setCart] = useRecoilState(ShoppingCart)
 
     const history = useHistory()
@@ -46,7 +44,7 @@ const CartComponent: React.FC = () => {
     }
 
     return (
-        <Popover placement='bottom-end' closeOnBlur={false}>
+        <Popover placement='bottom-end' closeOnBlur={true}>
             <PopoverTrigger>
                 <Box alignItems='center' justifyContent='space-between' w='100%' display={['none', 'unset']}>
                     <Button background='transparent' _hover={{backgroundColor: '#555'}} h='100%' fontSize='lg' fontWeight='regular'>

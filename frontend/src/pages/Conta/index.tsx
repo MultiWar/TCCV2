@@ -1,4 +1,4 @@
-import { Avatar, Flex, Heading, Skeleton, Stack, stringOrNumber, Text } from '@chakra-ui/core';
+import { Avatar, Flex, Heading, Skeleton, Stack, Text } from '@chakra-ui/core';
 import { Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';

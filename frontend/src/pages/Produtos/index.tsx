@@ -1,4 +1,4 @@
-import { Button, Flex, Text } from '@chakra-ui/core';
+import { Button, Text } from '@chakra-ui/core';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -6,7 +6,7 @@ import { ShoppingCart } from '../../atoms/cart';
 import { DefaultButton } from '../../components/DefaultButton';
 // import DesktopImageComponent from '../../components/DesktopImageComponent';
 import {useProdutoQuery, useProdutosSimilaresQuery} from '../../generated/graphql'
-import { Card, CardComprar, Categoria, DivConcentracao, DivImagem, NomeRemedio, Similares, Tarja, DivMassa, Descricao, Quantidades, BotaoTrocarQuantidade, ProdutosSim, ProdutoSimilar, BotoesProdutosSimilares } from './styles';
+import { Card, CardComprar, Categoria, DivConcentracao, DivImagem, NomeRemedio, Similares, Tarja, DivMassa, Descricao, Quantidades, BotaoTrocarQuantidade, ProdutosSim, ProdutoSimilar } from './styles';
 
 interface ParamTypes {
     produto: string
@@ -41,7 +41,7 @@ const Produtos: React.FC = () => {
                 setIsInCart(true)
             }
         })
-    }, [cart, data])
+    }, [cart, data, produtoId])
 
     setTimeout(() => {}, 500)
 
@@ -106,28 +106,6 @@ const Produtos: React.FC = () => {
         localStorage.setItem('carrinho', JSON.stringify(carrinhoNovo))
         setIsInCart(false)
     }
-
-    // const handleIncreaseQuantity = () => {
-    //     const newCart = cart.map(produto => {
-    //         if(produto.idProduto === Number(produtoId)) {
-    //             return {...produto, quantidade: produto.quantidade + 1}
-    //         }
-    //         return produto
-    //     })
-    //     setCart(newCart)
-    //     localStorage.setItem('carrinho', JSON.stringify(newCart))
-    // }
-
-    // const handleLowerQuantity = () => {
-    //     const newCart = cart.map(produto => {
-    //         if(produto.idProduto === Number(produtoId)) {
-    //             return {...produto, quantidade: produto.quantidade - 1}
-    //         }
-    //         return produto
-    //     })
-    //     setCart(newCart)
-    //     localStorage.setItem('carrinho', JSON.stringify(newCart))
-    // }
 
     return (
         <Card>

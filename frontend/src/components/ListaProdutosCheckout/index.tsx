@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components'
-import { Button, Flex, Heading, Image, Stack, Text } from '@chakra-ui/core';
+import { Flex, Heading, Image, Stack, Text } from '@chakra-ui/core';
 import {useRecoilState} from 'recoil'
 import { ShoppingCart } from '../../atoms/cart';
 import { TabIndex } from '../../atoms/tabIndex';
 import { subtotal as subtt } from '../../atoms/subtt';
 import useGetTotal from '../../utils/getTotal';
-import { useHistory } from 'react-router-dom';
 import { DefaultButton } from '../DefaultButton';
 
 // import { Container } from './styles';
 
 const ListaProdutosCheckout: React.FC = () => {
   const [cart, setCart] = useRecoilState(ShoppingCart)
-  const [tabIndex, setTabIndex] = useRecoilState(TabIndex)
+  const [, setTabIndex] = useRecoilState(TabIndex)
   const [, setSubtotal] = useRecoilState(subtt)
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const subtotal = useGetTotal()
-  const history = useHistory()
 
 
   useEffect(() => {
@@ -108,7 +106,7 @@ const ListaProdutosCheckout: React.FC = () => {
               <Flex key={produto.idProduto} backgroundColor='gray.200' pr={2} w='100%' justify='space-between'>
                 <Flex p={2}>
                   <Image src='https://picsum.photos/200/300' borderRadius={4} w='20%' alt={produto.nomeProduto} mr={2}/>
-                  <Text alignSelf='center' fontSize={windowWidth <= 350 ? 'sm' : windowWidth <= 420 ? 'md' : ['lg', 'lg', 'xl', '2xl']} color='gray.800' isTruncated>{produto.nomeProduto}</Text>
+                  <Text alignSelf='center' fontFamily='Raleway' fontSize={windowWidth <= 350 ? 'sm' : windowWidth <= 420 ? 'md' : ['lg', 'lg', 'xl', '2xl']} color='gray.800' isTruncated>{produto.nomeProduto}</Text>
                 </Flex>
                 <Flex>
                   <Flex p={2}>
@@ -130,7 +128,7 @@ const ListaProdutosCheckout: React.FC = () => {
               </Flex>
             </Flex>
           ))}
-          <Text fontSize={['xl', '2xl', '3xl']} >Subtotal: R$ {subtotal}</Text>
+          <Text fontSize={['xl', '2xl', '3xl']} fontFamily='Montserrat' fontWeight='600'>Subtotal: R$ {subtotal}</Text>
           <DefaultButton onClick={() => {setTabIndex(prevValue => prevValue + 1); setSubtotal(subtotal)}}>Prosseguir</DefaultButton>
         </Stack>
       </Flex>

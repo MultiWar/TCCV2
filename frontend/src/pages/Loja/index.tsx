@@ -155,44 +155,14 @@ const Loja: React.FC = () => {
                                     }
                             }>
 
-                                <Checkbox value='1%' borderColor='blue.400'>1%</Checkbox>
-                                <Checkbox value='2.5%' borderColor='blue.400'>2,5%</Checkbox>
-                                <Checkbox value='3%' borderColor='blue.400'>3%</Checkbox>
-                                <Checkbox value='3.5%' borderColor='blue.400'>3,5%</Checkbox>
-                                <Checkbox value='4%' borderColor='blue.400'>4%</Checkbox>
-                                <Checkbox value='4.5%' borderColor='blue.400'>4,5%</Checkbox>
-                            </CheckboxGroup>
-                            <CheckboxGroup size='lg' name='concentracoes2' defaultValue={concentracoes2}
-                                onChange={
-                                    (value) => {
-                                        setConcentracoes2((value as string[]).length > 0 ? value as string[] : [])
-                                        setConcentracoesEscolhidas(concentracoes1?.concat(concentracoes2 || []) || undefined)
-                                        setPagina(2)
-                                    }
-                            }>
-                                <Checkbox value='5%' borderColor='blue.400'>5%</Checkbox>
-                                <Checkbox value='6%' borderColor='blue.400'>6%</Checkbox>
-                                <Checkbox value='7%' borderColor='blue.400'>7%</Checkbox>
-                                <Checkbox value='8%' borderColor='blue.400'>8%</Checkbox>
-                                <Checkbox value='9%' borderColor='blue.400'>9%</Checkbox>
-                                <Checkbox value='10%' borderColor='blue.400'>10%</Checkbox>
+                                <Checkbox value='100mg/g' borderColor='blue.400'>100mg/g</Checkbox>
+                                <Checkbox value='50mg/g' borderColor='blue.400'>50mg/g</Checkbox>
+                                <Checkbox value='25mcg' borderColor='blue.400'>25mcg</Checkbox>
+                                <Checkbox value='50mcg' borderColor='blue.400'>50mcg</Checkbox>
+                                <Checkbox value='100mcg' borderColor='blue.400'>100mcg</Checkbox>
                             </CheckboxGroup>
                         </Flex>
                     </Flex>
-                    <Box mt={4} w={['100%', '100%', 'unset']}>
-                        <Heading size='xl' as='legend' mb={2}>Principios Ativos</Heading>
-                        <CheckboxGroup size='lg' name='principioAtivo' defaultValue={principioAtivoEscolhido}
-                            onChange={
-                                (value) => {
-                                    setPrincipioAtivoEscolhido((value as string[]).length > 0 ? value as string[] : undefined)
-                                    setPagina(2)
-                                }
-                        }>
-                            <Checkbox value='principAtivo1' borderColor='blue.400'>Principio Ativo 1</Checkbox>
-                            <Checkbox value='principAtivo2' borderColor='blue.400'>Principio Ativo 2</Checkbox>
-                            <Checkbox value='principAtivo3' borderColor='blue.400'>Principio Ativo 3</Checkbox>
-                        </CheckboxGroup>
-                    </Box>
                     <Box mt={4} w={['100%', '100%', 'unset']}>
                         <Heading size='xl' as='legend' mb={2}>Ordernar por:</Heading>
                         <RadioGroup size='lg' name='orderBy' defaultValue={orderBy}
