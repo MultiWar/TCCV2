@@ -35,12 +35,15 @@ const Produtos: React.FC = () => {
     })
 
     useEffect(() => {
+        setIsInCart(false)
         cart.map(p => {
             if(p.idProduto === Number(produtoId)) {
                 setIsInCart(true)
             }
         })
-    }, [cart])
+    }, [cart, data])
+
+    setTimeout(() => {}, 500)
 
     const produtosSimilares = useProdutosSimilaresQuery({
         variables: {
@@ -138,7 +141,7 @@ const Produtos: React.FC = () => {
                         produto => {
                             if(produto.idProduto !== Number(produtoId)) {
                                 return (
-                                    <Link to={`/produtos/${produto.idProduto}`}>
+                                    <Link key={produto.idProduto} to={`/produtos/${produto.idProduto}`}>
                                         <ProdutoSimilar key={produto.idProduto}>
                                             <Text isTruncated={true} as='h4'>{produto.nomeProduto}</Text>
                                             <div />

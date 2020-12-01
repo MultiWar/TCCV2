@@ -22,6 +22,7 @@ import { tblUnidade as Unidade } from './entitites/Unidade'
 import { tblUser as User } from "./entitites/User"
 import { produtoResolver } from './resolvers/produtoResolver'
 import cors from 'cors'
+import { PedidoResolver } from './resolvers/pedidoResolver'
 
 const main = async () => {
     await createConnection({
@@ -67,12 +68,12 @@ const main = async () => {
 
     const apolloServer = new ApolloServer({
         schema: await buildSchema({
-            resolvers: [userResolver, produtoResolver],
+            resolvers: [userResolver, produtoResolver, PedidoResolver],
             validate: false
         }),
         context: ({req, res}) => ({req, res})
     })
-
+ 
     apolloServer.applyMiddleware({app, cors: false})
 
     app.listen(3333, () => {

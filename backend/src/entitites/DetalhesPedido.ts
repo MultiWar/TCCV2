@@ -13,8 +13,8 @@ export class tblDetalhePedido extends BaseEntity {
     @JoinColumn({name: 'idPedido'})
     idPedido!: tblPedido
 
-    @Field(() => String)
-    @PrimaryColumn('uuid')
+    @Field(() => Number)
+    @PrimaryColumn('int')
     @ManyToOne(() => tblProduto, produto => produto.detalhesPedido)
     @JoinColumn({name: 'idProduto'})
     idProduto!: tblProduto

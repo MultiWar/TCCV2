@@ -1,0 +1,13 @@
+query MeusPedidos($cpf: String!) {
+  meusPedidos(cpf: $cpf) {
+    idPedido
+    status
+    valorFinal
+    dataPedido
+    dataEntrega
+    detalhesPedido {
+      idProduto
+      qtde
+    }
+  }
+}

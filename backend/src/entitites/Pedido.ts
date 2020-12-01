@@ -1,5 +1,5 @@
 import { Field, ObjectType } from "type-graphql";
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, JoinTable, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { tblDetalhePedido } from "./DetalhesPedido";
 import { tblFuncionario } from "./Funcionario";
 import { tblProgEntrega } from "./ProgEntrega";
@@ -13,17 +13,17 @@ export class tblPedido extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     idPedido!: string
 
-    @Field(() => String)
-    @OneToOne(() => tblProgEntrega)
+    @Field(() => String, {nullable: true})
+    @OneToOne(() => tblProgEntrega, {nullable: true})
     @JoinColumn({name: 'idProgEntrega'})
-    idProgEntrega: tblProgEntrega
+    idProgEntrega?: tblProgEntrega
     
     @Field()
-    @Column('smalldatetime')
+    @Column('varchar', {length: 15})
     dataPedido!: string
     
     @Field()
-    @Column('smalldatetime')
+    @Column('varchar', {length: 15})
     dataEntrega: string
     
     @Field()
@@ -34,16 +34,20 @@ export class tblPedido extends BaseEntity {
     @Column('varchar', {length: 8})
     status: string
 
-    @Field(() => String)
-    @ManyToOne(() => tblFuncionario, funcionario => funcionario.pedidos)
+    @Field(() => String, {nullable: true})
+    @ManyToOne(() => tblFuncionario, funcionario => funcionario.pedidos, {nullable: true})
     @JoinColumn({name: 'idFuncionario'})
-    idFuncionario: tblFuncionario
+    idFuncionario?: tblFuncionario
 
     @Field(() => String)
     @ManyToOne(() => tblUser, user => user.pedidos)
     @JoinColumn({name: 'idUser'})
     idUser!: tblUser
 
-    @OneToMany(() => tblDetalhePedido, detalhePedido => detalhePedido.idPedido)
+    @Field(() => [tblDetalhePedido])
+    @OneToMany(() => tblDetalhePedido, detalhePedido => detalhePedido.idPedido, {
+        eager: true
+    })
+    @JoinTable()
     detalhesPedido: tblDetalhePedido[]
 }

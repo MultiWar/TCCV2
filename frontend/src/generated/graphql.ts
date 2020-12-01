@@ -19,6 +19,7 @@ export type Query = {
   produtos: ProdutosComPaginacao;
   produto: TblProduto;
   produtosSimilares: Array<TblProduto>;
+  meusPedidos: Array<TblPedido>;
 };
 
 
@@ -41,6 +42,11 @@ export type QueryProdutoArgs = {
 
 export type QueryProdutosSimilaresArgs = {
   categoria: Scalars['String'];
+};
+
+
+export type QueryMeusPedidosArgs = {
+  cpf: Scalars['String'];
 };
 
 export type TblUser = {
@@ -75,6 +81,26 @@ export type TblProduto = {
   idFornecedor: Scalars['String'];
 };
 
+export type TblPedido = {
+  __typename?: 'tblPedido';
+  idPedido: Scalars['String'];
+  idProgEntrega?: Maybe<Scalars['String']>;
+  dataPedido: Scalars['String'];
+  dataEntrega: Scalars['String'];
+  valorFinal: Scalars['String'];
+  status: Scalars['String'];
+  idFuncionario?: Maybe<Scalars['String']>;
+  idUser: Scalars['String'];
+  detalhesPedido: Array<TblDetalhePedido>;
+};
+
+export type TblDetalhePedido = {
+  __typename?: 'tblDetalhePedido';
+  idPedido: Scalars['String'];
+  idProduto: Scalars['Float'];
+  qtde: Scalars['Float'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   register: UserResponse;
@@ -85,6 +111,7 @@ export type Mutation = {
   changeInformations: UserResponse;
   wipeUsers: Scalars['Boolean'];
   criarProdutos: TblProduto;
+  fazerPedido: Scalars['Boolean'];
 };
 
 
@@ -130,6 +157,14 @@ export type MutationCriarProdutosArgs = {
   nome: Scalars['String'];
 };
 
+
+export type MutationFazerPedidoArgs = {
+  valorFinal: Scalars['Float'];
+  prazoDeEntrega: Scalars['Float'];
+  cpf: Scalars['String'];
+  produtos: Array<ProdutoAdicionado>;
+};
+
 export type UserResponse = {
   __typename?: 'UserResponse';
   errors?: Maybe<Array<FieldError>>;
@@ -157,6 +192,11 @@ export type RegisterInput = {
 export type LoginInput = {
   cpf: Scalars['String'];
   senhaUser: Scalars['String'];
+};
+
+export type ProdutoAdicionado = {
+  idProduto: Scalars['Float'];
+  quantidade: Scalars['Float'];
 };
 
 export type ChangePasswordMutationVariables = Exact<{
@@ -197,6 +237,19 @@ export type ChangeUserInformationMutation = (
       & Pick<FieldError, 'field' | 'message'>
     )>> }
   ) }
+);
+
+export type FazerPedidoMutationVariables = Exact<{
+  valorFinal: Scalars['Float'];
+  prazoDeEntrega: Scalars['Float'];
+  cpf: Scalars['String'];
+  produtos: Array<ProdutoAdicionado>;
+}>;
+
+
+export type FazerPedidoMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'fazerPedido'>
 );
 
 export type ForgotPasswordMutationVariables = Exact<{
@@ -269,6 +322,23 @@ export type MeQuery = (
     { __typename?: 'tblUser' }
     & Pick<TblUser, 'cpf' | 'email' | 'nomeUser' | 'fone' | 'endereco'>
   ) }
+);
+
+export type MeusPedidosQueryVariables = Exact<{
+  cpf: Scalars['String'];
+}>;
+
+
+export type MeusPedidosQuery = (
+  { __typename?: 'Query' }
+  & { meusPedidos: Array<(
+    { __typename?: 'tblPedido' }
+    & Pick<TblPedido, 'idPedido' | 'status' | 'valorFinal' | 'dataPedido' | 'dataEntrega'>
+    & { detalhesPedido: Array<(
+      { __typename?: 'tblDetalhePedido' }
+      & Pick<TblDetalhePedido, 'idProduto' | 'qtde'>
+    )> }
+  )> }
 );
 
 export type ProdutoQueryVariables = Exact<{
@@ -408,6 +478,39 @@ export function useChangeUserInformationMutation(baseOptions?: Apollo.MutationHo
 export type ChangeUserInformationMutationHookResult = ReturnType<typeof useChangeUserInformationMutation>;
 export type ChangeUserInformationMutationResult = Apollo.MutationResult<ChangeUserInformationMutation>;
 export type ChangeUserInformationMutationOptions = Apollo.BaseMutationOptions<ChangeUserInformationMutation, ChangeUserInformationMutationVariables>;
+export const FazerPedidoDocument = gql`
+    mutation FazerPedido($valorFinal: Float!, $prazoDeEntrega: Float!, $cpf: String!, $produtos: [ProdutoAdicionado!]!) {
+  fazerPedido(valorFinal: $valorFinal, prazoDeEntrega: $prazoDeEntrega, cpf: $cpf, produtos: $produtos)
+}
+    `;
+export type FazerPedidoMutationFn = Apollo.MutationFunction<FazerPedidoMutation, FazerPedidoMutationVariables>;
+
+/**
+ * __useFazerPedidoMutation__
+ *
+ * To run a mutation, you first call `useFazerPedidoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useFazerPedidoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [fazerPedidoMutation, { data, loading, error }] = useFazerPedidoMutation({
+ *   variables: {
+ *      valorFinal: // value for 'valorFinal'
+ *      prazoDeEntrega: // value for 'prazoDeEntrega'
+ *      cpf: // value for 'cpf'
+ *      produtos: // value for 'produtos'
+ *   },
+ * });
+ */
+export function useFazerPedidoMutation(baseOptions?: Apollo.MutationHookOptions<FazerPedidoMutation, FazerPedidoMutationVariables>) {
+        return Apollo.useMutation<FazerPedidoMutation, FazerPedidoMutationVariables>(FazerPedidoDocument, baseOptions);
+      }
+export type FazerPedidoMutationHookResult = ReturnType<typeof useFazerPedidoMutation>;
+export type FazerPedidoMutationResult = Apollo.MutationResult<FazerPedidoMutation>;
+export type FazerPedidoMutationOptions = Apollo.BaseMutationOptions<FazerPedidoMutation, FazerPedidoMutationVariables>;
 export const ForgotPasswordDocument = gql`
     mutation ForgotPassword($email: String!) {
   forgotPassword(email: $email)
@@ -584,6 +687,47 @@ export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const MeusPedidosDocument = gql`
+    query MeusPedidos($cpf: String!) {
+  meusPedidos(cpf: $cpf) {
+    idPedido
+    status
+    valorFinal
+    dataPedido
+    dataEntrega
+    detalhesPedido {
+      idProduto
+      qtde
+    }
+  }
+}
+    `;
+
+/**
+ * __useMeusPedidosQuery__
+ *
+ * To run a query within a React component, call `useMeusPedidosQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeusPedidosQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMeusPedidosQuery({
+ *   variables: {
+ *      cpf: // value for 'cpf'
+ *   },
+ * });
+ */
+export function useMeusPedidosQuery(baseOptions?: Apollo.QueryHookOptions<MeusPedidosQuery, MeusPedidosQueryVariables>) {
+        return Apollo.useQuery<MeusPedidosQuery, MeusPedidosQueryVariables>(MeusPedidosDocument, baseOptions);
+      }
+export function useMeusPedidosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeusPedidosQuery, MeusPedidosQueryVariables>) {
+          return Apollo.useLazyQuery<MeusPedidosQuery, MeusPedidosQueryVariables>(MeusPedidosDocument, baseOptions);
+        }
+export type MeusPedidosQueryHookResult = ReturnType<typeof useMeusPedidosQuery>;
+export type MeusPedidosLazyQueryHookResult = ReturnType<typeof useMeusPedidosLazyQuery>;
+export type MeusPedidosQueryResult = Apollo.QueryResult<MeusPedidosQuery, MeusPedidosQueryVariables>;
 export const ProdutoDocument = gql`
     query Produto($idProduto: String!) {
   produto(id: $idProduto) {

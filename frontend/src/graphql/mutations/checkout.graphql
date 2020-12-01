@@ -1,0 +1,3 @@
+mutation FazerPedido($valorFinal: Float!, $prazoDeEntrega: Float!, $cpf:String!, $produtos: [ProdutoAdicionado!]!) {
+  fazerPedido (valorFinal: $valorFinal, prazoDeEntrega: $prazoDeEntrega, cpf: $cpf, produtos: $produtos) 
+}
