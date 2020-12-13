@@ -1,23 +1,23 @@
 # Conteúdos do Readme / Table of Contents
 ## Português
-* [Apresentação do Projeto](https://github.com/MultiWar/TCCV2/new/main?readme=1#português)
-  * [Conceito do projeto e funcionalidades](https://github.com/MultiWar/TCCV2/new/main?readme=1#conceito-do-projeto-e-funcionalidades)
-  * [Agradecimentos](https://github.com/MultiWar/TCCV2/new/main?readme=1#agradecimentos)
-* [Rodando o projeto no seu PC](https://github.com/MultiWar/TCCV2/new/main?readme=1#rodando-o-projeto-no-seu-pc)
-  * [Requisitos](https://github.com/MultiWar/TCCV2/new/main?readme=1#requisitos)
-  * [Instalando dependências](https://github.com/MultiWar/TCCV2/new/main?readme=1#instalando-dependências)
-  * [Preparando o banco de dados](https://github.com/MultiWar/TCCV2/new/main?readme=1#preparando-o-banco-de-dados)
-  * [Iniciando a aplicação](https://github.com/MultiWar/TCCV2/new/main?readme=1#iniciando-a-aplicação)
+* [Apresentação do Projeto](https://github.com/MultiWar/TCCV2/blob/main/README.md#apresentação-do-projeto)
+  * [Conceito do projeto e funcionalidades](https://github.com/MultiWar/TCCV2/blob/main/README.md#conceito-do-projeto-e-funcionalidades)
+  * [Agradecimentos](https://github.com/MultiWar/TCCV2/blob/main/README.md#agradecimentos)
+* [Rodando o projeto no seu PC](https://github.com/MultiWar/TCCV2/blob/main/README.md#rodando-o-projeto-no-seu-pc)
+  * [Requisitos](https://github.com/MultiWar/TCCV2/blob/main/README.md#requisitos)
+  * [Instalando dependências](https://github.com/MultiWar/TCCV2/blob/main/README.md#instalando-dependências)
+  * [Preparando o banco de dados](https://github.com/MultiWar/TCCV2/blob/main/README.md#preparando-o-banco-de-dados)
+  * [Iniciando a aplicação](https://github.com/MultiWar/TCCV2/blob/main/README.md#iniciando-a-aplicação)
 
 ## English
-* [Project Introduction](https://github.com/MultiWar/TCCV2/new/main?readme=1#project-introduction)
-  * [Project's concepts and features](https://github.com/MultiWar/TCCV2/new/main?readme=1#projects-concepts-and-features)
-  * [Thanking some people](https://github.com/MultiWar/TCCV2/new/main?readme=1#thanking-some-people)
-* [Running the application](https://github.com/MultiWar/TCCV2/new/main?readme=1#running-the-application)
-  * [Requirements](https://github.com/MultiWar/TCCV2/new/main?readme=1#requirements)
-  * [Installing dependencies](https://github.com/MultiWar/TCCV2/new/main?readme=1#installing-dependencies)
-  * [Readying the database](https://github.com/MultiWar/TCCV2/new/main?readme=1#readying-the-database)
-  * [Starting the app](https://github.com/MultiWar/TCCV2/new/main?readme=1#starting-the-app)
+* [Project Introduction](https://github.com/MultiWar/TCCV2/blob/main/README.md#project-introduction)
+  * [Project's concepts and features](https://github.com/MultiWar/TCCV2/blob/main/README.md#projects-concepts-and-features)
+  * [Thanking some people](https://github.com/MultiWar/TCCV2/blob/main/README.md#thanking-some-people)
+* [Running the application](https://github.com/MultiWar/TCCV2/blob/main/README.md#running-the-application)
+  * [Requirements](https://github.com/MultiWar/TCCV2/blob/main/README.md#requirements)
+  * [Installing dependencies](https://github.com/MultiWar/TCCV2/blob/main/README.md#installing-dependencies)
+  * [Readying the database](https://github.com/MultiWar/TCCV2/blob/main/README.md#readying-the-database)
+  * [Starting the app](https://github.com/MultiWar/TCCV2/blob/main/README.md#starting-the-app)
 
 
 # Apresentação do Projeto
