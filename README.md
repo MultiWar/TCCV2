@@ -9,7 +9,7 @@
   * [Preparando o banco de dados](https://github.com/MultiWar/TCCV2/new/main?readme=1#preparando-o-banco-de-dados)
   * [Iniciando a aplicação](https://github.com/MultiWar/TCCV2/new/main?readme=1#iniciando-a-aplicação)
 
-## Inglês
+## English
 * [Project Introduction](https://github.com/MultiWar/TCCV2/new/main?readme=1#project-introduction)
   * [Project's concepts and features](https://github.com/MultiWar/TCCV2/new/main?readme=1#projects-concepts-and-features)
   * [Thanking some people](https://github.com/MultiWar/TCCV2/new/main?readme=1#thanking-some-people)
