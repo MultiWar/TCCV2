@@ -37,7 +37,7 @@
   
   O site é a parte da loja da farmácia, principalmente. Nele, é possível visualizar os produtos e comprá-los, além de possuir funcionalidades de cadastro e login e alteração das informações da conta do usuário. Também existe a possibilidade de recuperar a senha caso o usuário esqueça da senha que criaram anteriormente. Para isso, o usuário informa o e-mail cadastrado (o que é checado contra o banco de dados, e, se não houver cadastros com esse e-mail, um erro é retornado) e recebe, neste e-mail, um link com um token único para a redefinição da senha. 
   
-  Falando em senha, nós não salvamos a senha em plain-text no banco. A senha recebe um salt e depois passa por um processo de hash, e só aí é guardada no banco, para evitar que, caso o banco seja comprometido, as senhas continuarão escondidas na medida do possível.
+  Falando em senha, nós não salvamos a senha em plain-text no banco. A senha recebe um salt e depois passa por um processo de hash, e só aí é guardada no banco, para garantir que, caso o banco seja comprometido, as senhas continuarão escondidas na medida do possível.
   
   
 ## Agradecimentos
